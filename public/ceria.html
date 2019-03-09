@@ -1,0 +1,19 @@
+<div id="chart" style="height:100%"></div>
+<script src="https://cdn.seatsio.net/chart.js"></script>
+<script>
+    new seatsio.SeatingChart({
+        divId: 'chart',
+        publicKey: '7c6f76ce-210e-4cd0-ae65-354d87e5a6ca',
+        event: 'ceria-gala-2019',
+		objectLabel: function(object, defaultLabel, extraConfig) {
+			return object.labels.own ;
+		  },
+      objectColor: function(object, defaultColor) {
+        if (object.isSelectable()) {
+          return "white";
+        }
+		else return 'red';
+        return defaultColor;
+      }
+    }).render();
+</script>

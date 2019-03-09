@@ -1,0 +1,77 @@
+easy_admin:
+    site_name: "Clap'Sabots"
+    list:
+        max_results: 100
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+    
+    design:
+        menu:
+            - label: 'Administration'
+              children: ['Club', 'ClubYear', 'Section']
+            - label: 'Membres'
+              children: ['Member']
+            - label: 'Costumes'
+              children: ['ClothesColor', 'ClothesType', 'ClothesOpportunity']
+    entities:
+        Club:
+            class: App\Entity\Club
+            form:
+                fields: 
+                    - { type: group, label: General, css_class: 'col-sm-6', icon: edit }
+                    - { property: name }
+                    - { property: vatNumber }
+                    - { type: group, label: Address, css_class: 'col-sm-6' }
+                    - { property: headOfficeAddress, label: '', type: 'App\Form\Type\AddressType'  } 
+                    - { type: group, label: Years, css_class: 'col-sm-12', icon: calendar }
+                    - { property: clubYears, label: '', type: embedded_list }
+        Address: 
+            class: App\Entity\Address
+        ClubYear: 
+            class: App\Entity\ClubYear 
+        Section: 
+            class: App\Entity\Section
+            form:
+                fields: 
+                    - { type: 'tab' , label: 'Section Information', icon: 'edit' }
+                    - { property: name }
+                    - { property: code }
+                    - { type: 'tab' , label: 'Affiliate list', icon: 'user' }
+                    - { property: memberShips, label: '', type: embedded_list }
+        ClothesColor:
+            class: App\Entity\ClothesColor
+        ClothesType:
+            class: App\Entity\ClothesType
+        ClothesOpportunity:
+            class: App\Entity\ClothesOpportunity
+        ClothesTypeZone:
+            class: App\Entity\ClothesTypeZone
+        ClothesTexture:
+            class: App\Entity\ClothesTexture
+        ClothesSeason:
+            class: App\Entity\ClothesSeason
+        ClothesTypeType:
+            class: App\Entity\ClothesTypeType
+        Member:
+            class: App\Entity\Member
+            form:
+                fields:
+                    - { type: 'tab' , label: 'Account Information', icon: 'user' }
+                    - { type: group, label: General, css_class: 'col-sm-6', icon: edit }
+                    - { property: firstname }
+                    - { property: lastname }
+                    - { property: email, type: email }
+                    - { property: phone }
+                    - { property: mobilePhone }
+                    - { property: 'sex', type: 'App\Form\Type\SexType' }
+                    - { property: 'birthdate', type: 'App\Form\Type\BirthdateType' }
+                    - { property: niss }
+                    - { property: 'insurer', type: 'App\Form\Type\InsurerType' }
+                    - { type: group, label: Address, css_class: 'col-sm-6' }
+                    - { property: 'address', type: 'App\Form\Type\AddressType' }
+                    - { type: 'tab' , label: 'Affiliate', icon: 'user' }
+                    - { property: memberShips, type: embedded_list }
+        MemberShip:
+            class: App\Entity\MemberShip
