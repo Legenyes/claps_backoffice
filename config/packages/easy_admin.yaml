@@ -16,7 +16,7 @@ easy_admin:
             - label: 'Membres'
               children: ['Member']
             - label: 'Costumes'
-              children: ['ClothesColor', 'ClothesType', 'ClothesOpportunity']
+              children: ['ClothesColor', 'ClothesType', 'ClothesOpportunity', 'ClothesTypeZone']
     entities:
         Club:
             class: App\Entity\Club
@@ -44,6 +44,15 @@ easy_admin:
                     - { property: memberShips, label: '', type: embedded_list }
         ClothesColor:
             class: App\Entity\ClothesColor
+            list:
+                fields:
+                    - { property: id }
+                    - { property: name }
+                    - { property: code, template: 'easy_admin/property_color.html.twig' }
+            form:
+                fields:
+                    - { property: name }
+                    - { property: code }
         ClothesType:
             class: App\Entity\ClothesType
         ClothesOpportunity:
