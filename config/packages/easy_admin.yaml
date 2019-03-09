@@ -59,6 +59,9 @@ easy_admin:
             class: App\Entity\ClothesOpportunity
         ClothesTypeZone:
             class: App\Entity\ClothesTypeZone
+            form:
+                fields:
+                    - { property: name }
         ClothesTexture:
             class: App\Entity\ClothesTexture
             form:
