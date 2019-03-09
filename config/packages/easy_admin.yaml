@@ -52,7 +52,7 @@ easy_admin:
             form:
                 fields:
                     - { property: name }
-                    - { property: code }
+                    - { property: code, type: 'App\Form\Type\ColorType'  }
         ClothesType:
             class: App\Entity\ClothesType
         ClothesOpportunity:
