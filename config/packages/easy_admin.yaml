@@ -8,6 +8,8 @@ easy_admin:
         datetime: 'd/m/Y H:i:s'
     
     design:
+        templates: 
+            label_null: 'easy_admin/label_null.html.twig'
         menu:
             - label: 'Administration'
               children: ['Club', 'ClubYear', 'Section']
