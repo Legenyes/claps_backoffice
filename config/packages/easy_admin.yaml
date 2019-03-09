@@ -16,7 +16,7 @@ easy_admin:
             - label: 'Membres'
               children: ['Member']
             - label: 'Costumes'
-              children: ['ClothesColor', 'ClothesType', 'ClothesOpportunity', 'ClothesTypeZone']
+              children: ['ClothesColor', 'ClothesType', 'ClothesOpportunity', 'ClothesTypeZone', 'ClothesSeason']
     entities:
         Club:
             class: App\Entity\Club
@@ -63,6 +63,9 @@ easy_admin:
             class: App\Entity\ClothesTexture
         ClothesSeason:
             class: App\Entity\ClothesSeason
+            form:
+                fields:
+                    - { property: name }
         ClothesTypeType:
             class: App\Entity\ClothesTypeType
         Member:
