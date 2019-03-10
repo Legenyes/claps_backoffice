@@ -16,7 +16,12 @@ easy_admin:
             - label: 'Membres'
               children: ['Member']
             - label: 'Costumes'
-              children: ['ClothesColor', 'ClothesType', 'ClothesOpportunity', 'ClothesTypeZone', 'ClothesSeason', 'ClothesTexture']
+              children:
+                - { entity: 'ClothesType', label: 'Types' }
+                - { entity: 'ClothesOpportunity', label: 'Opportunity' }
+                - { entity: 'ClothesSeason', label: 'Seasons' }
+                - { entity: 'ClothesTexture', label: 'Textures' }
+                - { entity: 'ClothesTypeZone', label: 'Zones' }
     entities:
         Club:
             class: App\Entity\Club
@@ -45,6 +50,7 @@ easy_admin:
         ClothesColor:
             class: App\Entity\ClothesColor
             list:
+                sort: ['name', 'ASC']
                 fields:
                     - { property: id }
                     - { property: name }
@@ -55,27 +61,47 @@ easy_admin:
                     - { property: code, type: 'App\Form\Type\ColorType'  }
         ClothesType:
             class: App\Entity\ClothesType
+            list:
+                sort: ['type', 'ASC']
+            form:
+                fields:
+                    - { property: name }
+                    - { property: type }
+                    - { property: zone }
+        ClothesTypeType:
+            class: App\Entity\ClothesTypeType
+            form:
+                fields:
+                    - { property: name }
         ClothesOpportunity:
             class: App\Entity\ClothesOpportunity
+            list:
+                sort: ['name', 'ASC']
         ClothesTypeZone:
             class: App\Entity\ClothesTypeZone
+            list:
+                sort: ['name', 'ASC']
             form:
                 fields:
                     - { property: name }
         ClothesTexture:
             class: App\Entity\ClothesTexture
+            list:
+                sort: ['name', 'ASC']
             form:
                 fields:
                     - { property: name }
         ClothesSeason:
             class: App\Entity\ClothesSeason
+            list:
+                sort: ['name', 'ASC']
             form:
                 fields:
                     - { property: name }
-        ClothesTypeType:
-            class: App\Entity\ClothesTypeType
         Member:
             class: App\Entity\Member
+            list:
+                sort: ['lastname', 'ASC']
             form:
                 fields:
                     - { type: 'tab' , label: 'Account Information', icon: 'user' }
