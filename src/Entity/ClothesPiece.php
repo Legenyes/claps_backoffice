@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -73,9 +75,20 @@ class ClothesPiece
      */
     private $personal;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Section", inversedBy="clothesPieces")
+     */
+    private $sections;
+
+
+    public function __construct()
+    {
+        $this->sections = new ArrayCollection();
+    }
+
     public function __toString()
     {
-        return $this->name;
+        return $this->name . '('. $this->code .')';
     }
 
     public function getId(): ?int
@@ -211,6 +224,32 @@ class ClothesPiece
     public function setPersonal(?bool $personal): self
     {
         $this->personal = $personal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Section[]
+     */
+    public function getSections(): Collection
+    {
+        return $this->sections;
+    }
+
+    public function addSection(Section $section): self
+    {
+        if (!$this->sections->contains($section)) {
+            $this->sections[] = $section;
+        }
+
+        return $this;
+    }
+
+    public function removeSection(Section $section): self
+    {
+        if ($this->sections->contains($section)) {
+            $this->sections->removeElement($section);
+        }
 
         return $this;
     }
