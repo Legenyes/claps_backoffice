@@ -34,7 +34,7 @@ class ClothesPiece
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\clothesSeason", inversedBy="clothesPieces")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ClothesSeason", inversedBy="clothesPieces")
      */
     private $season;
 

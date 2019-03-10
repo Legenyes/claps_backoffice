@@ -17,6 +17,7 @@ easy_admin:
               children: ['Member']
             - label: 'Costumes'
               children:
+                - { entity: 'ClothesPiece', label: 'Pieces' }
                 - { entity: 'ClothesType', label: 'Types' }
                 - { entity: 'ClothesOpportunity', label: 'Opportunity' }
                 - { entity: 'ClothesSeason', label: 'Seasons' }
@@ -47,6 +48,9 @@ easy_admin:
                     - { property: code }
                     - { type: 'tab' , label: 'Affiliate list', icon: 'user' }
                     - { property: memberShips, label: '', type: embedded_list }
+
+        ClothesPiece:
+            class: App\Entity\ClothesPiece
         ClothesColor:
             class: App\Entity\ClothesColor
             list:
