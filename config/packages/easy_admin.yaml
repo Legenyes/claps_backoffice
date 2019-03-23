@@ -59,7 +59,7 @@ easy_admin:
                     - { property: code }
                     - { property: gender, template: 'easy_admin/property_gender.html.twig' }
                     - { property: name }
-                    - { property: country }
+                    - { property: country, template: 'easy_admin/property_country.html.twig' }
                     - { property: sections }
             form:
                 fields:
