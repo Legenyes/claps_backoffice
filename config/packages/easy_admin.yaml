@@ -57,6 +57,7 @@ easy_admin:
                 fields:
                     - { property: id }
                     - { property: code }
+                    - { property: gender, template: 'easy_admin/property_gender.html.twig' }
                     - { property: name }
                     - { property: country }
                     - { property: sections }
