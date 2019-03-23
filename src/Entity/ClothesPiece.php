@@ -76,6 +76,11 @@ class ClothesPiece
     private $personal;
 
     /**
+     * @ORM\Column(name="gender", type="array", nullable=true)
+     */
+    private $gender;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Section", inversedBy="clothesPieces")
      */
     private $sections;
@@ -226,6 +231,34 @@ class ClothesPiece
         $this->personal = $personal;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param mixed $gender
+     * @return ClothesPiece
+     */
+    public function setGender($gender): self
+    {
+        $this->gender = $gender;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getGenders()
+    {
+        return array(
+            'M' => 'homme',
+            'F' => 'femme');
     }
 
     /**

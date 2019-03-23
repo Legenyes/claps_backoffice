@@ -60,6 +60,23 @@ easy_admin:
                     - { property: name }
                     - { property: country }
                     - { property: sections }
+            form:
+                fields:
+                    - { type: group, label: General, columns: 4, icon: edit }
+                    - { property: name }
+                    - { property: code }
+                    - { property: gender, type: 'App\Form\Type\GenderType' }
+                    - { property: personal }
+                    - { property: sections }
+                    - { type: group, label: Localization, columns: 4, icon: globe }
+                    - { property: country, type: country }
+                    - { property: area }
+                    - { property: city }
+                    - { type: group, label: Composing, columns: 4, icon: cut }
+                    - { property: description }
+                    - { property: clotheType }
+                    - { property: clotheTexture }
+                    - { property: clotheOpportunity }
         ClothesColor:
             class: App\Entity\ClothesColor
             list:
