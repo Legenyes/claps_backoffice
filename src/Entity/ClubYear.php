@@ -50,9 +50,21 @@ class ClubYear
         $this->memberShips = new ArrayCollection();
     }
 
+    /**
+     * @return string|null
+     */
     public function __toString()
     {
-        return $this->getClub()->getName();
+        $result = "";
+
+        if($this->getClub()) {
+            $result .= $this->getClub()->getName();
+
+            $result .= ' '. $this->getDateStart()->format('Y');
+            $result .= ' - '. $this->getDateStop()->format('Y');
+        }
+
+        return $result;
     }
 
     public function getId(): ?int

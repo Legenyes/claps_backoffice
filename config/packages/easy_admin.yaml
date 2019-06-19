@@ -15,7 +15,7 @@ easy_admin:
             - label: 'Administration'
               children: ['Club', 'ClubYear', 'Section']
             - label: 'Membres'
-              children: ['Member']
+              children: ['Member', 'MemberShip']
             - label: 'Costumes'
               children:
                 - { entity: 'ClothesPiece', label: 'Pieces' }
@@ -152,3 +152,11 @@ easy_admin:
                     - { property: memberShips, type: embedded_list }
         MemberShip:
             class: App\Entity\MemberShip
+            list:
+                fields:
+                    - { property: id }
+                    - { property: member }
+                    - { property: clubYear }
+                    - { property: sections }
+                    - { property: subscriptionAmount }
+                    - { property: subscriptionPaidAt }
