@@ -26,6 +26,7 @@ easy_admin:
                 - { entity: 'ClothesSeason', label: 'Seasons' }
                 - { entity: 'ClothesTexture', label: 'Textures' }
                 - { entity: 'ClothesTypeZone', label: 'Zones' }
+                - { entity: 'ClothesColor', label: 'Color' }
     entities:
         Club:
             class: App\Entity\Club
@@ -130,6 +131,16 @@ easy_admin:
                     - { property: dressKeeper }
                     - { property: personal }
                     - { property: dressMaker }
+            list:
+                sort: ['clothesPiece', 'ASC']
+                fields:
+                    - { property: id }
+                    - { property: clothesPiece }
+                    - { property: dressKeeper }
+                    - { property: dressMaker }
+                    - { property: personal }
+                    - { property: colors, template: 'easy_admin/property_color.html.twig' }
+                    - { property: status }
         ClothesColor:
             class: App\Entity\ClothesColor
             list:

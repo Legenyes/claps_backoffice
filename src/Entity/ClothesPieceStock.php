@@ -56,6 +56,16 @@ class ClothesPieceStock
         $this->colors = new ArrayCollection();
     }
 
+    /**
+     * @return string|null
+     */
+    public function __toString()
+    {
+        $result = $this->getClothesPiece()->getName();
+
+        return $result;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
