@@ -56,11 +56,12 @@ easy_admin:
                 sort: ['code', 'ASC']
                 fields:
                     - { property: id }
+                    - { property: 'image', type: 'image', base_path: '%app.path.clothespiece_images%' }
                     - { property: code }
                     - { property: gender, template: 'easy_admin/property_gender.html.twig' }
                     - { property: name }
                     - { property: country, template: 'easy_admin/property_country.html.twig' }
-                    - { property: sections }
+                filters: ['code', 'name', 'gender', 'country', 'sections']
             form:
                 fields:
                     - { type: group, label: General, columns: 4, icon: edit }
@@ -78,6 +79,8 @@ easy_admin:
                     - { property: clotheType }
                     - { property: clotheTexture }
                     - { property: clotheOpportunity }
+                    - { type: group, label: Picture, columns: 4, icon: file-image }
+                    - { property: 'imageFile', type: 'vich_image' }
         ClothesColor:
             class: App\Entity\ClothesColor
             list:
@@ -160,3 +163,14 @@ easy_admin:
                     - { property: sections }
                     - { property: subscriptionAmount }
                     - { property: subscriptionPaidAt }
+            form:
+                fields:
+                    - { property: clubYear }
+                    - { property: member }
+                    - { property: sections }
+                    - { property: startDate }
+                    - { property: endDate }
+                    - { property: subscriptionAmount }
+                    - { property: subscriptionPaidAt }
+
+
