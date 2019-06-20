@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\ClothesPiece;
+use EasyCorp\Bundle\EasyAdminBundle\Form\Type\EasyAdminAutocompleteType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,9 +16,8 @@ class ClothesPieceForCostumeType extends AbstractType
     {
 
         $builder
-            ->add('piece', EntityType::class, array(
-                    'class' => ClothesPiece::class,
-                    'placeholder' => 'Choose an option',
+            ->add('piece', EasyAdminAutocompleteType::class, array(
+                    'class' => ClothesPiece::class
                 )
             )
         ;
