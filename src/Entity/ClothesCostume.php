@@ -6,15 +6,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource()
- * @ORM\Entity(repositoryClass="App\Repository\ClothesPieceRepository")
- * @Vich\Uploadable
+ * @ORM\Entity(repositoryClass="App\Repository\ClothesCostumeRepository")
  */
-class ClothesPiece
+class ClothesCostume
 {
     /**
      * @ORM\Id()
@@ -39,14 +36,9 @@ class ClothesPiece
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ClothesSeason", inversedBy="clothesPieces")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ClothesSeason")
      */
     private $season;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ClothesType", inversedBy="clothesPieces")
-     */
-    private $clotheType;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -64,19 +56,9 @@ class ClothesPiece
     private $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ClothesTexture", inversedBy="clothesPieces")
-     */
-    private $clotheTexture;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ClothesOpportunity", inversedBy="clothesPieces")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ClothesOpportunity")
      */
     private $clotheOpportunity;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $personal;
 
     /**
      * @ORM\Column(name="gender", type="array", nullable=true)
@@ -89,28 +71,14 @@ class ClothesPiece
     private $sections;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @var string
-     */
-    private $image;
-
-    /**
-     * @Vich\UploadableField(mapping="clothespiece_images", fileNameProperty="image")
-     * @var File
-     */
-    private $imageFile;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true))
-     * @var \DateTime
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ClothesCostumePiece", mappedBy="piece", orphanRemoval=true)
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\ClothesCostumePiece",
+     *     mappedBy="costume",
+     *     orphanRemoval=true,
+     *     cascade={"persist"}
+     * )
      */
     private $clothesCostumePieces;
-
 
     public function __construct()
     {
@@ -120,7 +88,7 @@ class ClothesPiece
 
     public function __toString()
     {
-        return $this->name . ' ('. $this->code .')';
+        return $this->name . '('. $this->code .')';
     }
 
     public function getId(): ?int
@@ -176,23 +144,18 @@ class ClothesPiece
         return $this;
     }
 
-    public function getClotheType(): ?ClothesType
-    {
-        return $this->clotheType;
-    }
-
-    public function setClotheType(?ClothesType $clotheType): self
-    {
-        $this->clotheType = $clotheType;
-
-        return $this;
-    }
-
+    /**
+     * @return string|null
+     */
     public function getCountry(): ?string
     {
         return $this->country;
     }
 
+    /**
+     * @param string|null $country
+     * @return ClothesCostume
+     */
     public function setCountry(?string $country): self
     {
         $this->country = $country;
@@ -200,11 +163,18 @@ class ClothesPiece
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getArea(): ?string
     {
         return $this->area;
     }
 
+    /**
+     * @param string|null $area
+     * @return ClothesCostume
+     */
     public function setArea(?string $area): self
     {
         $this->area = $area;
@@ -212,11 +182,18 @@ class ClothesPiece
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCity(): ?string
     {
         return $this->city;
     }
 
+    /**
+     * @param string|null $city
+     * @return ClothesCostume
+     */
     public function setCity(?string $city): self
     {
         $this->city = $city;
@@ -224,38 +201,21 @@ class ClothesPiece
         return $this;
     }
 
-    public function getClotheTexture(): ?ClothesTexture
-    {
-        return $this->clotheTexture;
-    }
-
-    public function setClotheTexture(?ClothesTexture $clotheTexture): self
-    {
-        $this->clotheTexture = $clotheTexture;
-
-        return $this;
-    }
-
+    /**
+     * @return ClothesOpportunity|null
+     */
     public function getClotheOpportunity(): ?ClothesOpportunity
     {
         return $this->clotheOpportunity;
     }
 
+    /**
+     * @param ClothesOpportunity|null $clotheOpportunity
+     * @return ClothesCostume
+     */
     public function setClotheOpportunity(?ClothesOpportunity $clotheOpportunity): self
     {
         $this->clotheOpportunity = $clotheOpportunity;
-
-        return $this;
-    }
-
-    public function getPersonal(): ?bool
-    {
-        return $this->personal;
-    }
-
-    public function setPersonal(?bool $personal): self
-    {
-        $this->personal = $personal;
 
         return $this;
     }
@@ -270,7 +230,7 @@ class ClothesPiece
 
     /**
      * @param mixed $gender
-     * @return ClothesPiece
+     * @return ClothesCostume
      */
     public function setGender($gender): self
     {
@@ -296,6 +256,10 @@ class ClothesPiece
         return $this->sections;
     }
 
+    /**
+     * @param Section $section
+     * @return ClothesCostume
+     */
     public function addSection(Section $section): self
     {
         if (!$this->sections->contains($section)) {
@@ -305,58 +269,16 @@ class ClothesPiece
         return $this;
     }
 
+    /**
+     * @param Section $section
+     * @return ClothesCostume
+     */
     public function removeSection(Section $section): self
     {
         if ($this->sections->contains($section)) {
             $this->sections->removeElement($section);
         }
 
-        return $this;
-    }
-
-    public function setImageFile(File $image = null)
-    {
-        $this->imageFile = $image;
-
-        // VERY IMPORTANT:
-        // It is required that at least one field changes if you are using Doctrine,
-        // otherwise the event listeners won't be called and the file is lost
-        if ($image) {
-            // if 'updatedAt' is not defined in your entity, use another property
-            $this->updatedAt = new \DateTime('now');
-        }
-    }
-
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-
-    public function setImage($image)
-    {
-        $this->image = $image;
-    }
-
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     * @return ClothesPiece
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): ClothesPiece
-    {
-        $this->updatedAt = $updatedAt;
         return $this;
     }
 
@@ -368,11 +290,26 @@ class ClothesPiece
         return $this->clothesCostumePieces;
     }
 
+    public function setClothesCostumePieces($collection)
+    {
+        if (gettype($collection) == "array") {
+            $collection = new ArrayCollection($collection);
+        }
+
+        foreach($collection as $item) {
+            $item->setCostume($this);
+        }
+
+        $this->clothesCostumePieces = $collection;
+
+        return $this;
+    }
+
     public function addClothesCostumePiece(ClothesCostumePiece $clothesCostumePiece): self
     {
         if (!$this->clothesCostumePieces->contains($clothesCostumePiece)) {
             $this->clothesCostumePieces[] = $clothesCostumePiece;
-            $clothesCostumePiece->setPiece($this);
+            $clothesCostumePiece->setCostume($this);
         }
 
         return $this;
@@ -383,13 +320,11 @@ class ClothesPiece
         if ($this->clothesCostumePieces->contains($clothesCostumePiece)) {
             $this->clothesCostumePieces->removeElement($clothesCostumePiece);
             // set the owning side to null (unless already changed)
-            if ($clothesCostumePiece->getPiece() === $this) {
-                $clothesCostumePiece->setPiece(null);
+            if ($clothesCostumePiece->getCostume() === $this) {
+                $clothesCostumePiece->setCostume(null);
             }
         }
 
         return $this;
     }
-
-
 }

@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Form\Type;
+
+use App\Entity\ClothesPiece;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class ClothesPieceForCostumeType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+
+        $builder
+            ->add('piece', EntityType::class, array(
+                    'class' => ClothesPiece::class,
+                    'placeholder' => 'Choose an option',
+                )
+            )
+        ;
+    }  
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'App\Entity\ClothesCostumePiece'
+        ));
+    } 
+}

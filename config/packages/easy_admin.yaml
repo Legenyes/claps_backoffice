@@ -18,6 +18,7 @@ easy_admin:
               children: ['Member', 'MemberShip']
             - label: 'Costumes'
               children:
+                - { entity: 'ClothesCostume', label: 'Costumes' }
                 - { entity: 'ClothesPiece', label: 'Pieces' }
                 - { entity: 'ClothesType', label: 'Types' }
                 - { entity: 'ClothesOpportunity', label: 'Opportunity' }
@@ -49,6 +50,41 @@ easy_admin:
                     - { property: code }
                     - { type: 'tab' , label: 'Affiliate list', icon: 'user' }
                     - { property: memberShips, label: '', type: embedded_list }
+        ClothesCostume:
+            class: App\Entity\ClothesCostume
+            list:
+                sort: ['code', 'ASC']
+                fields:
+                    - { property: id }
+                    - { property: code }
+                    - { property: gender, template: 'easy_admin/property_gender.html.twig' }
+                    - { property: name }
+                    - { property: country, template: 'easy_admin/property_country.html.twig' }
+                filters: ['code', 'name', 'gender', 'country', 'sections']
+            form:
+                fields:
+                    - { type: group, label: General, columns: 4, icon: edit }
+                    - { property: name }
+                    - { property: code }
+                    - { property: gender, type: 'App\Form\Type\GenderType' }
+                    - { property: sections }
+                    - { type: group, label: Localization, columns: 4, icon: globe }
+                    - { property: country, type: country }
+                    - { property: area }
+                    - { property: city }
+                    - { type: group, label: Details, columns: 4, icon: info }
+                    - { property: description }
+                    - { property: season }
+                    - { property: clotheOpportunity }
+                    - { type: group, label: Composing, columns: 12, icon: cut }
+                    -
+                        property: clothesCostumePieces
+                        type: 'collection'
+                        type_options:
+                            entry_type: 'App\Form\Type\ClothesPieceForCostumeType'
+                            allow_delete: true
+                            allow_add: true
+                            by_reference: false
 
         ClothesPiece:
             class: App\Entity\ClothesPiece
