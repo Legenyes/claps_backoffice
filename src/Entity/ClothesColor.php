@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,6 +31,16 @@ class ClothesColor
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $code;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ClothesPieceStock", mappedBy="colors")
+     */
+    private $clothesPieceStocks;
+
+    public function __construct()
+    {
+        $this->clothesPieceStocks = new ArrayCollection();
+    }
 
     /**
      * @return string
@@ -80,6 +92,34 @@ class ClothesColor
     public function setCode(?string $code): ClothesColor
     {
         $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClothesPieceStock[]
+     */
+    public function getClothesPieceStocks(): Collection
+    {
+        return $this->clothesPieceStocks;
+    }
+
+    public function addClothesPieceStock(ClothesPieceStock $clothesPieceStock): self
+    {
+        if (!$this->clothesPieceStocks->contains($clothesPieceStock)) {
+            $this->clothesPieceStocks[] = $clothesPieceStock;
+            $clothesPieceStock->addColor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClothesPieceStock(ClothesPieceStock $clothesPieceStock): self
+    {
+        if ($this->clothesPieceStocks->contains($clothesPieceStock)) {
+            $this->clothesPieceStocks->removeElement($clothesPieceStock);
+            $clothesPieceStock->removeColor($this);
+        }
+
         return $this;
     }
 

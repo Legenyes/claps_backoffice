@@ -111,11 +111,17 @@ class ClothesPiece
      */
     private $clothesCostumePieces;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClothesPieceStock", mappedBy="clothesPiece", orphanRemoval=true)
+     */
+    private $clothesPieceStocks;
+
 
     public function __construct()
     {
         $this->sections = new ArrayCollection();
         $this->clothesCostumePieces = new ArrayCollection();
+        $this->clothesPieceStocks = new ArrayCollection();
     }
 
     public function __toString()
@@ -391,5 +397,35 @@ class ClothesPiece
         return $this;
     }
 
+    /**
+     * @return Collection|ClothesPieceStock[]
+     */
+    public function getClothesPieceStocks(): Collection
+    {
+        return $this->clothesPieceStocks;
+    }
+
+    public function addClothesPieceStock(ClothesPieceStock $clothesPieceStock): self
+    {
+        if (!$this->clothesPieceStocks->contains($clothesPieceStock)) {
+            $this->clothesPieceStocks[] = $clothesPieceStock;
+            $clothesPieceStock->setClothesPiece($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClothesPieceStock(ClothesPieceStock $clothesPieceStock): self
+    {
+        if ($this->clothesPieceStocks->contains($clothesPieceStock)) {
+            $this->clothesPieceStocks->removeElement($clothesPieceStock);
+            // set the owning side to null (unless already changed)
+            if ($clothesPieceStock->getClothesPiece() === $this) {
+                $clothesPieceStock->setClothesPiece(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

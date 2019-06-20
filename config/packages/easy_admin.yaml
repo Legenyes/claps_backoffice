@@ -20,6 +20,7 @@ easy_admin:
               children:
                 - { entity: 'ClothesCostume', label: 'Costumes' }
                 - { entity: 'ClothesPiece', label: 'Pieces' }
+                - { entity: 'ClothesPieceStock', label: 'Stock' }
                 - { entity: 'ClothesType', label: 'Types' }
                 - { entity: 'ClothesOpportunity', label: 'Opportunity' }
                 - { entity: 'ClothesSeason', label: 'Seasons' }
@@ -117,6 +118,18 @@ easy_admin:
                     - { property: clotheOpportunity }
                     - { type: group, label: Picture, columns: 4, icon: file-image }
                     - { property: 'imageFile', type: 'vich_image' }
+        ClothesPieceStock:
+            class: App\Entity\ClothesPieceStock
+            form:
+                fields:
+                    - { type: group, label: General, columns: 4, icon: edit }
+                    - { property: clothesPiece, type_options: { placeholder: 'Select a piece' } }
+                    - { property: status, type: 'App\Form\Type\ClothesPieceStockStatusType'}
+                    - { property: colors }
+                    - { type: group, label: Member, columns: 4, icon: user }
+                    - { property: dressKeeper }
+                    - { property: personal }
+                    - { property: dressMaker }
         ClothesColor:
             class: App\Entity\ClothesColor
             list:

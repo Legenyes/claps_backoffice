@@ -75,9 +75,21 @@ class Member
      */
     private $memberShips;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClothesPieceStock", mappedBy="dressMaker")
+     */
+    private $clothesPieceStitched;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClothesPieceStock", mappedBy="dressKeeper")
+     */
+    private $clothesPieces;
+
     public function __construct()
     {
         $this->memberShips = new ArrayCollection();
+        $this->clothesPieceStitched = new ArrayCollection();
+        $this->clothesPieces = new ArrayCollection();
     }
 
     public function __toString()
@@ -235,6 +247,68 @@ class Member
             // set the owning side to null (unless already changed)
             if ($memberShip->getMember() === $this) {
                 $memberShip->setMember(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClothesPieceStock[]
+     */
+    public function getClothesPieceStitched(): Collection
+    {
+        return $this->clothesPieceStitched;
+    }
+
+    public function addClothesPieceStitched(ClothesPieceStock $clothesPieceStitched): self
+    {
+        if (!$this->clothesPieceStitched->contains($clothesPieceStitched)) {
+            $this->clothesPieceStitched[] = $clothesPieceStitched;
+            $clothesPieceStitched->setDressMaker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClothesPieceStitched(ClothesPieceStock $clothesPieceStitched): self
+    {
+        if ($this->clothesPieceStitched->contains($clothesPieceStitched)) {
+            $this->clothesPieceStitched->removeElement($clothesPieceStitched);
+            // set the owning side to null (unless already changed)
+            if ($clothesPieceStitched->getDressMaker() === $this) {
+                $clothesPieceStitched->setDressMaker(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClothesPieceStock[]
+     */
+    public function getClothesPieces(): Collection
+    {
+        return $this->clothesPieces;
+    }
+
+    public function addClothesPiece(ClothesPieceStock $clothesPiece): self
+    {
+        if (!$this->clothesPieces->contains($clothesPiece)) {
+            $this->clothesPieces[] = $clothesPiece;
+            $clothesPiece->setDressKeeper($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClothesPiece(ClothesPieceStock $clothesPiece): self
+    {
+        if ($this->clothesPieces->contains($clothesPiece)) {
+            $this->clothesPieces->removeElement($clothesPiece);
+            // set the owning side to null (unless already changed)
+            if ($clothesPiece->getDressKeeper() === $this) {
+                $clothesPiece->setDressKeeper(null);
             }
         }
 
