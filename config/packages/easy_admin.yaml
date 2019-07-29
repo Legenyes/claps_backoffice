@@ -132,7 +132,7 @@ easy_admin:
                     - { property: status, type: 'App\Form\Type\ClothesPieceStockStatusType'}
                     - { property: colors }
                     - { type: group, label: Member, columns: 4, icon: user }
-                    - { property: dressKeeper }
+                    - { property: dressKeeper, type: 'App\Form\Type\MemberBraineType' }
                     - { property: personal }
                     - { property: dressMaker }
             list:

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Member;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -47,4 +48,17 @@ class MemberRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\User $user
+     * @return QueryBuilder
+     */
+    public function filterByParentUser(\Symfony\Component\Security\Core\User\User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.firstname LIKE :firstname')
+            ->setParameter('firstname', '%'.$user->getUsername() .'%')
+            ->setMaxResults(10)
+            ;
+    }
 }
