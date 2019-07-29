@@ -11,7 +11,7 @@ class ClothesPieceStockStatusType extends ChoiceType
     {
         parent::configureOptions($resolver);
 
-	$resolver->setDefault('choices',[
+	    $resolver->setDefault('choices',[
             'Au stock' => 'STOCK',
             'En utilisation' => 'USED',
             'Déclassé' => 'DECLASSED'] );
