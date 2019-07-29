@@ -63,6 +63,10 @@ class ClothesPieceStock
     {
         $result = $this->getClothesPiece()->getName();
 
+        if($this->getDressKeeper()){
+            $result .= " (".  $this->getDressKeeper()->__toString() .")";
+        }
+
         return $result;
     }
 

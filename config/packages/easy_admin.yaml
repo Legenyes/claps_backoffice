@@ -99,9 +99,11 @@ easy_admin:
                     - { property: gender, template: 'easy_admin/property_gender.html.twig' }
                     - { property: name }
                     - { property: country, template: 'easy_admin/property_country.html.twig' }
+                    - { property: clothesPieceStocks }
                 filters: ['code', 'name', 'gender', 'country', 'sections']
             form:
                 fields:
+                    - { type: 'tab' , label: 'Details', icon: 'edit' }
                     - { type: group, label: General, columns: 4, icon: edit }
                     - { property: name }
                     - { property: code }
@@ -119,6 +121,8 @@ easy_admin:
                     - { property: clotheOpportunity }
                     - { type: group, label: Picture, columns: 4, icon: file-image }
                     - { property: 'imageFile', type: 'vich_image' }
+                    - { type: 'tab' , label: 'Stock', icon: 'cubes' }
+                    - { property: clothesPieceStocks, type: embedded_list }
         ClothesPieceStock:
             class: App\Entity\ClothesPieceStock
             form:
@@ -138,9 +142,7 @@ easy_admin:
                     - { property: clothesPiece }
                     - { property: dressKeeper }
                     - { property: dressMaker }
-                    - { property: personal }
                     - { property: colors, template: 'easy_admin/property_color.html.twig' }
-                    - { property: status }
         ClothesColor:
             class: App\Entity\ClothesColor
             list:
@@ -223,10 +225,11 @@ easy_admin:
                     - { property: sections }
                     - { property: subscriptionAmount }
                     - { property: subscriptionPaidAt }
+                filters: ['member', 'clubYear', 'sections']
             form:
                 fields:
                     - { property: clubYear }
-                    - { property: member }
+                    - { property: member,  type_options: { placeholder: 'Select a member' } }
                     - { property: sections }
                     - { property: startDate }
                     - { property: endDate }

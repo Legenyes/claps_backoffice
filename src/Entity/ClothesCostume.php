@@ -88,7 +88,7 @@ class ClothesCostume
 
     public function __toString()
     {
-        return $this->name . '('. $this->code .')';
+        return $this->name . ' ('. $this->code .')';
     }
 
     public function getId(): ?int
