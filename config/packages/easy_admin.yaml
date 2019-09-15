@@ -7,7 +7,9 @@ easy_admin:
         date:     'd/m/Y'
         time:     'H:i'
         datetime: 'd/m/Y H:i:s'
-    
+    user:
+        display_name: true
+        display_avatar: true
     design:
         templates: 
             label_null: 'easy_admin/label_null.html.twig'
@@ -31,6 +33,19 @@ easy_admin:
         User:
             class: App\Entity\User
             controller: App\Controller\UserController
+            form:
+                fields:
+                    - { property: email }
+                    - { property: firstName }
+                    - { property: lastName }
+                    - { property: password }
+                    - property: 'roles'
+                      type: 'choice'
+                      type_options:
+                          mapped: true
+                          expanded: true
+                          multiple: true
+                          choices: { 'User': 'ROLE_USER', 'Admin': 'ROLE_ADMIN' }
         Club:
             class: App\Entity\Club
             form:
