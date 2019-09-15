@@ -13,7 +13,7 @@ easy_admin:
             label_null: 'easy_admin/label_null.html.twig'
         menu:
             - label: 'Administration'
-              children: ['Club', 'ClubYear', 'Section']
+              children: ['Club', 'ClubYear', 'Section', 'User']
             - label: 'Membres'
               children: ['Member', 'MemberShip']
             - label: 'Costumes'
@@ -28,6 +28,9 @@ easy_admin:
                 - { entity: 'ClothesTypeZone', label: 'Zones' }
                 - { entity: 'ClothesColor', label: 'Color' }
     entities:
+        User:
+            class: App\Entity\User
+            controller: App\Controller\UserController
         Club:
             class: App\Entity\Club
             form:
