@@ -31,7 +31,7 @@ class UserController extends EasyAdminController
 
     public function updateEntity($entity)
     {
-        $this->encodePassword($entity);
+        //$this->encodePassword($entity);
         parent::updateEntity($entity);
     }
 
