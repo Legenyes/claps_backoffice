@@ -38,7 +38,6 @@ easy_admin:
                     - { property: email }
                     - { property: firstName }
                     - { property: lastName }
-                    - { property: password }
                     - property: 'roles'
                       type: 'choice'
                       type_options:
