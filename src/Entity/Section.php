@@ -35,9 +35,15 @@ class Section
      */
     private $code;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Video", mappedBy="sections")
+     */
+    private $videos;
+
     public function __construct()
     {
         $this->memberShips = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
     public function __toString()
@@ -98,6 +104,34 @@ class Section
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->addSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->contains($video)) {
+            $this->videos->removeElement($video);
+            $video->removeSection($this);
+        }
 
         return $this;
     }

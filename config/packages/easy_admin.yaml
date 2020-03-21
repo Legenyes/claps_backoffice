@@ -15,7 +15,7 @@ easy_admin:
             label_null: 'easy_admin/label_null.html.twig'
         menu:
             - label: 'Administration'
-              children: ['Club', 'ClubYear', 'Section', 'User']
+              children: ['Club', 'ClubYear', 'Section', 'User', 'Event']
             - label: 'Membres'
               children: ['Member', 'MemberShip']
             - label: 'Costumes'
@@ -29,6 +29,10 @@ easy_admin:
                 - { entity: 'ClothesTexture', label: 'Textures' }
                 - { entity: 'ClothesTypeZone', label: 'Zones' }
                 - { entity: 'ClothesColor', label: 'Color' }
+            - label: 'Medias'
+              children:
+                  - { entity: 'Video', label: 'Video' }
+                  - { entity: 'Playlist', label: 'Playlist' }
     entities:
         User:
             class: App\Entity\User
@@ -69,6 +73,29 @@ easy_admin:
                     - { property: code }
                     - { type: 'tab' , label: 'Affiliate list', icon: 'user' }
                     - { property: memberShips, label: '', type: embedded_list }
+
+        Event:
+            class: App\Entity\Event
+        Playlist:
+            class: App\Entity\Playlist
+        Video:
+            class: App\Entity\Video
+            list:
+                fields:
+                    - { property: id }
+                    - { property: name }
+                    - { property: sections }
+                    - { property: country, template: 'easy_admin/property_country.html.twig' }
+                    - { property: url }
+                filters: ['name', 'country', 'sections']
+            form:
+                fields:
+                    - { property: name }
+                    - { property: url }
+                    - { property: sections }
+                    - { property: recordDate }
+                    - { property: country, type: country }
+                    - { property: sections }
         ClothesCostume:
             class: App\Entity\ClothesCostume
             list:
