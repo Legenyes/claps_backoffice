@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+	{% include '_head.html.twig' %}
+{% endblock %}
+
+{% block header %}
+	{% include '_header.html.twig' %}
+{% endblock %}
+
+{% block banner %}
+	<div id="banner-area">
+		<img src="/images/banner/banner1.jpg" alt="" />
+		<div class="parallax-overlay"></div>
+		<!-- Subpage title start -->
+		<div class="banner-title-content">
+			<div class="text-center">
+				<h2>{% block banner_title %}Clap'Sabots{% endblock %}</h2>
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb justify-content-center">
+						<li class="breadcrumb-item"><a href="#">Home</a></li>
+						<li class="breadcrumb-item text-white" aria-current="page">Portfolio Static</li>
+					</ol>
+				</nav>
+			</div>
+		</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+{% endblock %}
+
+
+{% block container %}
+	<section id="main-container" class="portfolio-static">
+		<div class="container">
+			{% block body %}{% endblock %}
+		</div><!-- Container end -->
+	</section><!-- container end -->
+	<div class="gap-40"></div>
+{% endblock %}
+
+{% block footer %}
+	<!-- Footer start -->
+	<footer id="footer" class="footer">
+		{% include '_footer.html.twig' %}
+	</footer><!-- Footer end -->
+{% endblock %}
+
+{% block copyright %}
+	<!-- Copyright start -->
+	<section id="copyright" class="copyright angle">
+		{% include '_copyright.html.twig' %}
+	</section>
+{% endblock %}

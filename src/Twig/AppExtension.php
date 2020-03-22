@@ -2,13 +2,13 @@
 
 namespace App\Twig;
 
-use Doctrine\ORM\PersistentCollection;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Countries;
+use Symfony\Component\Intl\Languages;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class AppExtension extends \Twig_Extension
+class AppExtension extends AbstractExtension
 {
     /**
      * @var TranslatorInterface
@@ -28,16 +28,16 @@ class AppExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('phoneNumber', array($this, 'phoneNumber')),
-            new \Twig_SimpleFilter('ceil', array($this, 'ceil')),
-            new \Twig_SimpleFilter('mailTo', array($this, 'mailTo'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFilter('phoneTo', array($this, 'phoneTo'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFilter('repeat', array($this, 'repeat')),
-            new \Twig_SimpleFilter('hrFilesize', array($this, 'hrFilesize')),
-            new \Twig_SimpleFilter('getClassName', array($this, 'getClassName')),
-            new \Twig_SimpleFilter('localizedDate', array($this, 'localizedDate'), array('needs_environment' => true)),
-            new \Twig_SimpleFilter('country', array($this, 'country')),
-            new \Twig_SimpleFilter('languageName', array($this, 'languageName')),
+            new TwigFilter('phoneNumber', [$this, 'phoneNumber']),
+            new TwigFilter('ceil', [$this, 'ceil']),
+            new TwigFilter('mailTo', [$this, 'mailTo'], ['is_safe' => ['html']]),
+            new TwigFilter('phoneTo', [$this, 'phoneTo'], ['is_safe' => ['html']]),
+            new TwigFilter('repeat', [$this, 'repeat']),
+            new TwigFilter('hrFilesize', [$this, 'hrFilesize']),
+            new TwigFilter('getClassName', [$this, 'getClassName']),
+            new TwigFilter('localizedDate', [$this, 'localizedDate'], ['needs_environment' => true]),
+            new TwigFilter('country', [$this, 'country']),
+            new TwigFilter('languageName', [$this, 'languageName']),
         );
     }
 
@@ -63,9 +63,9 @@ class AppExtension extends \Twig_Extension
         // Ultime vérif
         if (str_replace(' ','',$newString) == $string) {
             return $newString;
-        } else {
-            return $string;
         }
+
+        return $string;
     }
 
     public function ceil($string)
@@ -111,9 +111,9 @@ class AppExtension extends \Twig_Extension
     {
         if (is_object($object)) {
             return get_class($object);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -155,8 +155,10 @@ class AppExtension extends \Twig_Extension
      */
     public function country($country_code)
     {
-        $country = Intl::getRegionBundle()->getCountryName($country_code);
-        return $country;
+        if (!$country_code)
+            return '';
+
+        return Countries::getName($country_code);
     }
 
     /**
@@ -167,8 +169,7 @@ class AppExtension extends \Twig_Extension
      */
     public function languageName($language_code, $output_language = 'en')
     {
-        $language_name = Intl::getLanguageBundle()->getLanguageName($language_code, null);
-        return $language_name;
+        return Languages::getName($language_code, $output_language);
     }
 
 }

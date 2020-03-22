@@ -1,0 +1,48 @@
+{% extends 'layout.html.twig' %}
+
+{% block banner_title %}{{ video.name|e }}{% endblock %}
+{% block title %}{{ video.name|e }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <!-- Portfolio item slider start -->
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ video.youtubeId }}?rel=0" allowfullscreen></iframe>
+            </div>
+        </div>
+        <!-- Portfolio item slider end -->
+
+        <!-- sidebar start -->
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="sidebar">
+                <div class="portfolio-desc">
+                    <h3 class="widget-title">Description</h3>
+                    <p>Oat cake oat cake dessert brownie. Gummies tiramisu tart jujubes jelly beans macaroon danish pie muffin. Soufflé pudding brownie pudding fruitcake marshmallow.</p>
+
+                    {% if video.country is not null %}
+                        <h3 class="widget-title">Pays</h3>
+                        <p>{{ video.country|country }}</p>
+                    {% endif %}
+
+                    {% if video.country is not null %}
+                        <h3 class="widget-title">Event</h3>
+                        <p>{{ video.country|country }}</p>
+                    {% endif %}
+
+                    {% if video.sections|length > 0 %}
+                    <h3 class="widget-title">Section</h3>
+                    <p>
+                        {% for section in video.sections %}
+                            <a href="#">{{ section }}</a>
+                            {% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- sidebar end -->
+    </div>
+
+{% endblock %}

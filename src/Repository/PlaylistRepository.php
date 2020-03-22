@@ -19,6 +19,20 @@ class PlaylistRepository extends ServiceEntityRepository
         parent::__construct($registry, Playlist::class);
     }
 
+    /**
+     * @param int $limit
+     *
+     * @return Playlist[]
+     */
+    public function findLastPlaylists($limit = 4)
+    {
+        return $this->createQueryBuilder('p')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Playlist[] Returns an array of Playlist objects
     //  */

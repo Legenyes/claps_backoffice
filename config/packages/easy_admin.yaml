@@ -78,6 +78,18 @@ easy_admin:
             class: App\Entity\Event
         Playlist:
             class: App\Entity\Playlist
+            form:
+                fields:
+                    - { property: name }
+                    - { type: group, label: Vidéos, columns: 12, icon: film }
+                    -
+                        property: playlistVideos
+                        type: 'collection'
+                        type_options:
+                            entry_type: 'App\Form\Type\VideoForPlaylistType'
+                            allow_delete: true
+                            allow_add: true
+                            by_reference: false
         Video:
             class: App\Entity\Video
             list:

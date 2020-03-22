@@ -21,16 +21,16 @@ class PlaylistVideo
     /**
      * @ORM\Column(type="integer")
      */
-    private $position;
+    private $position = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Playlist", inversedBy="playlistVideos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Playlist", inversedBy="playlistVideos", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $playlist;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Video", inversedBy="playlistVideos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Video", inversedBy="playlistVideos", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $video;
@@ -38,6 +38,21 @@ class PlaylistVideo
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        $string = '';
+
+        if ($this->getPlaylist()) {
+            $string .= $this->getPlaylist()->getName() .' | ';
+        }
+
+        if ($this->getVideo()) {
+            $string .= $this->getVideo()->getName();
+        }
+
+        return $string;
     }
 
     public function getPosition(): ?int

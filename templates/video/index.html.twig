@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block banner_title %}Video{% endblock %}
+{% block title %}Video{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-9 heading">
+            <span class="title-icon classic pull-left"><i class="fa fa-film"></i></span>
+            <h2 class="title classic">Vidéos</h2>
+        </div>
+        <div class="col-md-3">
+            <div id="search">
+                <form action="{{ path('app_video_search') }}">
+                    <input class="form-control form-control-lg" placeholder="search" type="search">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% include 'video/_grid.html.twig' %}
+
+{% endblock %}

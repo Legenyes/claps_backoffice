@@ -26,13 +26,18 @@ class Playlist
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PlaylistVideo", mappedBy="playlist", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\PlaylistVideo", mappedBy="playlist", orphanRemoval=true, cascade={"persist"})
      */
     private $playlistVideos;
 
     public function __construct()
     {
         $this->playlistVideos = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName() ?? '';
     }
 
     public function getId(): ?int

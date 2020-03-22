@@ -1,0 +1,59 @@
+
+{% for video in videos %}
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="grid">
+                <a href="{{ path('app_video_show', {'id': video.id }) }}">
+                    <figure class="m-0 effect-oscar">
+                        <img src="https://img.youtube.com/vi/{{ video.youtubeId }}/0.jpg" alt="{{ video.name|e }}">
+                    </figure>
+                </a>
+            </div>
+            <!--/ grid end -->
+        </div>
+        <div class="col-sm-9">
+            <div class="portfolio-static-desc">
+                <h3 style="font-size: 24px"><a href="{{ path('app_video_show', {'id': video.id }) }}">{{ video.name|e }}</a></h3>
+                <div class="video-meta meta-line1">
+                    {% if video.country is not null %}
+                        <span class="video-meta meta-event">
+                            <i class="fa fa-calendar"></i> <a href="#">{{ video.country|country }}</a>
+                            <span>•</span>
+                            <span>Il y a 6 ans</span>
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div class="video-meta meta-line2">
+                    {% if video.country is not null %}
+                        <span class="video-meta meta-country">
+                            <i class="fa fa-flag"></i> <a href="#">{{ video.country|country }}</a>
+                        </span>
+                        &nbsp;
+                    {% endif %}
+
+                    {% if video.sections|length > 0 %}
+                        <span class="video-meta meta-sections">
+                            <i class="fa fa-users"></i>
+                            {% for section in video.sections %}
+                                <a href="#">{{ section }}</a>
+                                {% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div class="video-meta meta-line2">
+                    {% if video.country is not null %}
+                        <div class="video-meta meta-tags"><i class="fa fa-tags"></i> <a href="#">Spectacles</a></div>
+                    {% endif %}
+                </div>
+
+                <div class="video-meta meta-desc">
+                    <p>Oat cake oat cake dessert brownie. Gummies tiramisu tart jujubes jelly beans macaroon danish pie muffin. Soufflé pudding brownie pudding fruitcake marshmallow.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ item 1 end -->
+{% endfor %}

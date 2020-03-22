@@ -56,6 +56,11 @@ class Video
         $this->playlistVideos = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+         return $this->getName() ?? '';
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -164,5 +169,35 @@ class Video
         }
 
         return $this;
+    }
+
+    public function getYoutubeId()
+    {
+        return $this->getYoutubeViedeoId($this->getUrl());
+    }
+
+    private function getYoutubeViedeoId($youtube_video_url) {
+        /**
+         * Pattern matches
+         * http://youtu.be/ID
+         * http://www.youtube.com/embed/ID
+         * http://www.youtube.com/watch?v=ID
+         * http://www.youtube.com/?v=ID
+         * http://www.youtube.com/v/ID
+         * http://www.youtube.com/e/ID
+         * http://www.youtube.com/user/username#p/u/11/ID
+         * http://www.youtube.com/leogopal#p/c/playlistID/0/ID
+         * http://www.youtube.com/watch?feature=player_embedded&v=ID
+         * http://www.youtube.com/?feature=player_embedded&v=ID
+         */
+        $pattern = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i';
+
+        // Checks if it matches a pattern and returns the value
+        if (preg_match($pattern, $youtube_video_url, $match)) {
+            return $match[1];
+        }
+
+        // if no match return false.
+        return false;
     }
 }
