@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Video;
+use App\Utils\SqlParameterBag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Video|null find($id, $lockMode = null, $lockVersion = null)
@@ -33,32 +35,40 @@ class VideoRepository extends ServiceEntityRepository
             ;
     }
 
-    // /**
-    //  * @return Video[] Returns an array of Video objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param SqlParameterBag $params
+     * @return QueryBuilder
+     */
+    private function filterAllQueryBuilder(SqlParameterBag $params)
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        /** @var QueryBuilder $query */
+        $query = $this->createQueryBuilder('video')
+            ->setFirstResult($params->getOffset())
+            ->setMaxResults($params->getLimit());
 
-    /*
-    public function findOneBySomeField($value): ?Video
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if ($params->has('search')) {
+            $search = iconv('UTF-8','UTF-8//IGNORE', $params->get('search'));
+
+            $query
+                ->andWhere('video.name LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
+
+        foreach($params->getOrderBy() as $key=>$value)
+            $query->addOrderBy("video.".$key, $value);
+
+        return $query;
     }
-    */
+
+    /**
+     * @param SqlParameterBag $params
+     * @return mixed
+     */
+    public function filterAll(SqlParameterBag $params)
+    {
+        return $this
+            ->filterAllQueryBuilder($params)
+            ->getQuery()
+            ->getResult();
+    }
 }

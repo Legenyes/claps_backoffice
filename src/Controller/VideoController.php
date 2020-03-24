@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Video;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/video")
  * @package App\Controller
  */
-class VideoController extends AbstractController
+class VideoController extends BaseController
 {
     /**
      * @Route("/", name="app_video_index")
@@ -39,7 +38,7 @@ class VideoController extends AbstractController
      */
     public function searchAction(Request $request, EntityManagerInterface $em): Response
     {
-        $videos = $em->getRepository(Video::class)->findAll();
+        $videos = $em->getRepository(Video::class)->filterAll($this->getSqlParameterBag());
 
         return $this->render('video/search.html.twig', [
             'videos' => $videos
