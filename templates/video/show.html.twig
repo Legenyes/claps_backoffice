@@ -25,9 +25,9 @@
                         <p>{{ video.country|country }}</p>
                     {% endif %}
 
-                    {% if video.country is not null %}
+                    {% if video.event is not null %}
                         <h3 class="widget-title">Event</h3>
-                        <p>{{ video.country|country }}</p>
+                        <p>{{ video.event }}</p>
                     {% endif %}
 
                     {% if video.sections|length > 0 %}

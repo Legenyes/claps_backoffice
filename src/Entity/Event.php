@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,21 @@ class Event
      * @ORM\Column(type="boolean")
      */
     private $isHighlight;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="event")
+     */
+    private $videos;
+
+    public function __construct()
+    {
+        $this->videos = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName() ?? '';
+    }
 
     public function getId(): ?int
     {
@@ -70,6 +87,37 @@ class Event
     public function setIsHighlight(bool $isHighlight): self
     {
         $this->isHighlight = $isHighlight;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->contains($video)) {
+            $this->videos->removeElement($video);
+            // set the owning side to null (unless already changed)
+            if ($video->getEvent() === $this) {
+                $video->setEvent(null);
+            }
+        }
 
         return $this;
     }

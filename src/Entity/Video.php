@@ -50,6 +50,11 @@ class Video
      */
     private $playlistVideos;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="videos")
+     */
+    private $event;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
@@ -168,6 +173,25 @@ class Video
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param Event $event
+     *
+     * @return Video
+     */
+    public function setEvent(Event $event): self
+    {
+        $this->event = $event;
         return $this;
     }
 

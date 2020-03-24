@@ -96,6 +96,7 @@ easy_admin:
                 fields:
                     - { property: id }
                     - { property: name }
+                    - { property: event }
                     - { property: sections }
                     - { property: country, template: 'easy_admin/property_country.html.twig' }
                     - { property: url }
@@ -104,6 +105,7 @@ easy_admin:
                 fields:
                     - { property: name }
                     - { property: url }
+                    - { property: event }
                     - { property: sections }
                     - { property: recordDate }
                     - { property: country, type: country }
