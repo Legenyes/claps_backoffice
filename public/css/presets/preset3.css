@@ -24,6 +24,9 @@ a.read-more:hover{
 .btn.btn-primary.solid{
 	background: #e96044;
 }
+.btn.btn-primary.solid:hover{
+	color: #e96044;
+}
 
 ul.circle li:before{
 	color: #e96044;

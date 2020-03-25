@@ -43,6 +43,7 @@ class VideoRepository extends ServiceEntityRepository
     {
         /** @var QueryBuilder $query */
         $query = $this->createQueryBuilder('video')
+            ->leftJoin('video.sections', 'section')
             ->setFirstResult($params->getOffset())
             ->setMaxResults($params->getLimit());
 
@@ -52,6 +53,24 @@ class VideoRepository extends ServiceEntityRepository
             $query
                 ->andWhere('video.name LIKE :search')
                 ->setParameter('search', '%'.$search.'%');
+        }
+
+        if ($params->has('country') && strlen($params->get('country'))>0) {
+            $query
+                ->andWhere('video.country = :country')
+                ->setParameter('country', $params->get('country'));
+        }
+
+        if ($params->has('event') && strlen($params->get('event'))>0) {
+            $query
+                ->andWhere('video.event = :event')
+                ->setParameter('event', $params->get('event'));
+        }
+
+        if ($params->has('section') && strlen($params->get('section'))>0) {
+            $query
+                ->andWhere('section.id = :section')
+                ->setParameter('section', $params->get('section'));
         }
 
         foreach($params->getOrderBy() as $key=>$value)

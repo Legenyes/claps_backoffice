@@ -1,0 +1,58 @@
+<div id="fitler_video" class="widget-title">
+    <p>
+        <a class="btn btn-primary" data-toggle="collapse" href="#collapseVideoFilter" role="button" aria-expanded="false" aria-controls="collapseVideoFilter">
+            <i class="fa fa-sliders"></i>&nbsp; &nbsp; FILTRER
+        </a>
+    </p>
+    <div class="collapse" id="collapseVideoFilter">
+        <form class="card card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4 class="title-border">Événement</h4>
+
+                    <select class="form-control" name="event">
+                        <option></option>
+                        {% for event in events %}
+                            <option value="{{ event.id }}">{{ event.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="title-border">Pays</h4>
+
+                    <select class="form-control" name="country">
+                        <option></option>
+                        <option value="HU">Hongrie</option>
+                        <option value="BE">Belgique</option>
+                        <option>Default select</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="title-border">Section</h4>
+
+                    <select class="form-control" name="section">
+                        <option></option>
+                        {% for section in sections %}
+                            <option value="{{ section.id }}">{{ section.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="title-border" name="tags">Tags</h4>
+
+                    <select class="form-control">
+                        <option></option>
+                        <option>Default select</option>
+                        <option>Default select</option>
+                        <option>Default select</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-primary solid" style="margin-top: 10px;">Valider</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
