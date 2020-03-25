@@ -1,0 +1,5 @@
+<div id="search">
+    <form action="{{ path('app_video_search') }}">
+        <input class="form-control form-control-lg" name="search" placeholder="search" type="search" value="{{ app.request.get('search') }}">
+    </form>
+</div>

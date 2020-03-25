@@ -10,11 +10,7 @@
             <h2 class="title classic">Vidéos</h2>
         </div>
         <div class="col-md-3">
-            <div id="search">
-                <form action="{{ path('app_video_search') }}">
-                    <input class="form-control form-control-lg" name="search" placeholder="search" type="search" value="{{ app.request.get('search') }}">
-                </form>
-            </div>
+            {{ include('video/_form_simple.html.twig') }}
         </div>
     </div>
 
