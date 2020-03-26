@@ -9,42 +9,25 @@
             <div class="row">
                 <div class="col-md-3">
                     <h4 class="title-border">Événement</h4>
-
-                    <select class="form-control" name="event">
-                        <option></option>
-                        {% for event in events %}
-                            <option value="{{ event.id }}">{{ event.name }}</option>
-                        {% endfor %}
-                    </select>
+                    {{ form_widget(searchVideoform.event) }}
                 </div>
+
                 <div class="col-md-3">
                     <h4 class="title-border">Pays</h4>
-
-                    <select class="form-control" name="country">
-                        <option></option>
-                        <option value="HU">Hongrie</option>
-                        <option value="BE">Belgique</option>
-                        <option>Default select</option>
-                    </select>
+                    {{ form_widget(searchVideoform.country) }}
                 </div>
+
                 <div class="col-md-3">
                     <h4 class="title-border">Section</h4>
-
-                    <select class="form-control" name="section">
-                        <option></option>
-                        {% for section in sections %}
-                            <option value="{{ section.id }}">{{ section.name }}</option>
-                        {% endfor %}
-                    </select>
+                    {{ form_widget(searchVideoform.sections) }}
                 </div>
+
                 <div class="col-md-3">
                     <h4 class="title-border" name="tags">Tags</h4>
 
                     <select class="form-control">
                         <option></option>
-                        <option>Default select</option>
-                        <option>Default select</option>
-                        <option>Default select</option>
+                        <option>Spectacle</option>
                     </select>
                 </div>
             </div>

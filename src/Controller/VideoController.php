@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\Section;
 use App\Entity\Video;
+use App\Form\Type\SearchVideoType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,15 +41,12 @@ class VideoController extends BaseController
      */
     public function searchAction(Request $request, EntityManagerInterface $em): Response
     {
-        $events =  $em->getRepository(Event::class)->findAll();
-        $sections =  $em->getRepository(Section::class)->findAll();
-
+        $form = $this->createForm(SearchVideoType::class);
         $videos = $em->getRepository(Video::class)->filterAll($this->getSqlParameterBag());
 
         return $this->render('video/search.html.twig', [
             'videos' => $videos,
-            'events' => $events,
-            'sections' => $sections,
+            'searchVideoform' => $form->createView(),
         ]);
     }
 
