@@ -11,13 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class MediaController
- * @Route("/media")
  * @package App\Controller
  */
 class MediaController extends AbstractController
 {
     /**
-     * @Route("/", name="app_media_index")
+     * @Route("/", name="app_index")
+     * @Route("/media", name="app_media_index")
      * @param EntityManagerInterface $em
      *
      * @return Response
@@ -27,9 +27,20 @@ class MediaController extends AbstractController
         $videos = $em->getRepository(Video::class)->findLastVideos();
         $playlists = $em->getRepository(Playlist::class)->findLastPlaylists();
 
+        $breadcrumb['items'][] = ['title' => 'Home', 'url' => '/'];
+        $breadcrumb['items'][] = ['title' => 'Media'];
+
         return $this->render('media/index.html.twig', [
             'videos' => $videos,
-            'playlists' => $playlists
+            'playlists' => $playlists,
+            'breadcrumb' => $this->getBreadcurmb()
         ]);
+    }
+
+    private function getBreadcurmb() {
+        $breadcrumb['items'][] = ['title' => 'Home', 'url' => '/'];
+        $breadcrumb['items'][] = ['title' => 'Media'];
+
+        return $breadcrumb;
     }
 }

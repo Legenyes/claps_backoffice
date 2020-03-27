@@ -29,7 +29,8 @@ class VideoController extends BaseController
         $videos = $em->getRepository(Video::class)->findAll();
 
         return $this->render('video/index.html.twig', [
-            'videos' => $videos
+            'videos' => $videos,
+            'breadcrumb' => $this->getBreadcurmb()
         ]);
     }
 
@@ -47,6 +48,7 @@ class VideoController extends BaseController
         return $this->render('video/search.html.twig', [
             'videos' => $videos,
             'searchVideoform' => $form->createView(),
+            'breadcrumb' => $this->getBreadcurmb()
         ]);
     }
 
@@ -59,8 +61,17 @@ class VideoController extends BaseController
     public function showAction(Video $video): Response
     {
         return $this->render('video/show.html.twig', [
-            'video' => $video
+            'video' => $video,
+            'breadcrumb' => $this->getBreadcurmb()
         ]);
+    }
+
+    private function getBreadcurmb() {
+        $breadcrumb['items'][] = ['title'=> 'Home', 'url' => '/'];
+        $breadcrumb['items'][] = ['title'=> 'Media', 'url' => $this->generateUrl('app_media_index')];
+        $breadcrumb['items'][] = ['title'=> 'Video'];
+
+        return $breadcrumb;
     }
 
 }
