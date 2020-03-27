@@ -36,7 +36,7 @@ class Event
     private $isHighlight;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="event", cascade={"persist"})
      */
     private $videos;
 

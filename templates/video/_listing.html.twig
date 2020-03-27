@@ -17,7 +17,7 @@
                 <div class="video-meta meta-line1">
                     {% if video.event is not null %}
                         <span class="video-meta meta-event">
-                            <i class="fa fa-calendar"></i> <a href="#">{{ video.event }}</a>
+                            <i class="fa fa-calendar"></i> <a href="{{ path('app_video_search', { 'event': video.event.id }) }}">{{ video.event }}</a>
                             {% if video.event.date is not null %}
                                 <span>•</span>
                                 <span>{{ video.event.date|date('d/m/y') }}</span>
@@ -29,7 +29,7 @@
                 <div class="video-meta meta-line2">
                     {% if video.country is not null %}
                         <span class="video-meta meta-country">
-                            <i class="fa fa-flag"></i> <a href="#">{{ video.country|country }}</a>
+                            <i class="fa fa-flag"></i> <a href="{{ path('app_video_search', { 'country': video.country }) }}">{{ video.country|country }}</a>
                         </span>
                         &nbsp;
                     {% endif %}
@@ -38,7 +38,7 @@
                         <span class="video-meta meta-sections">
                             <i class="fa fa-users"></i>
                             {% for section in video.sections %}
-                                <a href="#">{{ section }}</a>
+                                <a href="{{ path('app_video_search', { 'section': section.id }) }}">{{ section }}</a>
                                 {% if not loop.last %},{% endif %}
                             {% endfor %}
                         </span>

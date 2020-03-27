@@ -51,7 +51,7 @@ class Video
     private $playlistVideos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="videos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="videos", cascade={"persist"})
      */
     private $event;
 
