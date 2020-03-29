@@ -48,11 +48,14 @@ class VideoRepository extends ServiceEntityRepository
             ->setMaxResults($params->getLimit());
 
         if ($params->has('search')) {
-            $search = iconv('UTF-8','UTF-8//IGNORE', $params->get('search'));
+            $searchs = explode(" ", $params->get('search'));
+            foreach ($searchs as $key => $search) {
+                $search = iconv('UTF-8','UTF-8//IGNORE', $search);
+                $query
+                    ->andWhere('video.name LIKE :search'.$key)
+                    ->setParameter('search'.$key, '%'.$search.'%');
+            }
 
-            $query
-                ->andWhere('video.name LIKE :search')
-                ->setParameter('search', '%'.$search.'%');
         }
 
         if ($params->has('country') && strlen($params->get('country'))>0) {
@@ -67,10 +70,10 @@ class VideoRepository extends ServiceEntityRepository
                 ->setParameter('event', $params->get('event'));
         }
 
-        if ($params->has('section') && strlen($params->get('section'))>0) {
+        if ($params->has('sections') && strlen($params->get('sections'))>0) {
             $query
-                ->andWhere('section.id = :section')
-                ->setParameter('section', $params->get('section'));
+                ->andWhere('section.id = :sections')
+                ->setParameter('sections', $params->get('sections'));
         }
 
         foreach($params->getOrderBy() as $key=>$value)

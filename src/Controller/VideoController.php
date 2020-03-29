@@ -26,10 +26,12 @@ class VideoController extends BaseController
      */
     public function indexAction(EntityManagerInterface $em): Response
     {
+        $form = $this->createForm(SearchVideoType::class);
         $videos = $em->getRepository(Video::class)->findAll();
 
         return $this->render('video/index.html.twig', [
             'videos' => $videos,
+            'searchVideoform' => $form->createView(),
             'breadcrumb' => $this->getBreadcurmb()
         ]);
     }

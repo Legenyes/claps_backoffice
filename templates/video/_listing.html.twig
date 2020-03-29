@@ -38,7 +38,7 @@
                         <span class="video-meta meta-sections">
                             <i class="fa fa-users"></i>
                             {% for section in video.sections %}
-                                <a href="{{ path('app_video_search', { 'section': section.id }) }}">{{ section }}</a>
+                                <a href="{{ path('app_video_search', { 'sections': section.id }) }}">{{ section }}</a>
                                 {% if not loop.last %},{% endif %}
                             {% endfor %}
                         </span>

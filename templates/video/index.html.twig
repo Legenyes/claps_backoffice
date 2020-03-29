@@ -5,12 +5,17 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-9 heading">
+        <div class="col-md-3 heading">
             <span class="title-icon classic pull-left"><i class="fa fa-film"></i></span>
             <h2 class="title classic">Vidéos</h2>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-9">
             {{ include('video/_form_simple.html.twig') }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ include('video/_form_filter.html.twig') }}
         </div>
     </div>
 

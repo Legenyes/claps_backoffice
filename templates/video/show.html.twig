@@ -34,7 +34,7 @@
                     <h3 class="widget-title">Section</h3>
                     <p>
                         {% for section in video.sections %}
-                            <a href="#">{{ section }}</a>
+                            <a href="{{ path('app_video_search', { 'sections': section.id }) }}">{{ section }}</a>
                             {% if not loop.last %},{% endif %}
                         {% endfor %}
                     </p>
