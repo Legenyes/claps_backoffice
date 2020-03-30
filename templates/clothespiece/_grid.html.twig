@@ -1,0 +1,19 @@
+<div class="row">
+    {% for piece in pieces %}
+        <div class="col-sm-3 portfolio-static-item">
+            <div class="grid">
+                <a href="{">
+                    <figure class="m-0 effect-oscar">
+                        <img src="" alt="{{ costume.name|e }}">
+                    </figure>
+                </a>
+                <div class="portfolio-static-desc">
+                    <h3><a href="">{{ costume.name|e }}</a></h3>
+                    <span><a href="#">{{ costume.country|country }}</a></span>
+                </div>
+            </div>
+            <!--/ grid end -->
+        </div>
+        <!--/ item 1 end -->
+    {% endfor %}
+</div>
