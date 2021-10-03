@@ -1,6 +1,6 @@
 <div id="fitler_video" class="widget-title">
     <div class="collapse" id="collapseVideoFilter">
-        <form class="card card-body">
+        <form class="card card-body" action="{{ path('app_video_search') }}">
             <div class="row">
                 <div class="col-md-3">
                     <h4 class="title-border">Événement</h4>
@@ -18,9 +18,9 @@
                 </div>
 
                 <div class="col-md-3">
-                    <h4 class="title-border" name="tags">Tags</h4>
+                    <h4 class="title-border">Tags</h4>
 
-                    <select class="form-control">
+                    <select name="tags" class="form-control">
                         <option></option>
                         <option>Spectacle</option>
                     </select>

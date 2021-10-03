@@ -36,7 +36,7 @@ easy_admin:
     entities:
         User:
             class: App\Entity\User
-            controller: App\Controller\UserController
+            controller: App\Controller\Admin\UserController
             form:
                 fields:
                     - { property: email }
