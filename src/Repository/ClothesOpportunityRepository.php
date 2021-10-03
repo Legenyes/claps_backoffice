@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ClothesOpportunity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ClothesOpportunity|null find($id, $lockMode = null, $lockVersion = null)
