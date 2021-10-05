@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\EasyAdmin;
 
-use App\Entity\ClothesTypeZone;
+use App\Entity\Section;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ClothesTypeZoneCrudController extends AbstractCrudController
+class SectionCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return ClothesTypeZone::class;
+        return Section::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('ClothesTypeZone')
-            ->setEntityLabelInPlural('ClothesTypeZone')
-            ->setSearchFields(['id', 'name'])
+            ->setEntityLabelInSingular('Section')
+            ->setEntityLabelInPlural('Section')
+            ->setSearchFields(['id', 'name', 'code'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
     }
@@ -29,17 +29,19 @@ class ClothesTypeZoneCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name');
+        $code = TextField::new('code');
+        $memberShips = AssociationField::new('memberShips');
         $id = IntegerField::new('id', 'ID');
-        $clothesTypes = AssociationField::new('clothesTypes');
+        $videos = AssociationField::new('videos');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $clothesTypes];
+            return [$id, $name, $code, $memberShips, $videos];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $clothesTypes];
+            return [$id, $name, $code, $memberShips, $videos];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name];
+            return [$name, $code, $memberShips];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name];
+            return [$name, $code, $memberShips];
         }
     }
 }

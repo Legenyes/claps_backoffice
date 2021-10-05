@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\EasyAdmin;
 
 use App\Entity\ClothesPiece;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;

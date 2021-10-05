@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\EasyAdmin;
 
 use App\Entity\Video;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -44,7 +44,7 @@ class VideoCrudController extends AbstractCrudController
         $event = AssociationField::new('event');
         $sections = AssociationField::new('sections');
         $recordDate = DateTimeField::new('recordDate');
-        $country = TextField::new('country')->setTemplatePath('easy_admin/property_country.html.twig');
+        $country = TextField::new('country');//->setTemplatePath('easy_admin/property_country.html.twig');
         $id = IntegerField::new('id', 'ID');
         $playlistVideos = AssociationField::new('playlistVideos');
 

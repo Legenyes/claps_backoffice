@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\EasyAdmin;
 
-use App\Entity\ClothesColor;
+use App\Entity\ClothesOpportunity;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ClothesColorCrudController extends AbstractCrudController
+class ClothesOpportunityCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return ClothesColor::class;
+        return ClothesOpportunity::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('ClothesColor')
-            ->setEntityLabelInPlural('ClothesColor')
-            ->setSearchFields(['id', 'name', 'code'])
+            ->setEntityLabelInSingular('ClothesOpportunity')
+            ->setEntityLabelInPlural('ClothesOpportunity')
+            ->setSearchFields(['id', 'name'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
     }
@@ -29,18 +29,17 @@ class ClothesColorCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name');
-        $code = TextField::new('code')->setTemplatePath('easy_admin/property_color.html.twig');
+        $clothesPieces = AssociationField::new('clothesPieces');
         $id = IntegerField::new('id', 'ID');
-        $clothesPieceStocks = AssociationField::new('clothesPieceStocks');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $code];
+            return [$id, $name, $clothesPieces];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $code, $clothesPieceStocks];
+            return [$id, $name, $clothesPieces];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $code];
+            return [$name, $clothesPieces];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $code];
+            return [$name, $clothesPieces];
         }
     }
 }

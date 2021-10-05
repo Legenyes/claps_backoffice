@@ -1,47 +1,45 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\EasyAdmin;
 
-use App\Entity\User;
+use App\Entity\ClothesTypeType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class UserCrudController extends AbstractCrudController
+class ClothesTypeTypeCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return User::class;
+        return ClothesTypeType::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('User')
-            ->setEntityLabelInPlural('User')
-            ->setSearchFields(['id', 'email', 'roles', 'firstName', 'lastName'])
+            ->setEntityLabelInSingular('ClothesTypeType')
+            ->setEntityLabelInPlural('ClothesTypeType')
+            ->setSearchFields(['id', 'name'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $email = TextField::new('email');
-        $firstName = TextField::new('firstName');
-        $lastName = TextField::new('lastName');
-        $roles = TextField::new('roles');
+        $name = TextField::new('name');
         $id = IntegerField::new('id', 'ID');
-        $password = TextField::new('password');
+        $clothesTypes = AssociationField::new('clothesTypes');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $email, $firstName, $lastName];
+            return [$id, $name, $clothesTypes];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $email, $roles, $password, $firstName, $lastName];
+            return [$id, $name, $clothesTypes];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$email, $firstName, $lastName, $roles];
+            return [$name];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$email, $firstName, $lastName, $roles];
+            return [$name];
         }
     }
 }

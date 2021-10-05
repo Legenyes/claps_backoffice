@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\EasyAdmin;
 
-use App\Entity\ClothesTypeType;
+use App\Entity\Playlist;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ClothesTypeTypeCrudController extends AbstractCrudController
+class PlaylistCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return ClothesTypeType::class;
+        return Playlist::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('ClothesTypeType')
-            ->setEntityLabelInPlural('ClothesTypeType')
+            ->setEntityLabelInSingular('Playlist')
+            ->setEntityLabelInPlural('Playlist')
             ->setSearchFields(['id', 'name'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -29,17 +29,17 @@ class ClothesTypeTypeCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name');
+        $playlistVideos = AssociationField::new('playlistVideos');
         $id = IntegerField::new('id', 'ID');
-        $clothesTypes = AssociationField::new('clothesTypes');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $clothesTypes];
+            return [$id, $name, $playlistVideos];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $clothesTypes];
+            return [$id, $name, $playlistVideos];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name];
+            return [$name, $playlistVideos];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name];
+            return [$name, $playlistVideos];
         }
     }
 }

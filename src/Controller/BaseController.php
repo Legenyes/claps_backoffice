@@ -12,11 +12,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class BaseController extends AbstractController
 {
-    /** @var SqlParameterBag */
-    private $sqlParameterBag;
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    private SqlParameterBag $sqlParameterBag;
+    private EntityManagerInterface $entityManager;
 
 
     public function __construct(RequestStack $requestStack, EntityManagerInterface $entityManager)
@@ -31,40 +28,27 @@ class BaseController extends AbstractController
         }
     }
 
-    /**
-     * @return SqlParameterBag
-     */
-    protected function getSqlParameterBag()
+    protected function getSqlParameterBag(): SqlParameterBag
     {
         return $this->sqlParameterBag;
     }
 
-    /**
-     * @param SqlParameterBag $sqlParameterBag
-     * @return $this
-     */
-    protected function setSqlParameterBag(SqlParameterBag $sqlParameterBag)
+    protected function setSqlParameterBag(SqlParameterBag $sqlParameterBag): self
     {
         $this->sqlParameterBag = $sqlParameterBag;
+
         return $this;
     }
 
-    /**
-     * @return EntityManagerInterface
-     */
     public function getEntityManager(): EntityManagerInterface
     {
         return $this->entityManager;
     }
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     *
-     * @return $this
-     */
-    public function setEntityManager(EntityManagerInterface $entityManager)
+    public function setEntityManager(EntityManagerInterface $entityManager): self
     {
         $this->entityManager = $entityManager;
+
         return $this;
     }
 }
