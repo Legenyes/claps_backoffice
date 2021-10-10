@@ -22,6 +22,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
@@ -87,7 +88,7 @@ class MemberShipCrudController extends AbstractCrudController
         $sections = AssociationField::new('sections');
         $startDate = DateField::new('startDate');
         $endDate = DateField::new('endDate');
-        $subscriptionAmount = NumberField::new('subscriptionAmount');
+        $subscriptionAmount = MoneyField::new('subscriptionAmount')->setCurrency('EUR');
         $subscriptionPaidAt = DateField::new('subscriptionPaidAt');
         $id = IntegerField::new('id', 'ID');
 
@@ -114,7 +115,8 @@ class MemberShipCrudController extends AbstractCrudController
             ->get(EntityRepository::class)
             ->createQueryBuilder($searchDto, $entityDto, $fields, $filters)
             ->andWhere('entity.clubYear = :clubYear')
-            ->setParameter('clubYear', $clubYear);
+            ->setParameter('clubYear', $clubYear)
+            ->orderBy('entity.member.lastname', 'ASC');
     }
 
     public function export(Request $request)

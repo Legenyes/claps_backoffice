@@ -7,7 +7,9 @@ use App\Entity\Member;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -58,7 +60,7 @@ class MemberCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            FormField::addPanel('User Details')->setColumns(6),
+            FormField::addPanel('User Details'),
             IdField::new('id')->onlyOnDetail(),
             TextField::new('firstName'),
             TextField::new('lastName'),
@@ -79,6 +81,9 @@ class MemberCrudController extends AbstractCrudController
             EmailField::new('email'),
             TelephoneField::new('phone'),
             TelephoneField::new('mobilePhone'),
+
+            FormField::addPanel('Families information')->collapsible(),
+            AssociationField::new('families'),
 
             FormField::addPanel('User Address')->collapsible(),
             TextField::new('address.street')->hideOnIndex(),

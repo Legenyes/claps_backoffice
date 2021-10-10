@@ -5,8 +5,9 @@ namespace App\Controller\EasyAdmin;
 use App\Entity\Club;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ClubCrudController extends AbstractCrudController
@@ -28,20 +29,20 @@ class ClubCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $name = TextField::new('name');
-        $vatNumber = TextField::new('vatNumber');
-        $headOfficeAddress = AssociationField::new('headOfficeAddress');
-        $clubYears = AssociationField::new('clubYears');
-        $id = IntegerField::new('id', 'ID');
 
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $vatNumber, $headOfficeAddress, $clubYears];
-        } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $vatNumber, $headOfficeAddress, $clubYears];
-        } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $vatNumber, $headOfficeAddress, $clubYears];
-        } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $vatNumber, $headOfficeAddress, $clubYears];
-        }
+        return [
+            FormField::addPanel('Club Details'),
+            IDField::new('id', 'ID')->onlyOnDetail(),
+            TextField::new('name'),
+            TextField::new('vatNumber'),
+
+            FormField::addPanel('Club Headoffice address')->collapsible(),
+            TextField::new('headOfficeAddress.street')->hideOnIndex(),
+            TextField::new('headOfficeAddress.streetNumber')->hideOnIndex(),
+            TextField::new('headOfficeAddress.streetBox')->hideOnIndex(),
+            TextField::new('headOfficeAddress.zipCode')->hideOnIndex(),
+            TextField::new('headOfficeAddress.city')->hideOnIndex(),
+            CountryField::new('headOfficeAddress.country')->hideOnIndex(),
+        ];
     }
 }

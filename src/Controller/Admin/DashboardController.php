@@ -16,11 +16,14 @@ use App\Entity\Club;
 use App\Entity\ClubYear;
 use App\Entity\Event;
 use App\Entity\Member;
+use App\Entity\MemberFamily;
 use App\Entity\MemberShip;
 use App\Entity\Playlist;
 use App\Entity\Section;
 use App\Entity\User;
 use App\Entity\Video;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -67,7 +70,8 @@ class DashboardController extends AbstractDashboardController
         ];
 
         $submenu2 = [
-            MenuItem::linkToCrud('Member', '', Member::class),
+            MenuItem::linkToCrud('Members', 'fa fa-user', Member::class),
+            MenuItem::linkToCrud('Families', 'fa fa-users', MemberFamily::class),
             MenuItem::linkToCrud('MemberShip', '', MemberShip::class),
         ];
 

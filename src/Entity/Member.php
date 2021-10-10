@@ -71,6 +71,11 @@ class Member
     private $address;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\MemberFamily")
+     */
+    private $families;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\MemberShip", mappedBy="member", orphanRemoval=true)
      */
     private $memberShips;
@@ -87,6 +92,7 @@ class Member
 
     public function __construct()
     {
+        $this->families = new ArrayCollection();
         $this->memberShips = new ArrayCollection();
         $this->clothesPieceStitched = new ArrayCollection();
         $this->clothesPieces = new ArrayCollection();
@@ -218,6 +224,32 @@ class Member
     public function setAddress(Address $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MemberFamily[]
+     */
+    public function getFamilies(): Collection
+    {
+        return $this->families;
+    }
+
+    public function addFamily(MemberFamily $family): self
+    {
+        if (!$this->families->contains($family)) {
+            $this->families[] = $family;
+        }
+
+        return $this;
+    }
+
+    public function removeFamily(MemberFamily $family): self
+    {
+        if ($this->families->contains($family)) {
+            $this->families->removeElement($family);
+        }
 
         return $this;
     }

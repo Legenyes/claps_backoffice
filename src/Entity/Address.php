@@ -133,7 +133,7 @@ class Address
 
     public function getFirstLine(): string
     {
-        $line = $this->street;
+        $line = $this->street ?? '';
         if ($this->streetNumber) {
             $line .= " ". $this->streetNumber;
         }

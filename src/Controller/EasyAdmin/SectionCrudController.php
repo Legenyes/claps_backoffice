@@ -5,8 +5,7 @@ namespace App\Controller\EasyAdmin;
 use App\Entity\Section;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class SectionCrudController extends AbstractCrudController
@@ -28,20 +27,10 @@ class SectionCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $name = TextField::new('name');
-        $code = TextField::new('code');
-        $memberShips = AssociationField::new('memberShips');
-        $id = IntegerField::new('id', 'ID');
-        $videos = AssociationField::new('videos');
-
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $code, $memberShips, $videos];
-        } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $code, $memberShips, $videos];
-        } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $code, $memberShips];
-        } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $code, $memberShips];
-        }
+        return [
+            IDField::new('id', 'ID')->onlyOnDetail(),
+            TextField::new('name'),
+            TextField::new('code')
+        ];
     }
 }
