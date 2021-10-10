@@ -96,7 +96,7 @@ class Member
     {
         return $this->firstname .' '. $this->lastname;
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -210,12 +210,12 @@ class Member
         return $this;
     }
 
-    public function getAddress(): ?Address
+    public function getAddress(): Address
     {
         return $this->address;
     }
 
-    public function setAddress(?Address $address): self
+    public function setAddress(Address $address): self
     {
         $this->address = $address;
 
@@ -313,5 +313,26 @@ class Member
         }
 
         return $this;
+    }
+
+    public function getExportData()
+    {
+        $address = $this->getAddress() ? $this->getAddress()->getExportData() : [];
+
+        return \array_merge([
+            '.PRENOM' => $this->firstname,
+            '.NOM' => $this->lastname,
+            '.DATEN' => $this->birthdate ? $this->birthdate->format('d/m/Y') : '',
+            '.GENRE' => $this->sex,
+            '.IDFEDE' => '',
+            '.TYPEM' => 'Adhérent',
+            '.GROUPE' => 'Clap\'Sabots',
+            '.FONCTIONADM' => '',
+            '.FONCTIONART' => '',
+            '.GROUPEPRINCIPAL' => 'Clap\'Sabots',
+            '.TEL' => $this->phone,
+            '.GSM' => $this->mobilePhone,
+            '.EMAIL' => $this->email,
+        ], $address);
     }
 }

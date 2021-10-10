@@ -66,7 +66,7 @@ class MemberShip
     {
         return $this->member .' ('. $this->startDate->format('Y') .'-'.$this->endDate->format('Y') .')';
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,14 +121,16 @@ class MemberShip
     }
 
 
-    public function getClubYear(): ?ClubYear
+    public function getClubYear(): ClubYear
     {
         return $this->clubYear;
     }
 
-    public function setClubYear(?ClubYear $clubYear): self
+    public function setClubYear(ClubYear $clubYear): self
     {
         $this->clubYear = $clubYear;
+        $this->startDate = $clubYear->getDateStart();
+        $this->endDate = $clubYear->getDateStop();
 
         return $this;
     }
@@ -169,6 +171,15 @@ class MemberShip
         }
 
         return $this;
+    }
+
+    public function getExportData()
+    {
+        return \array_merge([
+            'subscription_id' => $this->id,
+            'subscriptionAmount' => $this->subscriptionAmount,
+            'subscriptionPaidAt' => $this->subscriptionPaidAt ? $this->subscriptionPaidAt->format('d/m/Y H:m') : '',
+        ], $this->getMember()->getExportData());
     }
 
 }

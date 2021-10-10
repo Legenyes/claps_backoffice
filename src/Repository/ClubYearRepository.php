@@ -19,32 +19,12 @@ class ClubYearRepository extends ServiceEntityRepository
         parent::__construct($registry, ClubYear::class);
     }
 
-    // /**
-    //  * @return ClubYear[] Returns an array of ClubYear objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findCurrentYear(): ClubYear
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ClubYear
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.isActive = 1')
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }

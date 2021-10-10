@@ -48,10 +48,10 @@ class Address
      */
     private $country;
 
-    
+
     public function __toString()
     {
-        return $this->streetNumber .' '. $this->street .", ". $this->zipCode .' '. $this->city .', '. $this->country;
+        return $this->getFirstLine() .", ". $this->zipCode .' '. $this->city .', '. $this->country;
     }
 
     public function getId(): ?int
@@ -129,5 +129,27 @@ class Address
         $this->country = $country;
 
         return $this;
+    }
+
+    public function getFirstLine(): string
+    {
+        $line = $this->street;
+        if ($this->streetNumber) {
+            $line .= " ". $this->streetNumber;
+        }
+        if ($this->streetBox) {
+            $line .= "/". $this->streetBox;
+        }
+
+        return $line;
+    }
+
+    public function getExportData()
+    {
+        return \array_merge([
+            '.ADRESSE' => $this->getFirstLine(),
+            '.CP' => $this->zipCode,
+            '.LOCALITE' => $this->city,
+        ]);
     }
 }

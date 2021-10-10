@@ -2,12 +2,18 @@
 
 namespace App\Controller\EasyAdmin;
 
+use App\Entity\Address;
 use App\Entity\Member;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class MemberCrudController extends AbstractCrudController
@@ -15,6 +21,28 @@ class MemberCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Member::class;
+    }
+
+    public function createEntity(string $entityFqcn)
+    {
+        $address = new Address();
+        $address->setCountry('BE');
+
+        $member = new Member();
+        $member->setAddress($address);
+
+        return $member;
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if (!$entityInstance->getAddress()) {
+            $address = new Address();
+            $address->setCountry('BE');
+            $entityInstance->setAddress($address);
+        }
+
+        parent::updateEntity($entityManager, $entityInstance);
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -29,29 +57,36 @@ class MemberCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $firstname = TextField::new('firstname');
-        $lastname = TextField::new('lastname');
-        $email = TextField::new('email');
-        $phone = TextField::new('phone');
-        $mobilePhone = TextField::new('mobilePhone');
-        $sex = TextField::new('sex');
-        $birthdate = DateField::new('birthdate');
-        $niss = TextField::new('niss');
-        $insurer = TextField::new('insurer');
-        $address = AssociationField::new('address');
-        $memberShips = AssociationField::new('memberShips');
-        $id = IntegerField::new('id', 'ID');
-        $clothesPieceStitched = AssociationField::new('clothesPieceStitched');
-        $clothesPieces = AssociationField::new('clothesPieces');
+        return [
+            FormField::addPanel('User Details')->setColumns(6),
+            IdField::new('id')->onlyOnDetail(),
+            TextField::new('firstName'),
+            TextField::new('lastName'),
+            DateField::new('birthdate'),
+            ChoiceField::new('sex', 'Gender')
+                ->hideOnIndex()
+                ->setChoices([ 'Male' => 'M', 'Female' => 'F']),
+            TextField::new('niss')->hideOnIndex(),
+            ChoiceField::new('insurer', 'Insurer')
+                ->hideOnIndex()
+                ->setChoices([
+                    'PartenaMut' => 'PARTENA',
+                    'Mutualité Solidaris' => 'SOLIDARIS',
+                    'Mutualité Chrétienne' => 'MC'
+                ]),
 
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $firstname, $lastname, $email, $phone, $mobilePhone, $birthdate];
-        } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $firstname, $lastname, $email, $phone, $mobilePhone, $birthdate, $sex, $niss, $insurer, $address, $memberShips, $clothesPieceStitched, $clothesPieces];
-        } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$firstname, $lastname, $email, $phone, $mobilePhone, $sex, $birthdate, $niss, $insurer, $address, $memberShips];
-        } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$firstname, $lastname, $email, $phone, $mobilePhone, $sex, $birthdate, $niss, $insurer, $address, $memberShips];
-        }
+            FormField::addPanel('Contact information')->collapsible(),
+            EmailField::new('email'),
+            TelephoneField::new('phone'),
+            TelephoneField::new('mobilePhone'),
+
+            FormField::addPanel('User Address')->collapsible(),
+            TextField::new('address.street')->hideOnIndex(),
+            TextField::new('address.streetNumber')->hideOnIndex(),
+            TextField::new('address.streetBox')->hideOnIndex(),
+            TextField::new('address.zipCode')->hideOnIndex(),
+            TextField::new('address.city')->hideOnIndex(),
+            CountryField::new('address.country')->hideOnIndex(),
+        ];
     }
 }
