@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use Infra\Symfony\Persistance\Doctrine\Entity\Club;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -36,6 +38,9 @@ class ClubCrudController extends AbstractCrudController
             FormField::addPanel('Club Details'),
             IDField::new('id', 'ID')->onlyOnDetail(),
             TextField::new('name'),
+            EmailField::new('email'),
+            UrlField::new('website'),
+            TextField::new('bankNumber'),
             TextField::new('vatNumber'),
 
             FormField::addPanel('Club Headoffice address')->collapsible(),

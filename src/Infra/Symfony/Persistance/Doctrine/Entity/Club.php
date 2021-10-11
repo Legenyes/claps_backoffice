@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -26,6 +27,24 @@ class Club
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @Assert\Email()
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @Assert\Url()
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $website;
+
+    /**
+     * @Assert\Iban()
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bankNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -65,6 +84,42 @@ class Club
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getWebsite(): string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    public function getBankNumber(): ?string
+    {
+        return $this->bankNumber;
+    }
+
+    public function setBankNumber(?string $bankNumber): self
+    {
+        $this->bankNumber = $bankNumber;
 
         return $this;
     }

@@ -135,7 +135,7 @@ class AppExtension extends AbstractExtension
 
     }
 
-    public function country(string $country_code): string
+    public function country(?string $country_code): string
     {
         if (!$country_code) {
             return '';
