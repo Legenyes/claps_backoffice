@@ -79,10 +79,11 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('User', 'fa fa-user-circle-o', User::class),
         ];
 
+        $now = new \DateTimeImmutable();
         $submenuMember = [
             MenuItem::linkToCrud('Members', 'fa fa-user', Member::class),
+            MenuItem::linkToCrud('MemberShip '.$now->format('Y'), 'fa fa-address-card', MemberShip::class),
             MenuItem::linkToCrud('Families', 'fa fa-users', MemberFamily::class),
-            MenuItem::linkToCrud('MemberShip', 'fa fa-address-card', MemberShip::class),
         ];
 
         $submenuClothe = [

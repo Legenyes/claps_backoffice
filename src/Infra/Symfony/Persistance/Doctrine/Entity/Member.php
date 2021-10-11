@@ -352,6 +352,10 @@ class Member
     public function getExportData()
     {
         $address = $this->getAddress() ? $this->getAddress()->getExportData() : [];
+        $family = [];
+        if ($this->getFamilies() && count($this->getFamilies()) > 0) {
+            $family = $this->getFamilies()->first()->getExportData();
+        }
 
         return \array_merge([
             '.PRENOM' => $this->firstname,
@@ -367,6 +371,6 @@ class Member
             '.TEL' => $this->phone,
             '.GSM' => $this->mobilePhone,
             '.EMAIL' => $this->email,
-        ], $address);
+        ], $address, $family);
     }
 }

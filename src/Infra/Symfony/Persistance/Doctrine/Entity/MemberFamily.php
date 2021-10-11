@@ -114,4 +114,14 @@ class MemberFamily
 
         return $this;
     }
+
+    public function getExportData()
+    {
+        return [
+            '.EMAILMAMAN' => $this->motherEmail,
+            '.EMAILPAPA' => $this->fatherEmail,
+            '.GSMMAMAN' => $this->motherMobilePhone,
+            '.GSMPAPA' => $this->fatherMobilePhone,
+        ];
+    }
 }
