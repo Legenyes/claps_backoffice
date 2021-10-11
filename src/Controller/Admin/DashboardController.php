@@ -73,7 +73,7 @@ class DashboardController extends AbstractDashboardController
     {
         $submenuAdmin = [
             MenuItem::linkToCrud('Club', 'fa fa-building', Club::class),
-            MenuItem::linkToCrud('ClubYear', 'fa f-calendar-alt', ClubYear::class),
+            MenuItem::linkToCrud('ClubYear', 'fa fa-calendar-alt', ClubYear::class),
             MenuItem::linkToCrud('Section', 'fa fa-list', Section::class),
             MenuItem::linkToCrud('User', 'fa fa-user-circle-o', User::class),
         ];
@@ -98,6 +98,7 @@ class DashboardController extends AbstractDashboardController
 
         $submenuMedia = [
             MenuItem::linkToCrud('Video', 'fa fa-film', Video::class),
+            MenuItem::linkToCrud('Music', 'fa fa-music', Video::class),
             MenuItem::linkToCrud('Playlist', 'fa fa-list', Playlist::class),
         ];
 
@@ -110,11 +111,11 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Newsletter', 'fa fa-mailchimp', Event::class),
         ];
 
-        yield MenuItem::subMenu('Administration', 'fas fa-folder-open')->setSubItems($submenuAdmin);
-        yield MenuItem::subMenu('Membres', 'fas fa-folder-open')->setSubItems($submenuMember);
-        yield MenuItem::subMenu('Costumes', 'fas fa-folder-open')->setSubItems($submenuClothe);
-        yield MenuItem::subMenu('Medias', 'fas fa-folder-open')->setSubItems($submenuMedia);
-        yield MenuItem::subMenu('Event', 'fas fa-folder-open')->setSubItems($submenuEvent);
-        yield MenuItem::subMenu('Marketing', 'fas fa-folder-open')->setSubItems($submenuMarketing);
+        yield MenuItem::subMenu('Administration', 'fas fa-cogs')->setSubItems($submenuAdmin);
+        yield MenuItem::subMenu('Membres', 'fa fa-users')->setSubItems($submenuMember);
+        yield MenuItem::subMenu('Costumes', 'fas fa-tshirt')->setSubItems($submenuClothe);
+        yield MenuItem::subMenu('Medias', 'fas fa-photo-video')->setSubItems($submenuMedia);
+        yield MenuItem::subMenu('Event', 'fa fa-calendar-alt')->setSubItems($submenuEvent);
+        yield MenuItem::subMenu('Marketing', 'fas fa-bullhorn')->setSubItems($submenuMarketing);
     }
 }
