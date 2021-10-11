@@ -59,42 +59,62 @@ class DashboardController extends AbstractDashboardController
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
     }
 
+    public function configureActions(): Actions
+    {
+        $actions = parent::configureActions();
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->add(Crud::PAGE_EDIT, Action::SAVE_AND_ADD_ANOTHER)
+            ;
+    }
+
     public function configureMenuItems(): iterable
     {
-        $submenu1 = [
-            MenuItem::linkToCrud('Club', '', Club::class),
-            MenuItem::linkToCrud('ClubYear', '', ClubYear::class),
-            MenuItem::linkToCrud('Section', '', Section::class),
-            MenuItem::linkToCrud('User', '', User::class),
-            MenuItem::linkToCrud('Event', '', Event::class),
+        $submenuAdmin = [
+            MenuItem::linkToCrud('Club', 'fa fa-building', Club::class),
+            MenuItem::linkToCrud('ClubYear', 'fa f-calendar-alt', ClubYear::class),
+            MenuItem::linkToCrud('Section', 'fa fa-list', Section::class),
+            MenuItem::linkToCrud('User', 'fa fa-user-circle-o', User::class),
         ];
 
-        $submenu2 = [
+        $submenuMember = [
             MenuItem::linkToCrud('Members', 'fa fa-user', Member::class),
             MenuItem::linkToCrud('Families', 'fa fa-users', MemberFamily::class),
-            MenuItem::linkToCrud('MemberShip', '', MemberShip::class),
+            MenuItem::linkToCrud('MemberShip', 'fa fa-address-card', MemberShip::class),
         ];
 
-        $submenu3 = [
-            MenuItem::linkToCrud('Costumes', '', ClothesCostume::class),
-            MenuItem::linkToCrud('Pieces', '', ClothesPiece::class),
-            MenuItem::linkToCrud('Stock', '', ClothesPieceStock::class),
-            MenuItem::linkToCrud('Types', '', ClothesType::class),
-            MenuItem::linkToCrud('Opportunity', '', ClothesOpportunity::class),
-            MenuItem::linkToCrud('Seasons', '', ClothesSeason::class),
-            MenuItem::linkToCrud('Textures', '', ClothesTexture::class),
-            MenuItem::linkToCrud('Zones', '', ClothesTypeZone::class),
-            MenuItem::linkToCrud('Color', '', ClothesColor::class),
+        $submenuClothe = [
+            MenuItem::linkToCrud('Costumes', 'fa fa-user-tie', ClothesCostume::class),
+            MenuItem::linkToCrud('Pieces', 'fa fa-tshirt', ClothesPiece::class),
+            MenuItem::linkToCrud('Stock', 'fa fa-cubes', ClothesPieceStock::class),
+            MenuItem::linkToCrud('Types', 'fa fa-filter', ClothesType::class),
+            MenuItem::linkToCrud('Opportunity', 'fa fa-glass-cheers', ClothesOpportunity::class),
+            MenuItem::linkToCrud('Seasons', 'fa fa-cloud-sun', ClothesSeason::class),
+            MenuItem::linkToCrud('Textures', 'fa fa-feather', ClothesTexture::class),
+            MenuItem::linkToCrud('Zones', 'fa fa-map-marked-alt', ClothesTypeZone::class),
+            MenuItem::linkToCrud('Color', 'fa fa-paint-brush', ClothesColor::class),
         ];
 
-        $submenu4 = [
-            MenuItem::linkToCrud('Video', '', Video::class),
-            MenuItem::linkToCrud('Playlist', '', Playlist::class),
+        $submenuMedia = [
+            MenuItem::linkToCrud('Video', 'fa fa-film', Video::class),
+            MenuItem::linkToCrud('Playlist', 'fa fa-list', Playlist::class),
         ];
 
-        yield MenuItem::subMenu('Administration', 'fas fa-folder-open')->setSubItems($submenu1);
-        yield MenuItem::subMenu('Membres', 'fas fa-folder-open')->setSubItems($submenu2);
-        yield MenuItem::subMenu('Costumes', 'fas fa-folder-open')->setSubItems($submenu3);
-        yield MenuItem::subMenu('Medias', 'fas fa-folder-open')->setSubItems($submenu4);
+        $submenuEvent = [
+            MenuItem::linkToCrud('Event', 'fa fa-calendar-alt', Event::class),
+            MenuItem::linkToCrud('Reservation', 'fa fa-ticket-alt', Event::class),
+        ];
+
+        $submenuMarketing = [
+            MenuItem::linkToCrud('Newsletter', 'fa fa-mailchimp', Event::class),
+        ];
+
+        yield MenuItem::subMenu('Administration', 'fas fa-folder-open')->setSubItems($submenuAdmin);
+        yield MenuItem::subMenu('Membres', 'fas fa-folder-open')->setSubItems($submenuMember);
+        yield MenuItem::subMenu('Costumes', 'fas fa-folder-open')->setSubItems($submenuClothe);
+        yield MenuItem::subMenu('Medias', 'fas fa-folder-open')->setSubItems($submenuMedia);
+        yield MenuItem::subMenu('Event', 'fas fa-folder-open')->setSubItems($submenuEvent);
+        yield MenuItem::subMenu('Marketing', 'fas fa-folder-open')->setSubItems($submenuMarketing);
     }
 }
