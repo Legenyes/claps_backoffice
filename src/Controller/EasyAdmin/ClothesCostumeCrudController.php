@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\EasyAdmin;
 
 use App\Entity\ClothesCostume;
@@ -8,7 +10,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 
@@ -43,19 +48,23 @@ class ClothesCostumeCrudController extends AbstractCrudController
     {
         $name = TextField::new('name');
         $code = TextField::new('code');
-        $gender = ArrayField::new('gender')->setTemplatePath('easy_admin/property_gender.html.twig');
+        $gender = ChoiceField::new('gender', 'Gender')
+            ->allowMultipleChoices()
+            ->autocomplete()
+            ->setChoices([ 'Male' => 'M', 'Female' => 'F'])
+            ->setTemplatePath('admin/field/property_gender.html.twig');
         $sections = AssociationField::new('sections');
-        $country = TextField::new('country')->setTemplatePath('easy_admin/property_country.html.twig');
+        $country = CountryField::new('country');
         $area = TextField::new('area');
         $city = TextField::new('city');
-        $description = TextField::new('description');
+        $description = TextareaField::new('description');
         $season = AssociationField::new('season');
         $clotheOpportunity = AssociationField::new('clotheOpportunity');
         $clothesCostumePieces = AssociationField::new('clothesCostumePieces');
-        $id = IntegerField::new('id', 'ID');
+        $id = IdField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $code, $gender, $name, $country];
+            return [$code, $gender, $name, $country];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $code, $description, $country, $area, $city, $gender, $season, $clotheOpportunity, $sections, $clothesCostumePieces];
         } elseif (Crud::PAGE_NEW === $pageName) {

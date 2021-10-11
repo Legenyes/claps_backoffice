@@ -1,7 +1,0 @@
-{% if value is iterable %}
-    {% for element in value %}
-        <span class="badge badge-primary" style="background-color: {{ element.code|raw }}">{{ element }}</span>
-    {% endfor %}
-{% else %}
-    <span class="badge badge-primary" style="background-color: {{ value|raw }}">{{ value }}</span>
-{% endif %}

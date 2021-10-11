@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\EasyAdmin;
 
 use App\Entity\ClothesPieceStock;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -20,8 +24,8 @@ class ClothesPieceStockCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('ClothesPieceStock')
-            ->setEntityLabelInPlural('ClothesPieceStock')
+            ->setEntityLabelInSingular('Clothes Stock')
+            ->setEntityLabelInPlural('Clothes Stock')
             ->setSearchFields(['id', 'status'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -29,22 +33,14 @@ class ClothesPieceStockCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $clothesPiece = AssociationField::new('clothesPiece');
-        $status = TextField::new('status');
-        $colors = AssociationField::new('colors')->setTemplatePath('easy_admin/property_color.html.twig');
-        $dressKeeper = AssociationField::new('dressKeeper');
-        $personal = Field::new('personal');
-        $dressMaker = AssociationField::new('dressMaker');
-        $id = IntegerField::new('id', 'ID');
-
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $clothesPiece, $dressKeeper, $dressMaker, $colors];
-        } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $personal, $status, $clothesPiece, $dressMaker, $colors, $dressKeeper];
-        } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$clothesPiece, $status, $colors, $dressKeeper, $personal, $dressMaker];
-        } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$clothesPiece, $status, $colors, $dressKeeper, $personal, $dressMaker];
-        }
+        return [
+            IdField::new('id', 'ID')->onlyOnDetail(),
+            TextField::new('status'),
+            AssociationField::new('colors')->setTemplatePath('admin/field/property_color.html.twig'),
+            AssociationField::new('clothesPiece'),
+            AssociationField::new('dressKeeper'),
+            BooleanField::new('personal'),
+            AssociationField::new('dressMaker'),
+        ];
     }
 }

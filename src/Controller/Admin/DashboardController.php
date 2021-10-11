@@ -92,7 +92,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Opportunity', 'fa fa-glass-cheers', ClothesOpportunity::class),
             MenuItem::linkToCrud('Seasons', 'fa fa-cloud-sun', ClothesSeason::class),
             MenuItem::linkToCrud('Textures', 'fa fa-feather', ClothesTexture::class),
-            MenuItem::linkToCrud('Zones', 'fa fa-map-marked-alt', ClothesTypeZone::class),
+            MenuItem::linkToCrud('Zones', 'fa fa-puzzle-piece', ClothesTypeZone::class),
             MenuItem::linkToCrud('Color', 'fa fa-paint-brush', ClothesColor::class),
         ];
 
