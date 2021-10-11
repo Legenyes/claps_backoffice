@@ -108,7 +108,7 @@ class DashboardController extends AbstractDashboardController
         ];
 
         $submenuMarketing = [
-            MenuItem::linkToCrud('Newsletter', 'fa fa-mailchimp', Event::class),
+            MenuItem::linkToCrud('Newsletter', 'fa fa-paper-plane', Event::class),
         ];
 
         yield MenuItem::subMenu('Administration', 'fas fa-cogs')->setSubItems($submenuAdmin);
