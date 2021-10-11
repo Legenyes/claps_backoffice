@@ -1,3 +1,6 @@
 controllers:
-    resource: ../../src/Controller/
+    resource: ../../src/Infra/Symfony/Controller/
+    type: annotation
+controllers_ea:
+    resource: ../../src/Infra/EasyAdmin/Controller/
     type: annotation

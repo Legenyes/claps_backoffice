@@ -8,7 +8,7 @@ security:
         # Our user class and the algorithm we'll use to encode passwords
         # 'auto' means to let Symfony choose the best possible password hasher (Argon2 or Bcrypt)
         # https://symfony.com/doc/current/security.html#c-encoding-passwords
-        App\Entity\User: 'auto'
+        Infra\Symfony\Persistance\Doctrine\Entity\User: 'auto'
 
     providers:
         # https://symfony.com/doc/current/security/user_provider.html
@@ -16,7 +16,7 @@ security:
         # To see the users at src/App/DataFixtures/ORM/LoadFixtures.php
         # To load users from somewhere else: https://symfony.com/doc/current/security/user_provider.html#creating-a-custom-user-provider
         database_users:
-            entity: { class: App\Entity\User, property: email }
+            entity: { class: Infra\Symfony\Persistance\Doctrine\Entity\User, property: email }
 
     # https://symfony.com/doc/current/security.html#a-authentication-firewalls
     firewalls:

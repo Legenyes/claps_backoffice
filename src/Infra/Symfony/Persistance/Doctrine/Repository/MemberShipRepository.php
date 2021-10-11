@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Infra\Symfony\Persistance\Doctrine\Repository;
+
+use Infra\Symfony\Persistance\Doctrine\Entity\MemberShip;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method MemberShip|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MemberShip|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MemberShip[]    findAll()
+ * @method MemberShip[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class MemberShipRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, MemberShip::class);
+    }
+
+    // /**
+    //  * @return MemberShip[] Returns an array of MemberShip objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('m.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?MemberShip
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
+}
