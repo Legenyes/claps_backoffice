@@ -115,8 +115,7 @@ class MemberShipCrudController extends AbstractCrudController
             ->get(EntityRepository::class)
             ->createQueryBuilder($searchDto, $entityDto, $fields, $filters)
             ->andWhere('entity.clubYear = :clubYear')
-            ->setParameter('clubYear', $clubYear)
-            ->orderBy('entity.member.lastname', 'ASC');
+            ->setParameter('clubYear', $clubYear);
     }
 
     public function export(Request $request)
