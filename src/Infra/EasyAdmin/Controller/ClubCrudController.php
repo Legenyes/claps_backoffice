@@ -24,8 +24,8 @@ class ClubCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Club')
-            ->setEntityLabelInPlural('Club')
+            ->setEntityLabelInSingular('club.crud.title.singular')
+            ->setEntityLabelInPlural('club.crud.title.plural')
             ->setSearchFields(['id', 'name', 'vatNumber'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -35,21 +35,21 @@ class ClubCrudController extends AbstractCrudController
     {
 
         return [
-            FormField::addPanel('Club Details'),
+            FormField::addPanel('club.crud.form.general'),
             IDField::new('id', 'ID')->onlyOnDetail(),
-            TextField::new('name'),
-            EmailField::new('email'),
-            UrlField::new('website'),
-            TextField::new('bankNumber'),
-            TextField::new('vatNumber'),
+            TextField::new('name', 'word.name'),
+            EmailField::new('email', 'club.properties.email'),
+            UrlField::new('website', 'club.properties.website'),
+            TextField::new('bankNumber', 'club.properties.bank_number'),
+            TextField::new('vatNumber', 'club.properties.vat_number'),
 
-            FormField::addPanel('Club Headoffice address')->collapsible(),
-            TextField::new('headOfficeAddress.street')->hideOnIndex(),
-            TextField::new('headOfficeAddress.streetNumber')->hideOnIndex(),
-            TextField::new('headOfficeAddress.streetBox')->hideOnIndex(),
-            TextField::new('headOfficeAddress.zipCode')->hideOnIndex(),
-            TextField::new('headOfficeAddress.city')->hideOnIndex(),
-            CountryField::new('headOfficeAddress.country')->hideOnIndex(),
+            FormField::addPanel('club.crud.form.headoffice_address')->collapsible(),
+            TextField::new('headOfficeAddress.street','address.properties.street')->hideOnIndex(),
+            TextField::new('headOfficeAddress.streetNumber','address.properties.streetNumber')->hideOnIndex(),
+            TextField::new('headOfficeAddress.streetBox','address.properties.streetBox')->hideOnIndex(),
+            TextField::new('headOfficeAddress.zipCode','address.properties.zipCode')->hideOnIndex(),
+            TextField::new('headOfficeAddress.city','address.properties.city')->hideOnIndex(),
+            CountryField::new('headOfficeAddress.country','address.properties.country')->hideOnIndex(),
         ];
     }
 }

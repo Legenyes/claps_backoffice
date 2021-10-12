@@ -15,6 +15,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ClothesCostume
 {
+    public const GENDER_MALE = "M";
+    public const GENDER_FEMALE = "M";
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

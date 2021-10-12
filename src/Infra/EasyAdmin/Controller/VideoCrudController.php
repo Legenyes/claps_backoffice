@@ -24,8 +24,8 @@ class VideoCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Video')
-            ->setEntityLabelInPlural('Video')
+            ->setEntityLabelInSingular('video.crud.title.singular')
+            ->setEntityLabelInPlural('video.crud.title.plural')
             ->setSearchFields(['id', 'name', 'url', 'country'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -41,14 +41,14 @@ class VideoCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $name = TextField::new('name');
-        $url = TextField::new('url');
-        $event = AssociationField::new('event');
-        $sections = AssociationField::new('sections');
-        $recordDate = DateTimeField::new('recordDate');
-        $country = TextField::new('country');//->setTemplatePath('easy_admin/property_country.html.twig');
+        $name = TextField::new('name', 'word.name');
+        $url = TextField::new('url', 'word.url');
+        $event = AssociationField::new('event', 'event.crud.title.singular');
+        $sections = AssociationField::new('sections', 'section.crud.title.plural');
+        $recordDate = DateTimeField::new('recordDate', 'video.properties.record_date');
+        $country = TextField::new('country', 'address.properties.country');
         $id = IntegerField::new('id', 'ID');
-        $playlistVideos = AssociationField::new('playlistVideos');
+        $playlistVideos = AssociationField::new('playlistVideos', 'playlist.crud.title.plural');
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $event, $sections, $country, $url];

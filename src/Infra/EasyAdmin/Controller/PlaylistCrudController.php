@@ -21,8 +21,8 @@ class PlaylistCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Playlist')
-            ->setEntityLabelInPlural('Playlist')
+            ->setEntityLabelInSingular('playlist.crud.title.singular')
+            ->setEntityLabelInPlural('playlist.crud.title.plural')
             ->setSearchFields(['id', 'name'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -30,8 +30,8 @@ class PlaylistCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $name = TextField::new('name');
-        $playlistVideos = AssociationField::new('playlistVideos');
+        $name = TextField::new('name', 'word.name');
+        $playlistVideos = AssociationField::new('playlistVideos', 'video.crud.title.plural');
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {

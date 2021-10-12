@@ -11,7 +11,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -52,8 +51,8 @@ class MemberCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Member')
-            ->setEntityLabelInPlural('Member')
+            ->setEntityLabelInSingular('member.crud.title.singular')
+            ->setEntityLabelInPlural('member.crud.title.plural')
             ->setSearchFields(['id', 'firstname', 'lastname', 'email', 'phone', 'mobilePhone', 'sex', 'niss', 'insurer'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -62,16 +61,16 @@ class MemberCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            FormField::addPanel('User Details'),
+            FormField::addPanel('member.crud.form.personal'),
             IdField::new('id')->onlyOnDetail(),
-            TextField::new('firstName'),
-            TextField::new('lastName'),
-            DateField::new('birthdate'),
-            ChoiceField::new('sex', 'Gender')
+            TextField::new('firstName', 'member.properties.firstname'),
+            TextField::new('lastName', 'member.properties.lastname'),
+            DateField::new('birthdate', 'member.properties.birthdate'),
+            ChoiceField::new('sex',  'member.properties.sex')
                 ->hideOnIndex()
                 ->setChoices([ 'Male' => 'M', 'Female' => 'F']),
             TextField::new('niss')->hideOnIndex(),
-            ChoiceField::new('insurer', 'Insurer')
+            ChoiceField::new('insurer', 'member.properties.insurer')
                 ->hideOnIndex()
                 ->setChoices([
                     'PartenaMut' => 'PARTENA',
@@ -79,22 +78,22 @@ class MemberCrudController extends AbstractCrudController
                     'Mutualité Chrétienne' => 'MC'
                 ]),
 
-            FormField::addPanel('Contact information')->collapsible(),
-            EmailField::new('email'),
-            TelephoneField::new('phone'),
-            TelephoneField::new('mobilePhone'),
+            FormField::addPanel('member.crud.form.contact')->collapsible(),
+            EmailField::new('email', 'member.properties.email'),
+            TelephoneField::new('phone', 'member.properties.phone'),
+            TelephoneField::new('mobilePhone', 'member.properties.mobilePhone'),
 
-            FormField::addPanel('Families information')->collapsible(),
-            AssociationField::new('families')
+            FormField::addPanel('member.crud.form.families')->collapsible(),
+            AssociationField::new('families', 'member.properties.families')
                 ->setTemplatePath('admin/field/property_family.html.twig'),
 
-            FormField::addPanel('User Address')->collapsible(),
-            TextField::new('address.street')->hideOnIndex(),
-            TextField::new('address.streetNumber')->hideOnIndex(),
-            TextField::new('address.streetBox')->hideOnIndex(),
-            TextField::new('address.zipCode')->hideOnIndex(),
-            TextField::new('address.city')->hideOnIndex(),
-            CountryField::new('address.country')->hideOnIndex(),
+            FormField::addPanel('member.crud.form.address')->collapsible(),
+            TextField::new('address.street', 'address.properties.street')->hideOnIndex(),
+            TextField::new('address.streetNumber', 'address.properties.streetNumber')->hideOnIndex(),
+            TextField::new('address.streetBox', 'address.properties.streetBox')->hideOnIndex(),
+            TextField::new('address.zipCode', 'address.properties.zipCode')->hideOnIndex(),
+            TextField::new('address.city', 'address.properties.city')->hideOnIndex(),
+            CountryField::new('address.country', 'address.properties.country')->hideOnIndex(),
         ];
     }
 }

@@ -18,6 +18,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class ClothesPiece
 {
+    public const GENDER_MALE = "M";
+    public const GENDER_FEMALE = "M";
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

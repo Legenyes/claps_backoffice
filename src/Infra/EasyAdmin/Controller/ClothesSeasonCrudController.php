@@ -21,8 +21,8 @@ class ClothesSeasonCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Season')
-            ->setEntityLabelInPlural('Seasons')
+            ->setEntityLabelInSingular('clothe_season.crud.title.singular')
+            ->setEntityLabelInPlural('clothe_season.crud.title.plural')
             ->setSearchFields(['id', 'name'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -32,8 +32,7 @@ class ClothesSeasonCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id', 'ID')->onlyOnDetail(),
-            TextField::new('name'),
-            AssociationField::new('clothesPieces')->hideOnForm(),
+            TextField::new('name', 'word.name'),
         ];
     }
 }

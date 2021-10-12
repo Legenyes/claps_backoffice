@@ -27,8 +27,8 @@ class ClothesCostumeCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('ClothesCostume')
-            ->setEntityLabelInPlural('ClothesCostume')
+            ->setEntityLabelInSingular('clothe_costume.crud.title.singular')
+            ->setEntityLabelInPlural('clothe_costume.crud.title.plural')
             ->setSearchFields(['id', 'name', 'code', 'description', 'country', 'area', 'city', 'gender'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -46,21 +46,23 @@ class ClothesCostumeCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $name = TextField::new('name');
-        $code = TextField::new('code');
-        $gender = ChoiceField::new('gender', 'Gender')
+        $name = TextField::new('name', 'word.name');
+        $code = TextField::new('code', 'word.code');
+        $gender = ChoiceField::new('gender', 'clothe_costume.properties.gender')
             ->allowMultipleChoices()
             ->autocomplete()
-            ->setChoices([ 'Male' => 'M', 'Female' => 'F'])
+            ->setChoices([
+                'word.gender.male' => ClothesCostume::GENDER_MALE,
+                'word.gender.female' => ClothesCostume::GENDER_FEMALE])
             ->setTemplatePath('admin/field/property_gender.html.twig');
-        $sections = AssociationField::new('sections');
-        $country = CountryField::new('country');
-        $area = TextField::new('area');
-        $city = TextField::new('city');
-        $description = TextareaField::new('description');
-        $season = AssociationField::new('season');
-        $clotheOpportunity = AssociationField::new('clotheOpportunity');
-        $clothesCostumePieces = AssociationField::new('clothesCostumePieces');
+        $sections = AssociationField::new('sections', 'section.crud.title.plural');
+        $country = CountryField::new('country', 'address.properties.country');
+        $area = TextField::new('area', 'address.properties.area');
+        $city = TextField::new('city', 'address.properties.city');
+        $description = TextareaField::new('description', 'word.description');
+        $season = AssociationField::new('season', 'clothe_season.crud.title.singular');
+        $clotheOpportunity = AssociationField::new('clotheOpportunity', 'clothe_opportunity.crud.title.singular');
+        $clothesCostumePieces = AssociationField::new('clothesCostumePieces', 'clothe_piece.crud.title.plural');
         $id = IdField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {

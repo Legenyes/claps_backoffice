@@ -21,8 +21,8 @@ class ClothesColorCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Color')
-            ->setEntityLabelInPlural('Colors')
+            ->setEntityLabelInSingular('clothe_color.crud.title.singular')
+            ->setEntityLabelInPlural('clothe_color.crud.title.plural')
             ->setSearchFields(['id', 'name', 'code'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -32,8 +32,8 @@ class ClothesColorCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id', 'ID')->onlyOnDetail(),
-            TextField::new('name'),
-            ColorField::new('code'),
+            TextField::new('name', 'word.name'),
+            ColorField::new('code', 'word.code'),
         ];
     }
 }

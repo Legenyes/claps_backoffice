@@ -22,8 +22,8 @@ class ClubYearCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('ClubYear')
-            ->setEntityLabelInPlural('ClubYear')
+            ->setEntityLabelInSingular('club_year.crud.title.singular')
+            ->setEntityLabelInPlural('club_year.crud.title.plural')
             ->setSearchFields(['id'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -31,11 +31,11 @@ class ClubYearCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $dateStart = DateField::new('dateStart');
-        $dateStop = DateField::new('dateStop');
-        $isActive = Field::new('isActive');
-        $club = AssociationField::new('club');
-        $memberShips = AssociationField::new('memberShips');
+        $dateStart = DateField::new('dateStart', 'club_year.properties.date_start');
+        $dateStop = DateField::new('dateStop', 'club_year.properties.date_stop');
+        $isActive = Field::new('isActive', 'club_year.properties.is_active');
+        $club = AssociationField::new('club', 'club.crud.title.singular');
+        $memberShips = AssociationField::new('memberShips', 'memberShips.crud.title.plural');
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {

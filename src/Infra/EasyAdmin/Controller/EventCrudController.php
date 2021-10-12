@@ -23,8 +23,8 @@ class EventCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Event')
-            ->setEntityLabelInPlural('Event')
+            ->setEntityLabelInSingular('event.crud.title.singular')
+            ->setEntityLabelInPlural('event.crud.title.plural')
             ->setSearchFields(['id', 'name'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -32,10 +32,10 @@ class EventCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $name = TextField::new('name');
-        $date = DateTimeField::new('date');
-        $isHighlight = Field::new('isHighlight');
-        $videos = AssociationField::new('videos');
+        $name = TextField::new('name', 'word.name');
+        $date = DateTimeField::new('date', 'word.date');
+        $isHighlight = Field::new('isHighlight', 'event.properties.is_highlight');
+        $videos = AssociationField::new('videos', 'event.crud.title.plural');
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {

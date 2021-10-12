@@ -1,6 +1,127 @@
 action:
   save: "Enregistrer"
 
+address:
+  properties:
+    area: "Région"
+    city: "Ville"
+    country: "Pays"
+    street: "Rue"
+    streetBox: "Numéro"
+    streetNumber: "Boite"
+    zipCode: "Code postal"
+
+clothe_color:
+  crud:
+    title:
+      singular: "Couleur"
+      plural: "Couleurs"
+
+clothe_costume:
+  crud:
+    title:
+      singular: "Costume"
+      plural: "Costumes"
+  properties:
+    gender: "Genre"
+
+clothe_opportunity:
+  crud:
+    title:
+      singular: "Célébration"
+      plural: "Célébrations"
+
+clothe_season:
+  crud:
+    title:
+      singular: "Saison"
+      plural: "Saisons"
+
+clothe_texture:
+  crud:
+    title:
+      singular: "Texture"
+      plural: "Textures"
+
+clothe_type:
+  crud:
+    title:
+      singular: "Type"
+      plural: "Types"
+  properties:
+    type: "Type de vêtement"
+
+clothe_zone:
+  crud:
+    title:
+      singular: "Partie du corps"
+      plural: "Parties du corps"
+
+club:
+  crud:
+    form:
+      general: "Informations générales"
+      headoffice_address: "Adresse du siège social"
+    title:
+      singular: "Club"
+      plural: "Clubs"
+  properties:
+    bank_number: "Compte bancaire"
+    email: "Email"
+    vat_number: "Numéro de TVA"
+    website: "Site internet"
+
+club_year:
+  crud:
+    title:
+      singular: "Saison"
+      plural: "Saisons"
+  properties:
+    date_start: "Date de début"
+    date_stop:  "Date de find"
+    is_active: "Saison courante"
+
+event:
+  crud:
+    title:
+      singular: "Évènement"
+      plural: "Évènements"
+  properties:
+    is_highlight: "Mise en avant"
+
+member:
+  crud:
+    form:
+      address: "Adresse"
+      contact: "Coordonnées"
+      families: "Informations familiales"
+      personal: "Informations personnelles"
+    title:
+      singular: "Membre"
+      plural: "Membres"
+  properties:
+    birthdate: "Date de naissance"
+    email: "Email"
+    families: "Familles"
+    firstname: "Prénom"
+    lastname: "Nom"
+    insurer: "Assureur"
+    mobilePhone: "GSM"
+    phone: "Téléphone fixe"
+    sex: "Sexe"
+
+playlist:
+  crud:
+    title:
+      singular: "Playlist"
+      plural: "Playlists"
+
+section:
+  crud:
+    title:
+      singular: "Section"
+      plural: "Sections"
+
 user:
   change_password:
     action: "Changer le mot de passe"
@@ -19,4 +140,20 @@ user:
     firstname: "Prénom"
     lastname: "Nom"
 
+video:
+  crud:
+    title:
+      singular: "Vidéo"
+      plural: "Vidéos"
+  properties:
+    record_date: "Date d'enregistrement"
 
+word:
+  code: "Code"
+  date: "Date"
+  description: "Description"
+  gender:
+    female: "Femme"
+    male: "Homme"
+  name: "Nom"
+  url: "Url"
