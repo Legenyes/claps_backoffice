@@ -11,18 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class MediaController
- * @package App\Controller
- */
 class MediaController extends AbstractController
 {
     /**
      * @Route("/", name="app_index")
      * @Route("/media", name="app_media_index")
-     * @param EntityManagerInterface $em
-     *
-     * @return Response
      */
     public function indexAction(EntityManagerInterface $em): Response
     {
@@ -39,7 +32,8 @@ class MediaController extends AbstractController
         ]);
     }
 
-    private function getBreadcurmb() {
+    private function getBreadcurmb(): array
+    {
         $breadcrumb['items'][] = ['title' => 'Home', 'url' => '/'];
         $breadcrumb['items'][] = ['title' => 'Media'];
 

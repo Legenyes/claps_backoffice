@@ -7,22 +7,16 @@ namespace Infra\Symfony\Controller;
 use Infra\Symfony\Persistance\Doctrine\Entity\Video;
 use Infra\Symfony\Form\Type\SearchVideoType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class VideoController
  * @Route("/video")
- * @package App\Controller
  */
 class VideoController extends BaseController
 {
     /**
      * @Route("/", name="app_video_index")
-     * @param EntityManagerInterface $em
-     *
-     * @return Response
      */
     public function indexAction(EntityManagerInterface $em): Response
     {
@@ -38,11 +32,8 @@ class VideoController extends BaseController
 
     /**
      * @Route("/search", name="app_video_search")
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @return Response
      */
-    public function searchAction(Request $request, EntityManagerInterface $em): Response
+    public function searchAction(EntityManagerInterface $em): Response
     {
         $form = $this->createForm(SearchVideoType::class);
         $videos = $em->getRepository(Video::class)->filterAll($this->getSqlParameterBag());
@@ -56,9 +47,6 @@ class VideoController extends BaseController
 
     /**
      * @Route("/{id}", name="app_video_show", requirements={"id"="\d+"})
-     *
-     * @param Video $video
-     * @return Response
      */
     public function showAction(Video $video): Response
     {
@@ -68,7 +56,8 @@ class VideoController extends BaseController
         ]);
     }
 
-    private function getBreadcurmb() {
+    private function getBreadcurmb(): array
+    {
         $breadcrumb['items'][] = ['title'=> 'Home', 'url' => '/'];
         $breadcrumb['items'][] = ['title'=> 'Media', 'url' => $this->generateUrl('app_media_index')];
         $breadcrumb['items'][] = ['title'=> 'Video'];

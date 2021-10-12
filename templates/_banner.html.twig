@@ -1,0 +1,23 @@
+<div id="banner-area">
+	<img src="/images/banner/banner1.jpg" alt="" />
+	<div class="parallax-overlay"></div>
+	<!-- Subpage title start -->
+	<div class="banner-title-content">
+		<div class="text-center">
+			<h2>{% block banner_title %}Clap'Sabots{% endblock %}</h2>
+			{% if breadcrumb is defined and breadcrumb != null %}
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb justify-content-center">
+						{% for item in breadcrumb.items %}
+							{% if not loop.last %}
+								<li class="breadcrumb-item"><a href="{{ item.url }}">{{ item.title|e }}</a></li>
+							{% else %}
+								<li class="breadcrumb-item text-white" aria-current="page">{{ item.title|e }}</li>
+							{% endif %}
+						{% endfor %}
+					</ol>
+				</nav>
+			{% endif %}
+		</div>
+	</div><!-- Subpage title end -->
+</div><!-- Banner area end -->

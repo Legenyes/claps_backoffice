@@ -11,17 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class PlaylistController
  * @Route("/playlist")
- * @package App\Controller
  */
 class PlaylistController extends AbstractController
 {
     /**
      * @Route("/", name="app_playlist_index")
-     * @param EntityManagerInterface $em
-     *
-     * @return Response
      */
     public function indexAction(EntityManagerInterface $em): Response
     {

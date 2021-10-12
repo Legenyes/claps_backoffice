@@ -6,7 +6,7 @@
         {% block head %}{% endblock %}
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
+    <body id="{% block body_id %}{% endblock %}">
         <div class="body-inner">
             {% block header %}{% endblock %}
             {% block banner %}{% endblock %}
