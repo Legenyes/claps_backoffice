@@ -1,0 +1,22 @@
+action:
+  save: "Enregistrer"
+
+user:
+  change_password:
+    action: "Changer le mot de passe"
+    info: "Nous vous conseillons d’utiliser un mot de passe sûr que vous n’utilisez nulle part ailleurs"
+    form:
+      label:
+        current_password: "Mot de passe actuel"
+        new_password.first: "Nouveau mot de passe"
+        new_password.confirm: "Confirmation"
+    title: "Changer le mot de passe"
+  edit_user:
+    action: "Modifier mon compte"
+    title: "Modifier mon compte"
+  properties:
+    email: "Email"
+    firstname: "Prénom"
+    lastname: "Nom"
+
+

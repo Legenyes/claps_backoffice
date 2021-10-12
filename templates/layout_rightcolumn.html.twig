@@ -13,18 +13,20 @@
 {% endblock %}
 
 {% block container %}
-	<section id="main-container" class="portfolio-static">
+	<div id="main-container" class="portfolio-static">
 		<div class="container">
 			<div class="row">
-				<div id="main" class="col-sm-9">
+				<section id="main" class="col-sm-9">
 					{% block main %}{% endblock %}
-				</div>
-				<div id="sidebar" class="col-sm-3">
-					{% block sidebar %}{% endblock %}
-				</div>
+				</section>
+				<aside id="sidebar" class="col-sm-3">
+					<section class="sidebar sidebar-right">
+						{% block sidebar %}{% endblock %}
+					</section>
+				</aside>
 			</div>
 		</div><!-- Container end -->
-	</section><!-- container end -->
+	</div><!-- container end -->
 	<div class="gap-40"></div>
 {% endblock %}
 

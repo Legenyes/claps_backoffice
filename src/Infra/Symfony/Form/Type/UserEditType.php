@@ -17,14 +17,14 @@ class UserEditType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'user.email',
+                'label' => 'user.properties.email',
                 'disabled' => true,
             ])
             ->add('firstname', TextType::class, [
-                'label' => 'user.firstname',
+                'label' => 'user.properties.firstname',
             ])
             ->add('lastname', TextType::class, [
-                'label' => 'user.lastname',
+                'label' => 'user.properties.lastname',
             ])
         ;
     }

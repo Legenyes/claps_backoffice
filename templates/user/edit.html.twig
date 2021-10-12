@@ -3,7 +3,7 @@
 {% block body_id 'user_edit' %}
 
 {% block main %}
-    <h1>{{ 'title.edit_user'|trans }}</h1>
+    <h1>{{ 'user.edit_user.title'|trans }}</h1>
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
@@ -15,9 +15,9 @@
 {% endblock %}
 
 {% block sidebar %}
-    <div class="section">
+    <div class="section widget widget-user">
         <a href="{{ path('user_change_password') }}" class="btn btn-lg btn-block btn-danger">
-            <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.change_password'|trans }}
+            <i class="fa fa-lock" aria-hidden="true"></i> {{ 'user.change_password.action'|trans }}
         </a>
     </div>
 

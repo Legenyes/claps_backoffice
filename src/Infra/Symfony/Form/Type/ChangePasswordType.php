@@ -21,7 +21,7 @@ class ChangePasswordType extends AbstractType
                 'constraints' => [
                     new UserPassword(),
                 ],
-                'label' => 'label.current_password',
+                'label' => 'user.change_password.form.label.current_password',
                 'attr' => [
                     'autocomplete' => 'off',
                 ],
@@ -36,10 +36,10 @@ class ChangePasswordType extends AbstractType
                     ]),
                 ],
                 'first_options' => [
-                    'label' => 'label.new_password',
+                    'label' => 'user.change_password.form.label.new_password.first',
                 ],
                 'second_options' => [
-                    'label' => 'label.new_password_confirm',
+                    'label' => 'user.change_password.form.label.new_password.confirm',
                 ],
             ])
         ;
