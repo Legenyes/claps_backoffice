@@ -1,0 +1,38 @@
+{% if field.value is iterable %}
+    {% for element in field.value %}
+        {% set family = element %}
+        <dl>
+            {% if family.motherEmail is not null and family.motherMobilePhone is not null %}
+                <dt>Mother</dt>
+                {% if family.motherEmail is not null %}
+                    <dd>
+                        <i class="fa fa-envelope-o"></i>
+                        <a href="mailto:{{ family.motherEmail }}">{{ family.motherEmail }}</a>
+                    </dd>
+                {% endif %}
+                {% if family.motherEmail is not null %}
+                    <dd>
+                        <i class="fa fa-mobile-phone"></i>
+                        <a href="tel:{{ family.motherMobilePhone }}">{{ family.motherMobilePhone }}</a>
+                    </dd>
+                {% endif %}
+            {% endif %}
+
+            {% if family.fatherEmail is not null and family.fatherMobilePhone is not null %}
+                <dt>Father</dt>
+                {% if family.fatherEmail is not null %}
+                    <dd>
+                        <i class="fa fa-envelope-o"></i>
+                        <a href="mailto:{{ family.fatherEmail }}">{{ family.fatherEmail }}</a>
+                    </dd>
+                {% endif %}
+                {% if family.fatherMobilePhone is not null %}
+                    <dd>
+                        <i class="fa fa-mobile-phone"></i>
+                        <a href="tel:{{ family.fatherMobilePhone }}">{{ family.fatherMobilePhone }}</a>
+                    </dd>
+                {% endif %}
+            {% endif %}
+        </dl>
+    {% endfor %}
+{% endif %}

@@ -85,7 +85,8 @@ class MemberCrudController extends AbstractCrudController
             TelephoneField::new('mobilePhone'),
 
             FormField::addPanel('Families information')->collapsible(),
-            AssociationField::new('families'),
+            AssociationField::new('families')
+                ->setTemplatePath('admin/field/property_family.html.twig'),
 
             FormField::addPanel('User Address')->collapsible(),
             TextField::new('address.street')->hideOnIndex(),
