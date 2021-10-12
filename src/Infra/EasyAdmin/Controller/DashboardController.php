@@ -100,17 +100,17 @@ class DashboardController extends AbstractDashboardController
 
         $submenuMedia = [
             MenuItem::linkToCrud('Video', 'fa fa-film', Video::class),
-            MenuItem::linkToCrud('Music', 'fa fa-music', Video::class),
+            MenuItem::linkToDashboard('Music <small>(soon)</small>', 'fa fa-music'),
             MenuItem::linkToCrud('Playlist', 'fa fa-list', Playlist::class),
         ];
 
         $submenuEvent = [
             MenuItem::linkToCrud('Event', 'fa fa-calendar-alt', Event::class),
-            MenuItem::linkToCrud('Reservation', 'fa fa-ticket-alt', Event::class),
+            MenuItem::linkToDashboard('Reservation <small>(soon)</small>', 'fa fa-ticket-alt', Event::class),
         ];
 
         $submenuMarketing = [
-            MenuItem::linkToCrud('Newsletter', 'fa fa-paper-plane', Event::class),
+            MenuItem::linkToDashboard('Newsletter <small>(soon)</small>', 'fa fa-paper-plane', Event::class),
         ];
 
         yield MenuItem::subMenu('Administration', 'fas fa-cogs')->setSubItems($submenuAdmin);
