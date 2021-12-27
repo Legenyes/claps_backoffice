@@ -28,10 +28,11 @@ class VideoRepository extends ServiceEntityRepository
      *
      * @return Video[]
      */
-    public function findLastVideos($limit = 4)
+    public function findLastVideos(?int $limit = 4)
     {
         return $this->createQueryBuilder('v')
             ->setMaxResults($limit)
+            ->orderBy('v.id', 'DESC')
             ->getQuery()
             ->getResult()
             ;

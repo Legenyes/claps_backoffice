@@ -10,14 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MediaController extends AbstractController
+class HomeController extends AbstractController
 {
-    #[Route('/media', name:'app_media_index')]
-    public function indexAction(VideoRepository $videoRepository, PlaylistRepository $playlistRepository): Response
+    #[Route('/', name:'app_index')]
+    public function indexAction(VideoRepository $videoRepository): Response
     {
-        $videos = $videoRepository->findLastVideos();
+        $videos = $videoRepository->findLastVideos(8);
 
-        return $this->render('media/index.html.twig', [
+        return $this->render('Home/index.html.twig', [
             'videos' => $videos,
             'breadcrumb' => $this->getBreadcurmb()
         ]);
@@ -26,7 +26,6 @@ class MediaController extends AbstractController
     private function getBreadcurmb(): array
     {
         $breadcrumb['items'][] = ['title' => 'Home', 'url' => '/'];
-        $breadcrumb['items'][] = ['title' => 'Media'];
 
         return $breadcrumb;
     }
