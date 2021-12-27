@@ -30,8 +30,7 @@
                     {% if video.country is not null %}
                         <span class="video-meta meta-country">
                             <i class="fa fa-flag"></i> <a href="{{ path('app_video_search', { 'country': video.country }) }}">{{ video.country|country }}</a>
-                        </span>
-                        &nbsp;
+                        </span>                        &nbsp;
                     {% endif %}
 
                     {% if video.sections|length > 0 %}

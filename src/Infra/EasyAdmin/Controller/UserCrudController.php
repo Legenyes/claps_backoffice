@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use Infra\Symfony\Persistance\Doctrine\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -22,8 +24,8 @@ class UserCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('User')
-            ->setEntityLabelInPlural('Users')
+            ->setEntityLabelInSingular('user.crud.title.singular')
+            ->setEntityLabelInPlural('user.crud.title.plural')
             ->setSearchFields(['id', 'email', 'roles', 'firstName', 'lastName'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
@@ -33,11 +35,11 @@ class UserCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id', 'ID')->onlyOnDetail(),
-            EmailField::new('email'),
-            TextField::new('firstName'),
-            TextField::new('lastName'),
-            TextField::new('password')->onlyOnForms(),
-            ChoiceField::new('roles', 'Roles')
+            EmailField::new('email', 'user.properties.email'),
+            TextField::new('firstName', 'user.properties.firstname'),
+            TextField::new('lastName', 'user.properties.lastname'),
+            TextField::new('password', 'user.properties.password')->onlyOnForms(),
+            ChoiceField::new('roles', 'user.properties.roles')
                 ->allowMultipleChoices()
                 ->autocomplete()
                 ->setChoices([
@@ -46,5 +48,14 @@ class UserCrudController extends AbstractCrudController
                         'SuperAdmin' => 'ROLE_SUPER_ADMIN'
                     ])
         ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->setPermission(Action::NEW, 'ROLE_SUPER_ADMIN')
+            ->setPermission(Action::EDIT, 'ROLE_SUPER_ADMIN')
+            ->setPermission(Action::DELETE, 'ROLE_SUPER_ADMIN')
+            ;
     }
 }

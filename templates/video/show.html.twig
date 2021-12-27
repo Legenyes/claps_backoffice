@@ -22,12 +22,12 @@
 
                     {% if video.country is not null %}
                         <h3 class="widget-title">Pays</h3>
-                        <p>{{ video.country|country }}</p>
+                        <p><a href="{{ path('app_video_search', { 'country': video.country }) }}">{{ video.country|country }}</a></p>
                     {% endif %}
 
                     {% if video.event is not null %}
                         <h3 class="widget-title">Event</h3>
-                        <p>{{ video.event }}</p>
+                        <p><a href="{{ path('app_video_search', { 'event': video.event.id }) }}">{{ video.event }}</a></p>
                     {% endif %}
 
                     {% if video.sections|length > 0 %}

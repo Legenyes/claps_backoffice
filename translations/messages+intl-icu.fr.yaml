@@ -1,4 +1,5 @@
 action:
+  export: "Exporter"
   save: "Enregistrer"
 
 address:
@@ -7,8 +8,8 @@ address:
     city: "Ville"
     country: "Pays"
     street: "Rue"
-    streetBox: "Numéro"
-    streetNumber: "Boite"
+    streetBox: "Boite"
+    streetNumber: "Numéro"
     zipCode: "Code postal"
 
 clothe_color:
@@ -132,6 +133,10 @@ user:
         new_password.first: "Nouveau mot de passe"
         new_password.confirm: "Confirmation"
     title: "Changer le mot de passe"
+  crud:
+    title:
+      singular: "Utilisateur"
+      plural: "Utilisateurs"
   edit_user:
     action: "Modifier mon compte"
     title: "Modifier mon compte"
@@ -139,6 +144,8 @@ user:
     email: "Email"
     firstname: "Prénom"
     lastname: "Nom"
+    password: "Mot de passe"
+    roles: "Roles"
 
 video:
   crud:

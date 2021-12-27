@@ -178,7 +178,6 @@ class MemberShip
     public function getExportData()
     {
         return \array_merge([
-            'subscription_id' => $this->id,
             'subscriptionAmount' => $this->subscriptionAmount,
             'subscriptionPaidAt' => $this->subscriptionPaidAt ? $this->subscriptionPaidAt->format('d/m/Y H:m') : '',
         ], $this->getMember()->getExportData());

@@ -1,0 +1,7 @@
+{% if field.value is iterable %}
+    {% for element in field.value %}
+        <span class="badge badge-primary">{{ element }}</span>
+    {% endfor %}
+{% else %}
+    <span class="badge badge-primary">{{ field.value }}</span>
+{% endif %}

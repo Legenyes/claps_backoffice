@@ -6,26 +6,18 @@ namespace Infra\Symfony\Controller;
 
 use Infra\Symfony\Form\Type\ChangePasswordType;
 use Infra\Symfony\Form\Type\UserEditType;
-use Infra\Symfony\Persistance\Doctrine\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-/**
- * Controller used to manage current user.
- *
- * @Route("/profile")
- * @IsGranted("ROLE_USER")
- */
-class UserController extends AbstractController
+#[Route('/profile')]
+#[IsGranted('ROLE_USER')]
+class UserController extends BaseController
 {
-    /**
-     * @Route("/edit", methods="GET|POST", name="user_edit")
-     */
+    #[Route('/edit', name:'user_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function edit(Request $request): Response
     {
         $user = $this->getUser();
@@ -34,7 +26,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->getEntityManager()->flush();
 
             $this->addFlash('success', 'user.updated_successfully');
 
@@ -47,9 +39,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/change-password", methods="GET|POST", name="user_change_password")
-     */
+    #[Route('/change-password', name:'user_change_password', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function changePassword(Request $request, UserPasswordHasherInterface $hasher): Response
     {
         /** @var PasswordAuthenticatedUserInterface $user */
@@ -61,7 +51,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($hasher->hashPassword($user, $form->get('newPassword')->getData()));
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->getEntityManager()->flush();
 
             return $this->redirectToRoute('security_logout');
         }

@@ -55,6 +55,7 @@ class MemberCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('member.crud.title.plural')
             ->setSearchFields(['id', 'firstname', 'lastname', 'email', 'phone', 'mobilePhone', 'sex', 'niss', 'insurer'])
             ->setPaginatorPageSize(100)
+            ->setDefaultSort(['lastname' => 'ASC'])
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
     }
 

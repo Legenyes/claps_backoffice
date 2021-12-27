@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Infra\EasyAdmin\Controller;
 
 use Infra\Symfony\Persistance\Doctrine\Entity\ClubYear;
+use Infra\Symfony\Persistance\Doctrine\Entity\Member;
 use Infra\Symfony\Persistance\Doctrine\Entity\MemberShip;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
@@ -55,7 +56,7 @@ class MemberShipCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $export = Action::new('export', 'actions.export')
+        $export = Action::new('export', 'action.export')
             ->setIcon('fa fa-download')
             ->linkToCrudAction('export')
             ->setCssClass('btn')
@@ -84,15 +85,18 @@ class MemberShipCrudController extends AbstractCrudController
     {
         $clubYear = AssociationField::new('clubYear');
         $member = AssociationField::new('member');
-        $sections = AssociationField::new('sections');
+        $sections = AssociationField::new('sections')
+            ->setTemplatePath('admin/field/property_sections.html.twig');
         $startDate = DateField::new('startDate');
         $endDate = DateField::new('endDate');
-        $subscriptionAmount = MoneyField::new('subscriptionAmount')->setCurrency('EUR');
+        $subscriptionAmount = MoneyField::new('subscriptionAmount')
+            ->setCurrency('EUR')
+            ->setStoredAsCents(false);
         $subscriptionPaidAt = DateField::new('subscriptionPaidAt');
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $member, $clubYear, $sections, $subscriptionAmount, $subscriptionPaidAt];
+            return [$member, $sections, $subscriptionAmount, $subscriptionPaidAt];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $startDate, $endDate, $subscriptionAmount, $subscriptionPaidAt, $clubYear, $member, $sections];
         } elseif (Crud::PAGE_NEW === $pageName) {
@@ -113,8 +117,10 @@ class MemberShipCrudController extends AbstractCrudController
         return $this
             ->get(EntityRepository::class)
             ->createQueryBuilder($searchDto, $entityDto, $fields, $filters)
+            ->leftJoin('entity.member', 'member')
             ->andWhere('entity.clubYear = :clubYear')
-            ->setParameter('clubYear', $clubYear);
+            ->setParameter('clubYear', $clubYear)
+            ->addOrderBy('member.birthdate', 'DESC');
     }
 
     public function export(Request $request)
@@ -128,6 +134,7 @@ class MemberShipCrudController extends AbstractCrudController
 
         $data = [];
         foreach ($members as $member) {
+            /** @var $member MemberShip */
             $data[] = $member->getExportData();
         }
 

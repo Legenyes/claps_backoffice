@@ -4,22 +4,18 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Controller;
 
-use Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostume;
-use Doctrine\ORM\EntityManagerInterface;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClothesCostumeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/clothes/costumes")
- */
+#[Route('/clothes/costumes')]
 class ClothesCostumeController extends BaseController
 {
-    /**
-     * @Route("/", name="app_clothes_costume_index")
-     */
-    public function indexAction(EntityManagerInterface $em): Response
+
+    #[Route('/', name:'app_clothes_costume_index')]
+    public function indexAction(ClothesCostumeRepository $clothesCostumeRepository): Response
     {
-        $costumes = $em->getRepository(ClothesCostume::class)->findAll();
+        $costumes = $clothesCostumeRepository->findAll();
 
         return $this->render('clothescostume/index.html.twig', [
             'costumes' => $costumes,

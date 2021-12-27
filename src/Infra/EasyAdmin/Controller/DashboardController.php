@@ -113,7 +113,10 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToDashboard('Newsletter <small>(soon)</small>', 'fa fa-paper-plane', Event::class),
         ];
 
-        yield MenuItem::subMenu('Administration', 'fas fa-cogs')->setSubItems($submenuAdmin);
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+            yield MenuItem::subMenu('Administration', 'fas fa-cogs')->setSubItems($submenuAdmin);
+        }
+
         yield MenuItem::subMenu('Membres', 'fa fa-users')->setSubItems($submenuMember);
         yield MenuItem::subMenu('Costumes', 'fas fa-tshirt')->setSubItems($submenuClothe);
         yield MenuItem::subMenu('Medias', 'fas fa-photo-video')->setSubItems($submenuMedia);

@@ -4,23 +4,20 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Controller;
 
-use Infra\Symfony\Persistance\Doctrine\Entity\Playlist;
-use Infra\Symfony\Persistance\Doctrine\Entity\Video;
-use Doctrine\ORM\EntityManagerInterface;
+use Infra\Symfony\Persistance\Doctrine\Repository\PlaylistRepository;
+use Infra\Symfony\Persistance\Doctrine\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MediaController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_index")
-     * @Route("/media", name="app_media_index")
-     */
-    public function indexAction(EntityManagerInterface $em): Response
+    #[Route('/', name:'app_index')]
+    #[Route('/media', name:'app_media_index')]
+    public function indexAction(VideoRepository $videoRepository, PlaylistRepository $playlistRepository): Response
     {
-        $videos = $em->getRepository(Video::class)->findLastVideos();
-        $playlists = $em->getRepository(Playlist::class)->findLastPlaylists();
+        $videos = $videoRepository->findLastVideos();
+        $playlists = $playlistRepository->findLastPlaylists();
 
         $breadcrumb['items'][] = ['title' => 'Home', 'url' => '/'];
         $breadcrumb['items'][] = ['title' => 'Media'];

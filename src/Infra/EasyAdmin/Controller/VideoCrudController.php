@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use Infra\Symfony\Persistance\Doctrine\Entity\Video;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -42,11 +44,11 @@ class VideoCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name', 'word.name');
-        $url = TextField::new('url', 'word.url');
+        $url = UrlField::new('url', 'word.url');
         $event = AssociationField::new('event', 'event.crud.title.singular');
         $sections = AssociationField::new('sections', 'section.crud.title.plural');
         $recordDate = DateTimeField::new('recordDate', 'video.properties.record_date');
-        $country = TextField::new('country', 'address.properties.country');
+        $country = CountryField::new('country', 'address.properties.country');
         $id = IntegerField::new('id', 'ID');
         $playlistVideos = AssociationField::new('playlistVideos', 'playlist.crud.title.plural');
 

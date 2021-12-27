@@ -359,7 +359,7 @@ class Member
 
         return \array_merge([
             '.PRENOM' => $this->firstname,
-            '.NOM' => $this->lastname,
+            '.NOM' => strtoupper($this->lastname),
             '.DATEN' => $this->birthdate ? $this->birthdate->format('d/m/Y') : '',
             '.GENRE' => $this->sex,
             '.IDFEDE' => '',
