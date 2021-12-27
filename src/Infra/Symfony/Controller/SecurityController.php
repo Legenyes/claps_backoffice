@@ -9,6 +9,7 @@ use Infra\Symfony\Form\Type\UserRegisterType;
 use Infra\Symfony\Persistance\Doctrine\Entity\User;
 use Infra\Symfony\Persistance\Doctrine\Repository\MemberRepository;
 use Infra\Symfony\Persistance\Doctrine\Repository\UserRepository;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -40,22 +41,21 @@ class SecurityController extends BaseController
             }
 
             $membre = $membreRepository->findOneByEmail($registerRequest->email);
-            if (!$membre) {
-                $this->addFlash('error', 'user.updated_successfully');
-                return $this->redirectToRoute('security_register');
+            if ($membre) {
+                $user = new User();
+                $user->setEmail($membre->getEmail());
+                $user->setFirstName($membre->getFirstname());
+                $user->setLastName($membre->getLastname());
+                $user->setPassword($hasher->hashPassword($user, $registerRequest->password));
+                $user->setRoles(['ROLE_USER']);
+
+                $this->getEntityManager()->persist($user);
+                $this->getEntityManager()->flush();
+
+                return $this->redirectToRoute('user_edit');
             }
 
-            $user = new User();
-            $user->setEmail($membre->getEmail());
-            $user->setFirstName($membre->getFirstname());
-            $user->setLastName($membre->getLastname());
-            $user->setPassword($hasher->hashPassword($user, $registerRequest->password));
-            $user->setRoles(['ROLE_USER']);
-
-            $this->getEntityManager()->persist($user);
-            $this->getEntityManager()->flush();
-
-            return $this->redirectToRoute('user_edit');
+            $form->addError(new FormError("Nous ne trouvons pas cette adresse email dans notre liste de membre."));
         }
 
         return $this->render('security/register.html.twig', [
