@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Persistance\Doctrine\Repository;
 
+use Doctrine\ORM\QueryBuilder;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesPiece;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Infra\Symfony\Utils\SqlParameterBag;
 
 /**
  * @method ClothesPiece|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,32 +23,66 @@ class ClothesPieceRepository extends ServiceEntityRepository
         parent::__construct($registry, ClothesPiece::class);
     }
 
-    // /**
-    //  * @return ClothesPiece[] Returns an array of ClothesPiece objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function search()
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('c.country', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?ClothesPiece
+    /**
+     * @param SqlParameterBag $params
+     * @return QueryBuilder
+     */
+    private function filterAllQueryBuilder(SqlParameterBag $params)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        /** @var QueryBuilder $query */
+        $query = $this->createQueryBuilder('cp')
+            ->leftJoin('cp.sections', 'section')
+            ->setFirstResult($params->getOffset())
+            ->setMaxResults($params->getLimit());
+
+        if ($params->has('search')) {
+            $searchs = explode(" ", $params->get('search'));
+            foreach ($searchs as $key => $search) {
+                $search = iconv('UTF-8','UTF-8//IGNORE', $search);
+                $query
+                    ->andWhere('cp.name LIKE :search'.$key)
+                    ->setParameter('search'.$key, '%'.$search.'%');
+            }
+
+        }
+
+        if ($params->has('country') && strlen($params->get('country'))>0) {
+            $query
+                ->andWhere('cp.country = :country')
+                ->setParameter('country', $params->get('country'));
+        }
+
+        if ($params->has('sections') && strlen($params->get('sections'))>0) {
+            $query
+                ->andWhere('section.id = :sections')
+                ->setParameter('sections', $params->get('sections'));
+        }
+
+        foreach($params->getOrderBy() as $key=>$value)
+            $query->addOrderBy("cp.".$key, $value);
+
+        return $query;
     }
-    */
+
+    /**
+     * @param SqlParameterBag $params
+     * @return mixed
+     */
+    public function filterAll(SqlParameterBag $params)
+    {
+        return $this
+            ->filterAllQueryBuilder($params)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

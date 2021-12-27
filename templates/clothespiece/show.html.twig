@@ -8,10 +8,10 @@
         <!-- Portfolio item slider start -->
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
             <figure class="m-0 effect-oscar">
-                {% if piece.image is not null %}
-                    <img src="/uploads/images/clothespieces/{{ piece.image }}" alt="{{ piece.name|e }}">
+                {% if piece.image %}
+                    <img src="{{ piece.image|e }}" alt="{{ piece.name|e }}">
                 {% else %}
-                    <img src="https://via.placeholder.com/400x600" alt="{{ piece.name|e }}">
+                    <img src="http://placehold.jp/255x383.png?text=non%20disponnible" alt="{{ piece.name|e }}">
                 {% endif %}
             </figure>
         </div>

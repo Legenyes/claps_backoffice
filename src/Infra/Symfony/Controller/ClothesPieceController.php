@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Controller;
 
+use Infra\Symfony\Form\Type\SearchClothesPieceType;
+use Infra\Symfony\Form\Type\SearchVideoType;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesPiece;
 use Infra\Symfony\Persistance\Doctrine\Repository\ClothesPieceRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +17,12 @@ class ClothesPieceController extends BaseController
     #[Route('/', name:'app_clothes_piece_index')]
     public function indexAction(ClothesPieceRepository $clothesPieceRepository): Response
     {
-        $pieces = $clothesPieceRepository->findAll();
+        $form = $this->createForm(SearchClothesPieceType::class);
+        $pieces = $clothesPieceRepository->filterAll($this->getSqlParameterBag());
 
         return $this->render('clothespiece/index.html.twig', [
             'pieces' => $pieces,
+            'searchClothesPieceform' => $form->createView(),
             'breadcrumb' => null
         ]);
     }

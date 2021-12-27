@@ -5,15 +5,20 @@
 
 {% block main %}
     <div class="row">
-        <div class="col-md-6 heading">
+        <div class="col-md-3 heading">
             <span class="title-icon classic pull-left"><i class="fa fa-cut"></i></span>
-            <h2 class="title classic">Pièces costumes</h2>
+            <h2 class="title classic">Pièces de costumes</h2>
         </div>
-        <div class="col-md-6">
-
+        <div class="col-md-9">
+            {{ include('clothespiece/_form_simple.html.twig') }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ include('clothespiece/_form_filter.html.twig') }}
         </div>
     </div>
 
-    {% include 'clothescostume/_grid.html.twig' %}
+    {% include 'clothespiece/_grid.html.twig' %}
 
 {% endblock %}
