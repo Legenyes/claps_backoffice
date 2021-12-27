@@ -18,14 +18,20 @@ class UserRegisterType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'user.properties.email',
+                'label' => 'user.register.form.label.email',
+                'help' => 'user.register.form.help.email',
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => [
+                    'label' => 'user.register.form.label.password.first',
+                    'help' => 'user.register.form.help.password',
+                ],
+                'second_options' => [
+                    'label' => 'user.register.form.label.password.confirm',
+                ],
             ])
         ;
     }

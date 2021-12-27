@@ -71,7 +71,7 @@ class SecurityController extends BaseController
             return $this->redirectToRoute('admin_dashboard');
         }
 
-        return $this->render('@EasyAdmin/page/login.html.twig', [
+        return $this->render('security/login.html.twig', [
             'error' => $helper->getLastAuthenticationError(),
             'last_username' => $helper->getLastUsername(),
             'page_title' => 'Clap\'Sabots',
