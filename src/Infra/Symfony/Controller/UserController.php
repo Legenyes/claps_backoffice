@@ -6,6 +6,7 @@ namespace Infra\Symfony\Controller;
 
 use Infra\Symfony\Form\Type\ChangePasswordType;
 use Infra\Symfony\Form\Type\UserEditType;
+use Infra\Symfony\Persistance\Doctrine\Entity\Member;
 use Infra\Symfony\Persistance\Doctrine\Entity\User;
 use Infra\Symfony\Persistance\Doctrine\Repository\MemberFamilyRepository;
 use Infra\Symfony\Persistance\Doctrine\Repository\MemberRepository;
@@ -21,13 +22,20 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 class UserController extends BaseController
 {
     #[Route('/', name:'app_user_show', methods: [Request::METHOD_GET])]
-    public function show(MemberRepository $memberRepository): Response
+    public function show(MemberRepository $memberRepository, MemberFamilyRepository $familyRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
+        $families = [];
+        $familyMembers = [];
         $member = $memberRepository->findOneByEmail($user->getEmail());
-        $families = $member->getFamilies();
-        $familyMembers[] = $memberRepository->findOneByEmail($user->getEmail());
+        if ($member) {
+            $families = $member->getFamilies();
+            $familyMembers[] = $memberRepository->findOneByEmail($member->getEmail());
+        } else {
+            $families[] = $familyRepository->findOneByEmail($user->getEmail());
+        }
+
         foreach ($families as $family) {
             $members = $memberRepository->findByFamily($family);
             $familyMembers = array_merge($familyMembers, $members);
@@ -39,6 +47,11 @@ class UserController extends BaseController
             'familyMembers' => $familyMembers,
             'families' => $families,
         ]);
+    }
+
+    private function getMember(): Member
+    {
+
     }
 
     #[Route('/edit', name:'user_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]

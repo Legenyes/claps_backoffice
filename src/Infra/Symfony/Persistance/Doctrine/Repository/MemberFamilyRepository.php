@@ -20,4 +20,13 @@ class MemberFamilyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, MemberFamily::class);
     }
+
+    public function findOneByEmail(string $email): ?MemberFamily
+    {
+        $query = $this->createQueryBuilder('f')
+            ->where('f.motherEmail = :email OR f.fatherEmail = :email')
+            ->setParameter('email', $email);
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
 }

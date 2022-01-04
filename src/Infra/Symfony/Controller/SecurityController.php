@@ -4,30 +4,50 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Domain\Account\User\UseCase\Register\RegisterUserRequest;
 use Infra\Symfony\Form\Type\UserRegisterType;
+use Infra\Symfony\Persistance\Doctrine\Entity\Member;
+use Infra\Symfony\Persistance\Doctrine\Entity\MemberFamily;
 use Infra\Symfony\Persistance\Doctrine\Entity\User;
+use Infra\Symfony\Persistance\Doctrine\Repository\MemberFamilyRepository;
 use Infra\Symfony\Persistance\Doctrine\Repository\MemberRepository;
 use Infra\Symfony\Persistance\Doctrine\Repository\UserRepository;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class SecurityController extends BaseController
 {
     use TargetPathTrait;
 
+    private UserPasswordHasherInterface $hasher;
+
+    public function __construct(
+        RequestStack $requestStack,
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $hasher
+    ) {
+        parent::__construct($requestStack, $entityManager);
+        $this->hasher = $hasher;
+    }
+
     #[Route('/register', name: 'security_register')]
     public function register(
         Request $request,
         UserRepository $userRepository,
         MemberRepository $membreRepository,
-        UserPasswordHasherInterface $hasher
+        MemberFamilyRepository $familyRepository,
+        UserAuthenticatorInterface $userAuthenticator,
+        FormLoginAuthenticator $formLoginAuthenticator
     ): Response {
         $registerRequest = new RegisterUserRequest();
 
@@ -40,19 +60,19 @@ class SecurityController extends BaseController
                 return $this->redirectToRoute('security_login');
             }
 
-            $membre = $membreRepository->findOneByEmail($registerRequest->email);
-            if ($membre) {
-                $user = new User();
-                $user->setEmail($membre->getEmail());
-                $user->setFirstName($membre->getFirstname());
-                $user->setLastName($membre->getLastname());
-                $user->setPassword($hasher->hashPassword($user, $registerRequest->password));
-                $user->setRoles(['ROLE_USER']);
+            $member = $membreRepository->findOneByEmail($registerRequest->email);
+            if ($member) {
+                $user = $this->createFromMember($member, $registerRequest);
+                $userAuthenticator->authenticateUser($user, $formLoginAuthenticator, $request);
+                
+                return $this->redirectToRoute('app_index');
+            }
+            $family = $familyRepository->findOneByEmail($registerRequest->email);
+            if ($family) {
+                $user = $this->createFromFamily($family, $registerRequest);
+                $userAuthenticator->authenticateUser($user, $formLoginAuthenticator, $request);
 
-                $this->getEntityManager()->persist($user);
-                $this->getEntityManager()->flush();
-
-                return $this->redirectToRoute('user_edit');
+                return $this->redirectToRoute('app_index');
             }
 
             $form->addError(new FormError("Nous ne trouvons pas cette adresse email dans notre liste de membre."));
@@ -61,6 +81,35 @@ class SecurityController extends BaseController
         return $this->render('security/register.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    private function createFromMember(Member $member, RegisterUserRequest $registerRequest): User
+    {
+        $user = new User();
+        $user->setEmail($member->getEmail());
+        $user->setFirstName($member->getFirstname());
+        $user->setLastName($member->getLastname());
+        $user->setPassword($this->hasher->hashPassword($user, $registerRequest->password));
+        $user->setRoles(['ROLE_USER']);
+
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+
+        return $user;
+    }
+
+    private function createFromFamily(MemberFamily $family, RegisterUserRequest $registerRequest): User
+    {
+        $user = new User();
+        $user->setEmail($registerRequest->email);
+        $user->setLastName($family->getLastname());
+        $user->setPassword($this->hasher->hashPassword($user, $registerRequest->password));
+        $user->setRoles(['ROLE_USER']);
+
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+
+        return $user;
     }
 
     #[Route('/login', name: 'security_login')]
