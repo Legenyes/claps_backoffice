@@ -67,8 +67,10 @@ class ClothesPieceRepository extends ServiceEntityRepository
                 ->setParameter('sections', $params->get('sections'));
         }
 
-        foreach($params->getOrderBy() as $key=>$value)
+        $query->addOrderBy("cp.country", "ASC");
+        foreach($params->getOrderBy() as $key=>$value) {
             $query->addOrderBy("cp.".$key, $value);
+        }
 
         return $query;
     }

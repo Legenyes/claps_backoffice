@@ -6,6 +6,9 @@ namespace Infra\Symfony\Controller;
 
 use Infra\Symfony\Form\Type\ChangePasswordType;
 use Infra\Symfony\Form\Type\UserEditType;
+use Infra\Symfony\Persistance\Doctrine\Entity\User;
+use Infra\Symfony\Persistance\Doctrine\Repository\MemberFamilyRepository;
+use Infra\Symfony\Persistance\Doctrine\Repository\MemberRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +20,27 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[IsGranted('ROLE_USER')]
 class UserController extends BaseController
 {
+    #[Route('/', name:'app_user_show', methods: [Request::METHOD_GET])]
+    public function show(MemberRepository $memberRepository): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $member = $memberRepository->findOneByEmail($user->getEmail());
+        $families = $member->getFamilies();
+        $familyMembers[] = $memberRepository->findOneByEmail($user->getEmail());
+        foreach ($families as $family) {
+            $members = $memberRepository->findByFamily($family);
+            $familyMembers = array_merge($familyMembers, $members);
+        }
+        $familyMembers = array_unique($familyMembers);
+
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+            'familyMembers' => $familyMembers,
+            'families' => $families,
+        ]);
+    }
+
     #[Route('/edit', name:'user_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function edit(Request $request): Response
     {

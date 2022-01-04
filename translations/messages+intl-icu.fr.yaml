@@ -82,6 +82,18 @@ club_year:
     date_stop:  "Date de find"
     is_active: "Saison courante"
 
+document_category:
+  crud:
+    title:
+      singular: "Catégorie de document"
+      plural: "Catégories de document"
+
+document_file:
+  crud:
+    title:
+      singular: "Document"
+      plural: "Documents"
+
 event:
   crud:
     title:
@@ -100,13 +112,16 @@ member:
     title:
       singular: "Membre"
       plural: "Membres"
+  edit_member:
+    title: "Fiche personnelle {name}"
   properties:
     birthdate: "Date de naissance"
     email: "Email"
     families: "Familles"
     firstname: "Prénom"
     lastname: "Nom"
-    insurer: "Assureur"
+    niss: "N° national"
+    insurer: "Mutuelle"
     mobilePhone: "GSM"
     phone: "Téléphone fixe"
     sex: "Sexe"
@@ -157,6 +172,8 @@ user:
         email: "Adresse email"
         password.first: "Mot de passe"
         password.confirm: "Confirmation"
+  show_user:
+    title: "Bienvenue {name}"
   properties:
     email: "Email"
     firstname: "Prénom"

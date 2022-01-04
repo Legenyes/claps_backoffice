@@ -8,6 +8,7 @@ use Infra\Symfony\Persistance\Doctrine\Entity\Member;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Infra\Symfony\Persistance\Doctrine\Entity\MemberFamily;
 
 /**
  * @method Member|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,34 +23,16 @@ class MemberRepository extends ServiceEntityRepository
         parent::__construct($registry, Member::class);
     }
 
-    // /**
-    //  * @return Member[] Returns an array of Member objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByFamily(MemberFamily $memberFamily)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            ->join('m.families', 'f')
+            ->andWhere('f.id = :family')
+            ->setParameter('family', $memberFamily->getId())
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Member
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 
     /**
      * @param \Symfony\Component\Security\Core\User\User $user

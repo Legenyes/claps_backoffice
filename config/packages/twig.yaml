@@ -3,3 +3,6 @@ twig:
     debug: '%kernel.debug%'
     form_themes: ['bootstrap_4_horizontal_layout.html.twig']
     strict_variables: '%kernel.debug%'
+    globals:
+        # the value is the service's id
+        path_documents: '%app.path.documents%'

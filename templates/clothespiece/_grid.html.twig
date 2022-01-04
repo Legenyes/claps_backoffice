@@ -1,6 +1,6 @@
 <div class="row">
     {% for piece in pieces %}
-        <div class="col-sm-3 portfolio-static-item">
+        <div class="col-sm-2 col-xs-6 portfolio-static-item">
             <div class="grid">
                 <a href="{{ path('app_clothes_piece_show', {'id': piece.id }) }}">
                     <figure class="m-0 effect-oscar">
@@ -16,7 +16,7 @@
 
                    <span>
                        <a href="#">
-                           <img src="/bundles/easyadmin/images/flags/{{ piece.country }}.png" class="country-flag" style="height:25px" alt="{{ piece.country|country }}">
+                           <img src="/bundles/easyadmin/images/flags/{{ piece.country }}.png" class="country-flag" style="height:15px" alt="{{ piece.country|country }}">
                            {{ piece.country|country }}
                        </a>
                    </span>

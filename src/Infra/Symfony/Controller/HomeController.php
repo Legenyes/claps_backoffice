@@ -17,7 +17,7 @@ class HomeController extends AbstractController
     {
         $videos = $videoRepository->findLastVideos(8);
 
-        return $this->render('Home/index.html.twig', [
+        return $this->render('home/index.html.twig', [
             'videos' => $videos,
             'breadcrumb' => $this->getBreadcurmb()
         ]);
