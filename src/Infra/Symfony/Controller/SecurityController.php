@@ -64,7 +64,7 @@ class SecurityController extends BaseController
             if ($member) {
                 $user = $this->createFromMember($member, $registerRequest);
                 $userAuthenticator->authenticateUser($user, $formLoginAuthenticator, $request);
-                
+
                 return $this->redirectToRoute('app_index');
             }
             $family = $familyRepository->findOneByEmail($registerRequest->email);

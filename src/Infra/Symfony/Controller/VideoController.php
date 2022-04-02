@@ -6,7 +6,10 @@ namespace Infra\Symfony\Controller;
 
 use Infra\Symfony\Persistance\Doctrine\Entity\Video;
 use Infra\Symfony\Form\Type\SearchVideoType;
+use Infra\Symfony\Persistance\Doctrine\Repository\EventRepository;
 use Infra\Symfony\Persistance\Doctrine\Repository\VideoRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -57,4 +60,42 @@ class VideoController extends BaseController
         return $breadcrumb;
     }
 
+    #[Route('/feed', name:'app_video_feed')]
+    public function feedAction(EventRepository $eventRepository): JsonResponse
+    {
+        $events = $eventRepository->findBy([], ['date' => 'DESC']);
+
+        foreach ($events as $event) {
+            if (!$event->getVideos()->isEmpty()) {
+                $eventData = [
+                    'id' => $event->getId(),
+                    'title' => $event->getName(),
+                    'description' => $event->getVenue() .' '. $event->getDate()?->format('C'),
+                    'image' => "https://www.vilagfa.be/fr/wp-content/uploads/sites/2/2015/05/plancher1.jpg",
+                ];
+                foreach ($event->getVideos() as $video) {
+                    $videoData = [
+                        'id' => $video->getId(),
+                        'title' => $video->getName(),
+                        'youtube' => $video->getUrl(),
+                        'director' => $video->getCountry(),
+                        'year' => 2022,
+                        'ratings' => null,
+                        'duration' => 780,
+                        'description' => $event->getVenue() .' '. $event->getDate()?->format('C'),
+                        'url' => "https://android-tv-classics.firebaseapp.com/content/le_voyage_dans_la_lun/media_le_voyage_dans_la_lun.mp4",
+                        'art' => "https://img.youtube.com/vi/" .$video->getYoutubeId(). "/sddefault.jpg",
+                    ];
+                    $eventData['items'][] = $videoData;
+                }
+                $data['feed'][] = $eventData;
+            }
+
+        }
+        $data['backgrounds'][] = 'https://www.vilagfa.be/fr/wp-content/uploads/sites/2/2015/05/plancher1.jpg';
+        $data['backgrounds'][] = 'https://www.vilagfa.be/fr/wp-content/uploads/sites/2/2015/05/plancher1.jpg';
+        $data['backgrounds'][] = 'https://www.vilagfa.be/fr/wp-content/uploads/sites/2/2015/05/plancher1.jpg';
+
+        return new JsonResponse($data);
+    }
 }

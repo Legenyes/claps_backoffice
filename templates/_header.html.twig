@@ -37,9 +37,11 @@
 							<a class="nav-link" href="{{ path('app_document_index') }}">Documents</a>
 						</li>
 
-						<li class="nav-item active">
-							<a class="nav-link" href="{{ path('admin_dashboard') }}">Admin</a>
-						</li>
+						{% if is_granted('ROLE_ADMIN') %}
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('admin_dashboard') }}">Admin</a>
+							</li>
+						{% endif %}
 
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"

@@ -25,7 +25,12 @@ class Event
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name = null;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private ?string $venue = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -89,6 +94,20 @@ class Event
     public function setIsHighlight(bool $isHighlight): self
     {
         $this->isHighlight = $isHighlight;
+
+        return $this;
+    }
+
+
+    public function getVenue(): ?string
+    {
+        return $this->venue;
+    }
+
+
+    public function setVenue(?string $venue): self
+    {
+        $this->venue = $venue;
 
         return $this;
     }

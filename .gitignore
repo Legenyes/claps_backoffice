@@ -15,3 +15,6 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 bin/
+private/
+.idea/
+nbproject/

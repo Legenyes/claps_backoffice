@@ -18,6 +18,7 @@ use Infra\Symfony\Persistance\Doctrine\Entity\ClubYear;
 use Infra\Symfony\Persistance\Doctrine\Entity\DocumentCategory;
 use Infra\Symfony\Persistance\Doctrine\Entity\DocumentFile;
 use Infra\Symfony\Persistance\Doctrine\Entity\Event;
+use Infra\Symfony\Persistance\Doctrine\Entity\LoginHistory;
 use Infra\Symfony\Persistance\Doctrine\Entity\Member;
 use Infra\Symfony\Persistance\Doctrine\Entity\MemberFamily;
 use Infra\Symfony\Persistance\Doctrine\Entity\MemberShip;
@@ -79,6 +80,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('ClubYear', 'fa fa-calendar-alt', ClubYear::class),
             MenuItem::linkToCrud('Section', 'fa fa-list', Section::class),
             MenuItem::linkToCrud('User', 'fa fa-user-circle-o', User::class),
+            MenuItem::linkToCrud('Login History', 'fa fa-user-circle-o', LoginHistory::class),
         ];
 
         $now = new \DateTimeImmutable();

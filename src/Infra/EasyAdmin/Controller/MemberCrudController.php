@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA;
+use EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory;
 use Infra\Symfony\Persistance\Doctrine\Entity\Address;
 use Infra\Symfony\Persistance\Doctrine\Entity\Member;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,9 +23,20 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Infra\Symfony\Persistance\Doctrine\Entity\MemberShip;
+use Infra\Symfony\Service\CsvService;
+use Symfony\Component\HttpFoundation\Request;
 
 class MemberCrudController extends AbstractCrudController
 {
+    private CsvService $csvService;
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(CsvService $csvService, EntityManagerInterface $entityManager)
+    {
+        $this->csvService = $csvService;
+        $this->entityManager = $entityManager;
+    }
     public static function getEntityFqcn(): string
     {
         return Member::class;
@@ -46,6 +62,17 @@ class MemberCrudController extends AbstractCrudController
         }
 
         parent::updateEntity($entityManager, $entityInstance);
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $export = Action::new('export', 'action.export')
+            ->setIcon('fa fa-download')
+            ->linkToCrudAction('export')
+            ->setCssClass('btn')
+            ->createAsGlobalAction();
+
+        return $actions->add(Crud::PAGE_INDEX, $export);
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -96,5 +123,22 @@ class MemberCrudController extends AbstractCrudController
             TextField::new('address.city', 'address.properties.city')->hideOnIndex(),
             CountryField::new('address.country', 'address.properties.country')->hideOnIndex(),
         ];
+    }
+
+    public function export(Request $request)
+    {
+        $context = $request->attributes->get(EA::CONTEXT_REQUEST_ATTRIBUTE);
+        $fields = FieldCollection::new($this->configureFields(Crud::PAGE_INDEX));
+        $filters = $this->get(FilterFactory::class)->create($context->getCrud()->getFiltersConfig(), $fields, $context->getEntity());
+        $members = $this->createIndexQueryBuilder($context->getSearch(), $context->getEntity(), $fields, $filters)
+            ->getQuery()
+            ->getResult();
+
+        $data = [];
+        foreach ($members as $member) {
+            $data[] = $member->getExportData();
+        }
+
+        return $this->csvService->export($data, 'export_members_'.date_create()->format('d-m-y').'.csv');
     }
 }

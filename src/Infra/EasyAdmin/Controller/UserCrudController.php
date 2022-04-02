@@ -6,6 +6,7 @@ namespace Infra\EasyAdmin\Controller;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Infra\Symfony\Persistance\Doctrine\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -39,6 +40,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('firstName', 'user.properties.firstname'),
             TextField::new('lastName', 'user.properties.lastname'),
             TextField::new('password', 'user.properties.password')->onlyOnForms(),
+            AssociationField::new('loginHistories')->onlyOnDetail(),
             ChoiceField::new('roles', 'user.properties.roles')
                 ->allowMultipleChoices()
                 ->autocomplete()

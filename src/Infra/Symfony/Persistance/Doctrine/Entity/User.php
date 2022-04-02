@@ -46,6 +46,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $lastName;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\LoginHistory", mappedBy="user")
+     */
+    private $loginHistories;
+
     public function __toString()
     {
         return $this->getFullName();
@@ -157,6 +162,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getLoginHistories()
+    {
+        return $this->loginHistories;
+    }
+
+    public function addLoginHistory(LoginHistory $loginHistory)
+    {
+        if (!$this->loginHistories->contains($loginHistory)) {
+            $this->loginHistories[] = $loginHistory;
+            $loginHistory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoginHistory(LoginHistory $loginHistory): self
+    {
+        if ($this->loginHistories->contains($loginHistory)) {
+            $this->loginHistories->removeElement($loginHistory);
+        }
 
         return $this;
     }
