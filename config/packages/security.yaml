@@ -65,9 +65,9 @@ security:
     access_control:
         # this is a catch-all for the admin area
         # additional security lives in the controllers
-        - { path: '^/register', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: '^/video/feed', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/register', roles: PUBLIC_ACCESS }
+        - { path: '^/video/feed', roles: PUBLIC_ACCESS }
+        - { path: '^/login', roles: PUBLIC_ACCESS }
         - { path: '^/admin', roles: ROLE_ADMIN }
         - { path: '^/', roles: ROLE_USER }
 
