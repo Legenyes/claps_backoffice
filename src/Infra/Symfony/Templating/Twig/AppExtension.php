@@ -30,6 +30,7 @@ class AppExtension extends AbstractExtension
         ];
     }
 
+
     public function phoneNumber(string $string): string
     {
         $string = trim($string);

@@ -15,8 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ClothesCostume implements \Stringable
 {
-    public const GENDER_MALE = "M";
-    public const GENDER_FEMALE = "M";
+    public final const GENDER_MALE = "M";
+    public final const GENDER_FEMALE = "M";
 
     /**
      * @ORM\Id()

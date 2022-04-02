@@ -44,7 +44,7 @@ class ClothesPieceRepository extends ServiceEntityRepository
             ->setMaxResults($params->getLimit());
 
         if ($params->has('search')) {
-            $searchs = explode(" ", $params->get('search'));
+            $searchs = explode(" ", (string) $params->get('search'));
             foreach ($searchs as $key => $search) {
                 $search = iconv('UTF-8','UTF-8//IGNORE', $search);
                 $query
@@ -54,13 +54,13 @@ class ClothesPieceRepository extends ServiceEntityRepository
 
         }
 
-        if ($params->has('country') && strlen($params->get('country'))>0) {
+        if ($params->has('country') && strlen((string) $params->get('country'))>0) {
             $query
                 ->andWhere('cp.country = :country')
                 ->setParameter('country', $params->get('country'));
         }
 
-        if ($params->has('sections') && strlen($params->get('sections'))>0) {
+        if ($params->has('sections') && strlen((string) $params->get('sections'))>0) {
             $query
                 ->andWhere('section.id = :sections')
                 ->setParameter('sections', $params->get('sections'));

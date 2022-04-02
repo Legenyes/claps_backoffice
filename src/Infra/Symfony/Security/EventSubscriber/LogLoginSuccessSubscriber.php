@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
 class LogLoginSuccessSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
 

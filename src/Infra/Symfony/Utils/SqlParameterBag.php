@@ -7,21 +7,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SqlParameterBag extends ParameterBag
 {
-    public const ASC  = 'ASC';
-    public const DESC = 'DESC';
+    public final const ASC  = 'ASC';
+    public final const DESC = 'DESC';
 
-    public const LIMIT     = 'limit';
-    public const OFFSET    = 'offset';
-    public const ORDER     = 'order';
-    public const ORDERBY   = 'orderby';
-    public const PAGE      = 'page';
+    public final const LIMIT     = 'limit';
+    public final const OFFSET    = 'offset';
+    public final const ORDER     = 'order';
+    public final const ORDERBY   = 'orderby';
+    public final const PAGE      = 'page';
 
-    public const MIN_PAGE = 1;
-    public const MIN_OFFSET = 0;
-    public const MAX_LIMIT = 1000;
+    public final const MIN_PAGE = 1;
+    public final const MIN_OFFSET = 0;
+    public final const MAX_LIMIT = 1000;
 
     /**
      * @param array $parameters An array of parameters
+     * @param int $returnType
      */
     public function __construct(array $parameters = [])
     {
@@ -32,8 +33,9 @@ class SqlParameterBag extends ParameterBag
      * @param mixed $key
      * @param mixed|null $value
      * @param mixed|null $defaultValue
+     * @return SqlParameterBag
      */
-    public function set($key, $value = null, $defaultValue = null): SqlParameterBag
+    public function set($key, $value = null, $defaultValue = null)
     {
         if ($value === null) {
             $value = $defaultValue;
@@ -68,14 +70,20 @@ class SqlParameterBag extends ParameterBag
         return $this;
     }
 
-    public function getLimit(): ?int
+    /**
+     * @return int
+     */
+    public function getLimit()
     {
         return ($limit = $this->getInt(self::LIMIT))
             ? $limit
             : null;
     }
 
-    public function setLimit(int $value):SqlParameterBag
+    /**
+     * @param int $value
+     */
+    public function setLimit($value):SqlParameterBag
     {
         $value = abs($value);
         $value = ($value > self::MAX_LIMIT) ? self::MAX_LIMIT : $value;
@@ -145,9 +153,13 @@ class SqlParameterBag extends ParameterBag
         return $this->has(self::ORDERBY);
     }
 
-    public function getArray(string $value, string $separator = ','):array
+    /**
+     * @param string $value
+     * @param string $separator
+     */
+    public function getArray($value, $separator = ','):array
     {
-        return ($arr = explode($separator, $this->get($value)))
+        return ($arr = explode($separator, (string) $this->get($value)))
             ? $arr
             : array();
     }

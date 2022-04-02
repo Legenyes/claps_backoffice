@@ -20,6 +20,7 @@ class BaseController extends AbstractController
 
         /** @var Request|null request */
         if ($request = $requestStack->getCurrentRequest()) {
+            $this->request = $request;
             $this->sqlParameterBag->setRequest($request);
         }
     }

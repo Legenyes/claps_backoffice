@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Controller;
 
+use Infra\Symfony\Form\Type\SearchVideoType;
 use Infra\Symfony\Persistance\Doctrine\Repository\EventRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,7 @@ class EventController extends BaseController
             'breadcrumb' => $this->getBreadcurmb()
         ]);
     }
+
 
     private function getBreadcurmb(): array
     {

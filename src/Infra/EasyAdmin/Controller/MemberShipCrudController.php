@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MemberShipCrudController extends AbstractCrudController
 {
-    public function __construct(private CsvService $csvService, private EntityManagerInterface $entityManager)
+    public function __construct(private readonly CsvService $csvService, private readonly EntityManagerInterface $entityManager)
     {
     }
 

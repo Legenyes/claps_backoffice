@@ -32,7 +32,7 @@ class SecurityController extends BaseController
     public function __construct(
         RequestStack $requestStack,
         EntityManagerInterface $entityManager,
-        private UserPasswordHasherInterface $hasher
+        private readonly UserPasswordHasherInterface $hasher
     ) {
         parent::__construct($requestStack, $entityManager);
     }
@@ -132,7 +132,7 @@ class SecurityController extends BaseController
      * and handle the logout automatically. See logout in config/packages/security.yaml
      */
     #[Route('/logout', name: 'security_logout')]
-    public function logout(): void
+    public function logout(): never
     {
         throw new \Exception('This should never be reached!');
     }

@@ -211,7 +211,7 @@ class Video implements \Stringable
         $pattern = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i';
 
         // Checks if it matches a pattern and returns the value
-        if (preg_match($pattern, $youtube_video_url, $match)) {
+        if (preg_match($pattern, (string) $youtube_video_url, $match)) {
             return $match[1];
         }
 
