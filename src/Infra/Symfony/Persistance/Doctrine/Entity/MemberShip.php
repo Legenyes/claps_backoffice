@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\MemberShipRepository")
  */
-class MemberShip
+class MemberShip implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -64,7 +64,7 @@ class MemberShip
         $this->sections = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->member .' ('. $this->startDate->format('Y') .'-'.$this->endDate->format('Y') .')';
     }

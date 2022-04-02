@@ -13,16 +13,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class BaseController extends AbstractController
 {
     private SqlParameterBag $sqlParameterBag;
-    private EntityManagerInterface $entityManager;
 
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $entityManager)
+    public function __construct(RequestStack $requestStack, private EntityManagerInterface $entityManager)
     {
         $this->sqlParameterBag  = new SqlParameterBag();
-        $this->entityManager = $entityManager;
 
         /** @var Request|null request */
         if ($request = $requestStack->getCurrentRequest()) {
-            $this->request = $request;
             $this->sqlParameterBag->setRequest($request);
         }
     }

@@ -25,6 +25,7 @@ class HomeController extends AbstractController
 
     private function getBreadcurmb(): array
     {
+        $breadcrumb = [];
         $breadcrumb['items'][] = ['title' => 'Home', 'url' => '/'];
 
         return $breadcrumb;

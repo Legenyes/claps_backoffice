@@ -29,13 +29,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MemberCrudController extends AbstractCrudController
 {
-    private CsvService $csvService;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(CsvService $csvService, EntityManagerInterface $entityManager)
+    public function __construct(private CsvService $csvService, private EntityManagerInterface $entityManager)
     {
-        $this->csvService = $csvService;
-        $this->entityManager = $entityManager;
     }
     public static function getEntityFqcn(): string
     {

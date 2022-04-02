@@ -30,7 +30,6 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-
     public function phoneNumber(string $string): string
     {
         $string = trim($string);
@@ -91,13 +90,13 @@ class AppExtension extends AbstractExtension
     {
         $filesizename = array(" Bytes", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB");
 
-        return $size ? round($size/pow(1024, ($i = floor(log($size, 1024)))), 2) . $filesizename[$i] : '0 Bytes';
+        return $size ? round($size/1024 ** ($i = floor(log($size, 1024))), 2) . $filesizename[$i] : '0 Bytes';
     }
 
     public function getClassName($object): ?string
     {
         if (is_object($object)) {
-            return get_class($object);
+            return $object::class;
         }
 
         return null;
@@ -106,7 +105,6 @@ class AppExtension extends AbstractExtension
     /**
      * Display a localized DateTime based on a pattern
      * @param \Twig_Environment $env (http://framework.zend.com/manual/1.12/en/zend.date.constants.html#zend.date.constants.selfdefinedformats)
-     * @param \DateTime $datetime
      * @param $pattern
      * @return string
      */

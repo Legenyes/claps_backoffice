@@ -22,10 +22,8 @@ class SearchClothesPieceType extends AbstractType
             ->setMethod('GET')
             ->add('sections', EntityType::class, [
                 'class' => Section::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('section')
-                        ->orderBy('section.id', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('section')
+                    ->orderBy('section.id', 'ASC'),
                 'attr' => ['class' => 'form-control'],
                 'multiple' => false,
                 'required' => false

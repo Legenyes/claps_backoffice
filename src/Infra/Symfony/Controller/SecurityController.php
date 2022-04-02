@@ -29,15 +29,12 @@ class SecurityController extends BaseController
 {
     use TargetPathTrait;
 
-    private UserPasswordHasherInterface $hasher;
-
     public function __construct(
         RequestStack $requestStack,
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $hasher
+        private UserPasswordHasherInterface $hasher
     ) {
         parent::__construct($requestStack, $entityManager);
-        $this->hasher = $hasher;
     }
 
     #[Route('/register', name: 'security_register')]

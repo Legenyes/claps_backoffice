@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\DocumentCategoryRepository")
  */
-class DocumentCategory
+class DocumentCategory implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -43,9 +43,9 @@ class DocumentCategory
         $this->documentFiles = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-	return $this->name;
+	return (string) $this->name;
     }
 
     public function getId(): ?int

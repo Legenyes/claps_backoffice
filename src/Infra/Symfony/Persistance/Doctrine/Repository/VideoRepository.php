@@ -39,7 +39,6 @@ class VideoRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param SqlParameterBag $params
      * @return QueryBuilder
      */
     private function filterAllQueryBuilder(SqlParameterBag $params)
@@ -86,7 +85,6 @@ class VideoRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param SqlParameterBag $params
      * @return mixed
      */
     public function filterAll(SqlParameterBag $params)

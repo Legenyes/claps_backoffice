@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\MemberFamilyRepository")
  */
-class MemberFamily
+class MemberFamily implements \Stringable
 {
     /**
      * @ORM\Id()

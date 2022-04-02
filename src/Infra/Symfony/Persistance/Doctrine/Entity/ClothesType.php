@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesTypeRepository")
  */
-class ClothesType
+class ClothesType implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -47,9 +47,9 @@ class ClothesType
         $this->clothesPieces = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getId(): ?int

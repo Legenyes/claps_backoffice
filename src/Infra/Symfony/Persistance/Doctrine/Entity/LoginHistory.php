@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity()
  */
-class LoginHistory
+class LoginHistory implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -35,7 +35,7 @@ class LoginHistory
      */
     private $user;
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getUser() ." at ". date_format($this->getDate(), 'd/m/y');
     }

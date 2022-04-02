@@ -17,7 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\DocumentFileRepository")
  * @Vich\Uploadable
  */
-class DocumentFile
+class DocumentFile implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -32,16 +32,14 @@ class DocumentFile
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @var string
-     */
-    private $document;
+				 * @ORM\Column(type="string", length=255, nullable=true)
+				 */
+				private string $document;
 
     /**
-     * @Vich\UploadableField(mapping="documents", fileNameProperty="document")
-     * @var File
-     */
-    private $documentFile;
+				 * @Vich\UploadableField(mapping="documents", fileNameProperty="document")
+				 */
+				private ?\Symfony\Component\HttpFoundation\File\File $documentFile = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\DocumentCategory", inversedBy="documentFiles")
@@ -49,14 +47,13 @@ class DocumentFile
     private $documentCategory;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true))
-     * @var \DateTime
-     */
-    private $updatedAt;
+				 * @ORM\Column(type="datetime", nullable=true))
+				 */
+				private \DateTime $updatedAt;
 
-    public function __toString()
+    public function __toString(): string
     {
-	return $this->name;
+	return (string) $this->name;
     }
 
     public function getId(): ?int

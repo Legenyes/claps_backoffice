@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesCostumeRepository")
  */
-class ClothesCostume
+class ClothesCostume implements \Stringable
 {
     public const GENDER_MALE = "M";
     public const GENDER_FEMALE = "M";
@@ -91,7 +91,7 @@ class ClothesCostume
         $this->clothesCostumePieces = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name . ' ('. $this->code .')';
     }
@@ -149,18 +149,11 @@ class ClothesCostume
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCountry(): ?string
     {
         return $this->country;
     }
 
-    /**
-     * @param string|null $country
-     * @return ClothesCostume
-     */
     public function setCountry(?string $country): self
     {
         $this->country = $country;
@@ -168,18 +161,11 @@ class ClothesCostume
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getArea(): ?string
     {
         return $this->area;
     }
 
-    /**
-     * @param string|null $area
-     * @return ClothesCostume
-     */
     public function setArea(?string $area): self
     {
         $this->area = $area;
@@ -187,18 +173,11 @@ class ClothesCostume
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCity(): ?string
     {
         return $this->city;
     }
 
-    /**
-     * @param string|null $city
-     * @return ClothesCostume
-     */
     public function setCity(?string $city): self
     {
         $this->city = $city;
@@ -206,18 +185,11 @@ class ClothesCostume
         return $this;
     }
 
-    /**
-     * @return ClothesOpportunity|null
-     */
     public function getClotheOpportunity(): ?ClothesOpportunity
     {
         return $this->clotheOpportunity;
     }
 
-    /**
-     * @param ClothesOpportunity|null $clotheOpportunity
-     * @return ClothesCostume
-     */
     public function setClotheOpportunity(?ClothesOpportunity $clotheOpportunity): self
     {
         $this->clotheOpportunity = $clotheOpportunity;
@@ -235,7 +207,6 @@ class ClothesCostume
 
     /**
      * @param mixed $gender
-     * @return ClothesCostume
      */
     public function setGender($gender): self
     {
@@ -261,10 +232,6 @@ class ClothesCostume
         return $this->sections;
     }
 
-    /**
-     * @param Section $section
-     * @return ClothesCostume
-     */
     public function addSection(Section $section): self
     {
         if (!$this->sections->contains($section)) {
@@ -274,10 +241,6 @@ class ClothesCostume
         return $this;
     }
 
-    /**
-     * @param Section $section
-     * @return ClothesCostume
-     */
     public function removeSection(Section $section): self
     {
         if ($this->sections->contains($section)) {

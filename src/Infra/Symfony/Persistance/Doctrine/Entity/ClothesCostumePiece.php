@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesCostumePieceRepository")
  */
-class ClothesCostumePiece
+class ClothesCostumePiece implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -43,10 +43,10 @@ class ClothesCostumePiece
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isDefault = true;
+    private bool $isDefault = true;
 
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->costume . ' - '. $this->piece;
     }

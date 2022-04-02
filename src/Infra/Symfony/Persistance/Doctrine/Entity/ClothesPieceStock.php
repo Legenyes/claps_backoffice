@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesPieceStockRepository")
  */
-class ClothesPieceStock
+class ClothesPieceStock implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -61,7 +61,7 @@ class ClothesPieceStock
     /**
      * @return string|null
      */
-    public function __toString()
+    public function __toString(): string
     {
         $result = $this->getClothesPiece()->getName();
 
@@ -69,7 +69,7 @@ class ClothesPieceStock
             $result .= " (".  $this->getDressKeeper()->__toString() .")";
         }
 
-        return $result;
+        return (string) $result;
     }
 
     public function getId(): ?int

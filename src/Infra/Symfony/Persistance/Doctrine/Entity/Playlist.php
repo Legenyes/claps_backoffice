@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\PlaylistRepository")
  */
-class Playlist
+class Playlist implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -37,7 +37,7 @@ class Playlist
         $this->playlistVideos = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName() ?? '';
     }

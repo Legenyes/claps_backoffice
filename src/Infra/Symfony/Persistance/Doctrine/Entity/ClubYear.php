@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClubYearRepository")
  */
-class ClubYear
+class ClubYear implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -55,7 +55,7 @@ class ClubYear
     /**
      * @return string|null
      */
-    public function __toString()
+    public function __toString(): string
     {
         $result = "";
 

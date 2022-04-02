@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\EventRepository")
  */
-class Event
+class Event implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -52,7 +52,7 @@ class Event
         $this->videos = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName() ?? '';
     }

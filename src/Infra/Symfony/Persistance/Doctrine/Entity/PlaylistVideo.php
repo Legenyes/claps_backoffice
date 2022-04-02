@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\PlaylistVideoRepository")
  */
-class PlaylistVideo
+class PlaylistVideo implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -23,7 +23,7 @@ class PlaylistVideo
     /**
      * @ORM\Column(type="integer")
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Playlist", inversedBy="playlistVideos", cascade={"persist"})
@@ -42,7 +42,7 @@ class PlaylistVideo
         return $this->id;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $string = '';
 

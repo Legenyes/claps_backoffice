@@ -16,7 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesPieceRepository")
  * @Vich\Uploadable
  */
-class ClothesPiece
+class ClothesPiece implements \Stringable
 {
     public const GENDER_MALE = "M";
     public const GENDER_FEMALE = "M";
@@ -95,21 +95,18 @@ class ClothesPiece
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @var string
      */
-    private $image;
+    private string $image;
 
     /**
      * @Vich\UploadableField(mapping="clothespiece_images", fileNameProperty="image")
-     * @var File
      */
-    private $imageFile;
+    private ?\Symfony\Component\HttpFoundation\File\File $imageFile = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true))
-     * @var \DateTime
      */
-    private $updatedAt;
+    private \DateTime $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostumePiece", mappedBy="piece", orphanRemoval=true)
@@ -129,7 +126,7 @@ class ClothesPiece
         $this->clothesPieceStocks = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name . ' ('. $this->code .')';
     }
@@ -281,7 +278,6 @@ class ClothesPiece
 
     /**
      * @param mixed $gender
-     * @return ClothesPiece
      */
     public function setGender($gender): self
     {
@@ -353,18 +349,11 @@ class ClothesPiece
         return $this->image;
     }
 
-    /**
-     * @return \DateTime|null
-     */
     public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param \DateTime $updatedAt
-     * @return ClothesPiece
-     */
     public function setUpdatedAt(\DateTime $updatedAt): ClothesPiece
     {
         $this->updatedAt = $updatedAt;

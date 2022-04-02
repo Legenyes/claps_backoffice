@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesColorRepository")
  */
-class ClothesColor
+class ClothesColor implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -23,16 +23,14 @@ class ClothesColor
     private $id;
 
     /**
-     * @var string $name
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string $code
      * @ORM\Column(type="string", length=10, nullable=true)
      */
-    private $code;
+    private string $code;
 
     /**
      * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesPieceStock", mappedBy="colors")
@@ -44,34 +42,21 @@ class ClothesColor
         $this->clothesPieceStocks = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return ClothesColor
-     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -89,7 +74,6 @@ class ClothesColor
 
     /**
      * @param string $code
-     * @return ClothesColor
      */
     public function setCode(?string $code): ClothesColor
     {

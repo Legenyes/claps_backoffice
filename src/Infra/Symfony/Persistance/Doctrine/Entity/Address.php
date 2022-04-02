@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\AddressRepository")
  */
-class Address
+class Address implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -51,7 +51,7 @@ class Address
     private $country;
 
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getFirstLine() .", ". $this->zipCode .' '. $this->city .', '. $this->country;
     }

@@ -23,6 +23,7 @@ class MusicController extends BaseController
 
     private function getBreadcurmb(): array
     {
+        $breadcrumb = [];
         $breadcrumb['items'][] = ['title'=> 'Home', 'url' => '/'];
         $breadcrumb['items'][] = ['title'=> 'Media', 'url' => $this->generateUrl('app_media_index')];
         $breadcrumb['items'][] = ['title'=> 'Music'];

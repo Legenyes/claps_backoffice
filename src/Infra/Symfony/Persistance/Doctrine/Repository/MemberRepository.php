@@ -34,10 +34,6 @@ class MemberRepository extends ServiceEntityRepository
             ;
     }
 
-    /**
-     * @param \Symfony\Component\Security\Core\User\User $user
-     * @return QueryBuilder
-     */
     public function filterByParentUser(\Symfony\Component\Security\Core\User\User $user): QueryBuilder
     {
         return $this->createQueryBuilder('m')

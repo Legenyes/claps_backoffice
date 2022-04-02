@@ -115,11 +115,11 @@ class DashboardController extends AbstractDashboardController
 
         $submenuEvent = [
             MenuItem::linkToCrud('Event', 'fa fa-calendar-alt', Event::class),
-            MenuItem::linkToDashboard('Reservation <small>(soon)</small>', 'fa fa-ticket-alt', Event::class),
+            MenuItem::linkToDashboard('Reservation <small>(soon)</small>', 'fa fa-ticket-alt'),
         ];
 
         $submenuMarketing = [
-            MenuItem::linkToDashboard('Newsletter <small>(soon)</small>', 'fa fa-paper-plane', Event::class),
+            MenuItem::linkToDashboard('Newsletter <small>(soon)</small>', 'fa fa-paper-plane'),
         ];
 
         if ($this->isGranted('ROLE_SUPER_ADMIN')) {

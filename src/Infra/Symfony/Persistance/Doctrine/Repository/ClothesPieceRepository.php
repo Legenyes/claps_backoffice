@@ -33,7 +33,6 @@ class ClothesPieceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param SqlParameterBag $params
      * @return QueryBuilder
      */
     private function filterAllQueryBuilder(SqlParameterBag $params)
@@ -76,7 +75,6 @@ class ClothesPieceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param SqlParameterBag $params
      * @return mixed
      */
     public function filterAll(SqlParameterBag $params)

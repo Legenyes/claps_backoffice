@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Controller;
 
-use Infra\Symfony\Form\Type\SearchVideoType;
 use Infra\Symfony\Persistance\Doctrine\Repository\EventRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,9 +22,9 @@ class EventController extends BaseController
         ]);
     }
 
-
     private function getBreadcurmb(): array
     {
+        $breadcrumb = [];
         $breadcrumb['items'][] = ['title'=> 'Home', 'url' => '/'];
         $breadcrumb['items'][] = ['title'=> 'Events', 'url' => $this->generateUrl('app_event_index')];
         $breadcrumb['items'][] = ['title'=> 'Events'];

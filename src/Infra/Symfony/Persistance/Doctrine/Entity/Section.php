@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\SectionRepository")
  */
-class Section
+class Section implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -48,9 +48,9 @@ class Section
         $this->videos = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getId(): ?int

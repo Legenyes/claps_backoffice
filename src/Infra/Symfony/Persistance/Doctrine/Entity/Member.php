@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\MemberRepository")
  */
-class Member
+class Member implements \Stringable
 {
     /**
      * @ORM\Id()
@@ -100,7 +100,7 @@ class Member
         $this->clothesPieces = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->firstname .' '. $this->lastname;
     }

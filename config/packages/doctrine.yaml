@@ -23,7 +23,7 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/src/Infra/Symfony/Persistance/Doctrine/Entity'
                 prefix: 'Infra\Symfony\Persistance\Doctrine\Entity'
                 alias: App

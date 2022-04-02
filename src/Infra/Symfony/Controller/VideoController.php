@@ -53,6 +53,7 @@ class VideoController extends BaseController
 
     private function getBreadcurmb(): array
     {
+        $breadcrumb = [];
         $breadcrumb['items'][] = ['title'=> 'Home', 'url' => '/'];
         $breadcrumb['items'][] = ['title'=> 'Media', 'url' => $this->generateUrl('app_media_index')];
         $breadcrumb['items'][] = ['title'=> 'Video'];
@@ -63,6 +64,7 @@ class VideoController extends BaseController
     #[Route('/feed', name:'app_video_feed')]
     public function feedAction(EventRepository $eventRepository): JsonResponse
     {
+        $data = [];
         $events = $eventRepository->findBy([], ['date' => 'DESC']);
 
         foreach ($events as $event) {
