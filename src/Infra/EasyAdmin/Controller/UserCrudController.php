@@ -40,7 +40,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('firstName', 'user.properties.firstname'),
             TextField::new('lastName', 'user.properties.lastname'),
             TextField::new('password', 'user.properties.password')->onlyOnForms(),
-            AssociationField::new('loginHistories')->onlyOnDetail(),
+            AssociationField::new('loginHistories')/*->onlyOnDetail()*/,
             ChoiceField::new('roles', 'user.properties.roles')
                 ->allowMultipleChoices()
                 ->autocomplete()
