@@ -7,54 +7,38 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\VideoRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\VideoRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: VideoRepository::class)]
 class Video implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $url;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $url;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $recordDate;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private \DateTime $recordDate;
 
-    /**
-     * @ORM\Column(type="string", length=5, nullable=true)
-     */
-    private $country;
+    #[ORM\Column(type: Types::STRING, length: 5, nullable: true)]
+    private ?string $country = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Section", inversedBy="videos")
-     */
+    #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'videos')]
     private $sections;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\PlaylistVideo", mappedBy="video", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: PlaylistVideo::class, mappedBy: 'video', orphanRemoval: true)]
     private $playlistVideos;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Event", inversedBy="videos", cascade={"persist"})
-     */
+    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'video', cascade: ['persist'])]
     private $event;
 
     public function __construct()

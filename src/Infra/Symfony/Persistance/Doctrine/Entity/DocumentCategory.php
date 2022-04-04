@@ -7,35 +7,27 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\DocumentCategoryRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\DocumentCategoryRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: DocumentCategoryRepository::class)]
 class DocumentCategory implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING)]
+    private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=32)
-     */
+    #[ORM\Column(type: Types::STRING, length: 32)]
     private $icon;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\DocumentFile", mappedBy="documentCategory")
-     */
+    #[ORM\OneToMany(targetEntity: DocumentFile::class, mappedBy: 'documentCategory')]
     private $documentFiles;
 
     public function __construct()

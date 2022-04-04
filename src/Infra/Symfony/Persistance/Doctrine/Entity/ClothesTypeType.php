@@ -7,29 +7,23 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClothesTypeTypeRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesTypeTypeRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: ClothesTypeTypeRepository::class)]
 class ClothesTypeType implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesType", mappedBy="type")
-     */
+    #[ORM\OneToMany(targetEntity: ClothesType::class, mappedBy: 'type')]
     private $clothesTypes;
 
     public function __construct()

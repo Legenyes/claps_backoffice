@@ -7,56 +7,40 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\MemberShipRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\MemberShipRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: MemberShipRepository::class)]
 class MemberShip implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private $startDate;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private $endDate;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     */
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private $subscriptionAmount;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private $subscriptionPaidAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClubYear", inversedBy="memberShips")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: ClubYear::class, inversedBy: 'memberShips')]
+    #[ORM\JoinColumn(nullable: false)]
     private $clubYear;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Member", inversedBy="memberShips")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'memberShips')]
+    #[ORM\JoinColumn(nullable: false)]
     private $member;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Section", inversedBy="memberShips")
-     */
+    #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'memberShips')]
     private $sections;
 
     public function __construct()
@@ -122,7 +106,6 @@ class MemberShip implements \Stringable
         return $this;
     }
 
-
     public function getClubYear(): ClubYear
     {
         return $this->clubYear;
@@ -182,5 +165,4 @@ class MemberShip implements \Stringable
             'subscriptionPaidAt' => $this->subscriptionPaidAt ? $this->subscriptionPaidAt->format('d/m/Y H:m') : '',
         ], $this->getMember()->getExportData());
     }
-
 }

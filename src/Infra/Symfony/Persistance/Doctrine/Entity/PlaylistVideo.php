@@ -5,36 +5,28 @@ declare(strict_types=1);
 namespace Infra\Symfony\Persistance\Doctrine\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\PlaylistVideoRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\PlaylistVideoRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: PlaylistVideoRepository::class)]
 class PlaylistVideo implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $position = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Playlist", inversedBy="playlistVideos", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Playlist::class, inversedBy: 'playlistVideos', cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: false)]
     private $playlist;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Video", inversedBy="playlistVideos", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Video::class, inversedBy: 'playlistVideos', cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: false)]
     private $video;
 
     public function getId(): ?int

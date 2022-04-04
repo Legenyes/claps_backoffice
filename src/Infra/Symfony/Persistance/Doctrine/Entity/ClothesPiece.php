@@ -7,117 +7,78 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClothesPieceRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesPieceRepository")
- * @Vich\Uploadable
- */
+#[ApiResource]
+#[Vich\Uploadable]
+#[ORM\Entity(repositoryClass: ClothesPieceRepository::class)]
 class ClothesPiece implements \Stringable
 {
     public final const GENDER_MALE = "M";
     public final const GENDER_FEMALE = "M";
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $code;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $code;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesSeason", inversedBy="clothesPieces")
-     */
-    private $season;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $country = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesType", inversedBy="clothesPieces")
-     */
-    private $clotheType;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $area = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $country;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $city = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $area;
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    private ?bool $personal = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $city;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesTexture", inversedBy="clothesPieces")
-     */
-    private $clotheTexture;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesOpportunity", inversedBy="clothesPieces")
-     */
-    private $clotheOpportunity;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $personal;
-
-    /**
-     * @ORM\Column(name="gender", type="array", nullable=true)
-     */
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private $gender;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Section")
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTime $updatedAt;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[Vich\UploadableField(mapping: 'clothespiece_images', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
+
+    #[ORM\ManyToOne(targetEntity: ClothesSeason::class, inversedBy: 'clothesPieces')]
+    private $season;
+
+    #[ORM\ManyToOne(targetEntity: ClothesType::class, inversedBy: 'clothesPieces')]
+    private $clotheType;
+
+    #[ORM\ManyToOne(targetEntity: ClothesTexture::class, inversedBy: 'clothesPieces')]
+    private $clotheTexture;
+
+    #[ORM\ManyToOne(targetEntity: ClothesOpportunity::class, inversedBy: 'clothesPieces')]
+    private $clotheOpportunity;
+
+    #[ORM\ManyToMany(targetEntity: Section::class)]
     private $sections;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private string $image;
-
-    /**
-     * @Vich\UploadableField(mapping="clothespiece_images", fileNameProperty="image")
-     */
-    private ?\Symfony\Component\HttpFoundation\File\File $imageFile = null;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true))
-     */
-    private \DateTime $updatedAt;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostumePiece", mappedBy="piece", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: ClothesCostumePiece::class, mappedBy: 'piece', orphanRemoval: true)]
     private $clothesCostumePieces;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesPieceStock", mappedBy="clothesPiece", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: ClothesPieceStock::class, mappedBy: 'clothesPiece', orphanRemoval: true)]
     private $clothesPieceStocks;
-
 
     public function __construct()
     {

@@ -7,34 +7,26 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClothesColorRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesColorRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: ClothesColorRepository::class)]
 class ClothesColor implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
-    private string $code;
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    private ?string $code = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesPieceStock", mappedBy="colors")
-     */
+    #[ORM\ManyToMany(targetEntity: ClothesPieceStock::class, mappedBy: 'colors')]
     private $clothesPieceStocks;
 
     public function __construct()
@@ -64,17 +56,11 @@ class ClothesColor implements \Stringable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
-    /**
-     * @param string $code
-     */
     public function setCode(?string $code): ClothesColor
     {
         $this->code = $code;

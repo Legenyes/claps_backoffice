@@ -7,50 +7,36 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClothesPieceStockRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesPieceStockRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: ClothesPieceStockRepository::class)]
 class ClothesPieceStock implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $personal;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $personal = false;
 
-    /**
-     * @ORM\Column(type="string", length=32)
-     */
-    private $status;
+    #[ORM\Column(type: Types::STRING, length: 32)]
+    private string $status;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesPiece", inversedBy="clothesPieceStocks")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: ClothesPiece::class, inversedBy: 'clothesPieceStocks')]
+    #[ORM\JoinColumn(nullable: false)]
     private $clothesPiece;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Member", inversedBy="clothesPieceStitched")
-     */
+    #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'clothesPieceStitched')]
     private $dressMaker;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesColor", inversedBy="clothesPieceStocks")
-     */
+    #[ORM\ManyToOne(targetEntity: ClothesColor::class, inversedBy: 'clothesPieceStocks')]
     private $colors;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Member", inversedBy="clothesPieces")
-     */
+    #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'clothesPieces')]
     private $dressKeeper;
 
     public function __construct()
@@ -58,9 +44,6 @@ class ClothesPieceStock implements \Stringable
         $this->colors = new ArrayCollection();
     }
 
-    /**
-     * @return string|null
-     */
     public function __toString(): string
     {
         $result = $this->getClothesPiece()->getName();

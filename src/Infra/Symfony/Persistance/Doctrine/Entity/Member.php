@@ -7,89 +7,59 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\MemberRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\MemberRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: MemberRepository::class)]
 class Member implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $firstname;
+     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+     private ?string $firstname = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $lastname;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $lastname = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $email;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $phone;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $phone = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $mobilePhone;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $mobilePhone = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private $birthdate;
 
-    /**
-     * @ORM\Column(type="string", length=5, nullable=true)
-     */
-    private $sex;
+    #[ORM\Column(type: Types::STRING, length: 5, nullable: true)]
+    private ?string $sex = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $niss;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $niss = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $insurer;
+     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $insurer = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Address", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: Address::class, cascade: ['persist', 'remove'])]
     private $address;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\MemberFamily")
-     */
+    #[ORM\ManyToMany(targetEntity: MemberFamily::class)]
     private $families;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\MemberShip", mappedBy="member", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: MemberShip::class, mappedBy: 'member', orphanRemoval: true)]
     private $memberShips;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesPieceStock", mappedBy="dressMaker")
-     */
+    #[ORM\OneToMany(targetEntity: ClothesPieceStock::class, mappedBy: 'dressMaker')]
     private $clothesPieceStitched;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesPieceStock", mappedBy="dressKeeper")
-     */
+    #[ORM\OneToMany(targetEntity: ClothesPieceStock::class, mappedBy: 'dressKeeper')]
     private $clothesPieces;
 
     public function __construct()

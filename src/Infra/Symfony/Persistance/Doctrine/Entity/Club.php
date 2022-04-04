@@ -7,58 +7,42 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClubRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClubRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: ClubRepository::class)]
 class Club implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-     * @Assert\Email()
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $email;
+    #[Assert\Email]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $email = null;
 
-    /**
-     * @Assert\Url()
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $website;
+    #[Assert\Url]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $website = null;
 
-    /**
-     * @Assert\Iban()
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $bankNumber;
+    #[Assert\Iban]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $bankNumber = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $vatNumber;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $vatNumber = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Address", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: Address::class, cascade: ['persist', 'remove'])]
     private $headOfficeAddress;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClubYear", mappedBy="club")
-     */
+    #[ORM\OneToMany(targetEntity: ClubYear::class, mappedBy: 'club')]
     private $clubYears;
 
     public function __construct()

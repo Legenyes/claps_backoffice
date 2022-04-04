@@ -7,54 +7,39 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClubYearRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClubYearRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: ClubYearRepository::class)]
 class ClubYear implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $isActive = false;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private $dateStart;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private $dateStop;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Club", inversedBy="clubYears")
-     */
+    #[ORM\ManyToOne(targetEntity: Club::class, inversedBy: 'clubYears')]
     private $club;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\MemberShip", mappedBy="clubYear", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: MemberShip::class, mappedBy: 'clubYear', orphanRemoval: true)]
     private $memberShips;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $isActive;
 
     public function __construct()
     {
         $this->memberShips = new ArrayCollection();
     }
 
-    /**
-     * @return string|null
-     */
     public function __toString(): string
     {
         $result = "";

@@ -7,44 +7,32 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\EventRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\EventRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $name = null;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $venue = null;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $venue;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private $date;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isHighlight;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $isHighlight = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Video", mappedBy="event", cascade={"persist"})
-     */
+    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'event', cascade: ['persist'])]
     private $videos;
 
     public function __construct()
@@ -98,12 +86,10 @@ class Event implements \Stringable
         return $this;
     }
 
-
     public function getVenue(): ?string
     {
         return $this->venue;
     }
-
 
     public function setVenue(?string $venue): self
     {

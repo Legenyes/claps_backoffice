@@ -7,39 +7,29 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\SectionRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\SectionRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: SectionRepository::class)]
 class Section implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\MemberShip", mappedBy="sections")
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $code = null;
+
+    #[ORM\ManyToMany(targetEntity: MemberShip::class, mappedBy: 'sections')]
     private $memberShips;
 
-    /**
-     * @ORM\Column(type="string", length=5, nullable=true)
-     */
-    private $code;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Video", mappedBy="sections")
-     */
+    #[ORM\ManyToMany(targetEntity: Video::class, mappedBy: 'sections')]
     private $videos;
 
     public function __construct()

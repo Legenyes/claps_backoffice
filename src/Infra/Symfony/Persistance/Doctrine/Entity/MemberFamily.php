@@ -5,45 +5,33 @@ declare(strict_types=1);
 namespace Infra\Symfony\Persistance\Doctrine\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\MemberFamilyRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\MemberFamilyRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: MemberFamilyRepository::class)]
 class MemberFamily implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $lastname;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $lastname = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $motherEmail;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $motherEmail = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $motherMobilePhone;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $motherMobilePhone = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $fatherEmail;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $fatherEmail = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $fatherMobilePhone;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $fatherMobilePhone = null;
 
     public function __toString(): string
     {

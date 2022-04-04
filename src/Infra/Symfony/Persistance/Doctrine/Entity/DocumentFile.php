@@ -7,49 +7,37 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\DocumentFileRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\DocumentFileRepository")
- * @Vich\Uploadable
- */
+#[ApiResource]
+#[Vich\Uploadable]
+#[ORM\Entity(repositoryClass: DocumentFileRepository::class)]
 class DocumentFile implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-				 * @ORM\Column(type="string", length=255, nullable=true)
-				 */
-				private string $document;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private \DateTime $updatedAt;
 
-    /**
-				 * @Vich\UploadableField(mapping="documents", fileNameProperty="document")
-				 */
-				private ?\Symfony\Component\HttpFoundation\File\File $documentFile = null;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $document = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\DocumentCategory", inversedBy="documentFiles")
-     */
+    #[Vich\UploadableField(mapping: 'documents', fileNameProperty: 'document')]
+    private ?File $documentFile = null;
+
+    #[ORM\ManyToOne(targetEntity: DocumentCategory::class, inversedBy: 'documentFiles')]
     private $documentCategory;
-
-    /**
-				 * @ORM\Column(type="datetime", nullable=true))
-				 */
-				private \DateTime $updatedAt;
 
     public function __toString(): string
     {

@@ -5,51 +5,36 @@ declare(strict_types=1);
 namespace Infra\Symfony\Persistance\Doctrine\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\AddressRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\AddressRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $street;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $street = null;
 
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private $streetNumber;
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    private ?string  $streetNumber = null;
 
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private $streetBox;
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    private ?string  $streetBox = null;
 
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private $zipCode;
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    private ?string  $zipCode = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $city;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string  $city = null;
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
-    private $country;
-
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    private ?string  $country = null;
 
     public function __toString(): string
     {

@@ -7,82 +7,58 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClothesCostumeRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesCostumeRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: ClothesCostumeRepository::class)]
 class ClothesCostume implements \Stringable
 {
     public final const GENDER_MALE = "M";
     public final const GENDER_FEMALE = "M";
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $code;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $code;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesSeason")
-     */
-    private $season;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $country = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $country;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $area = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $area;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $city = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $city;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesOpportunity")
-     */
-    private $clotheOpportunity;
-
-    /**
-     * @ORM\Column(name="gender", type="array", nullable=true)
-     */
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private $gender;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\Section")
-     */
+    #[ORM\ManyToOne(targetEntity: ClothesOpportunity::class)]
+    private $clotheOpportunity;
+
+    #[ORM\ManyToOne(targetEntity: ClothesSeason::class)]
+    private $season;
+
+    #[ORM\ManyToMany(targetEntity: Section::class)]
     private $sections;
 
-    /**
-     * @ORM\OneToMany(
-     *     targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostumePiece",
-     *     mappedBy="costume",
-     *     orphanRemoval=true,
-     *     cascade={"persist"}
-     * )
-     */
+    #[ORM\OneToMany(
+        targetEntity: ClothesCostumePiece::class,
+        mappedBy: 'costume',
+        cascade: ['persist'],
+        orphanRemoval: true
+    )]
     private $clothesCostumePieces;
 
     public function __construct()

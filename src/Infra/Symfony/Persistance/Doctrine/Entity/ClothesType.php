@@ -7,39 +7,29 @@ namespace Infra\Symfony\Persistance\Doctrine\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClothesTypeRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesTypeRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: ClothesTypeRepository::class)]
 class ClothesType implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesTypeType", inversedBy="clothesTypes")
-     */
+    #[ORM\ManyToOne(targetEntity: ClothesTypeType::class, inversedBy: 'clothesTypes')]
     private $type;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesTypeZone", inversedBy="clothesTypes")
-     */
+    #[ORM\ManyToOne(targetEntity: ClothesTypeZone::class, inversedBy: 'clothesTypes')]
     private $zone;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesPiece", mappedBy="clotheType")
-     */
+    #[ORM\OneToMany(targetEntity: ClothesPiece::class, mappedBy: 'clotheType')]
     private $clothesPieces;
 
     public function __construct()

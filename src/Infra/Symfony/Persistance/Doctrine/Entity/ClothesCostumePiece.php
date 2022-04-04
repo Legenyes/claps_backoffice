@@ -5,46 +5,29 @@ declare(strict_types=1);
 namespace Infra\Symfony\Persistance\Doctrine\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Infra\Symfony\Persistance\Doctrine\Repository\ClothesCostumePieceRepository;
 
-/**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="Infra\Symfony\Persistance\Doctrine\Repository\ClothesCostumePieceRepository")
- */
+#[ApiResource]
+#[ORM\Entity(repositoryClass: ClothesCostumePieceRepository::class)]
 class ClothesCostumePiece implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(
-     *     targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostume",
-     *     inversedBy="clothesCostumePieces",
-     *     cascade={"persist"}
-     * )
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $costume;
-
-    /**
-     * @ORM\ManyToOne(
-     *     targetEntity="Infra\Symfony\Persistance\Doctrine\Entity\ClothesPiece",
-     *     inversedBy="clothesCostumePieces",
-     *     cascade={"persist"}
-     * )
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $piece;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $isDefault = true;
 
+    #[ORM\ManyToOne(targetEntity: ClothesCostume::class,inversedBy: 'clothesCostumePieces', cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $costume;
+
+    #[ORM\ManyToOne(targetEntity: ClothesPiece::class, inversedBy: 'clothesCostumePieces', cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $piece;
 
     public function __toString(): string
     {

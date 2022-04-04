@@ -16,10 +16,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
 
     $containerConfigurator->import(DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES);
-    $containerConfigurator->import(SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES);
 
-    $containerConfigurator->import(SymfonySetList::SYMFONY_CODE_QUALITY);
-    $containerConfigurator->import(SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION);
-
-    $services = $containerConfigurator->services();
+    //$services = $containerConfigurator->services();
 };

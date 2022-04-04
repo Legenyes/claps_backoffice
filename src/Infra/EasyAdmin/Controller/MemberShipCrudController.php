@@ -109,7 +109,7 @@ class MemberShipCrudController extends AbstractCrudController
     {
         $clubYear = $this->entityManager->getRepository(ClubYear::class)->findCurrentYear();
 
-        return $this
+        return $this->container
             ->get(EntityRepository::class)
             ->createQueryBuilder($searchDto, $entityDto, $fields, $filters)
             ->leftJoin('entity.member', 'member')
