@@ -57,6 +57,9 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-lg btn-block" onclick="this.form.submit(); this.disabled=true;">{{ _sign_in_label }}</button>
         </div>
+        <div class="form-group text-center">
+            <a href="{{ path('app_forgot_password_request') }}">{{ "user.login.forgot_password"|trans }}</a>
+        </div>
     </form>
 
     <script type="text/javascript">

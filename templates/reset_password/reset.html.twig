@@ -1,14 +1,14 @@
 {% extends 'layout_rightcolumn.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}{{ 'user.reset_password.reset.title' |trans }}{% endblock %}
 
-{% block body_id 'user_login' %}
+{% block body_id 'user_resetpassword_reset' %}
 
 {% block main %}
-    <h1>Reset your password</h1>
+    <h1>{{ 'user.reset_password.reset.title' |trans }}</h1>
 
     {{ form_start(resetForm) }}
         {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
+        <button class="btn btn-primary">{{ 'user.reset_password.reset.action' |trans }}</button>
     {{ form_end(resetForm) }}
 {% endblock %}

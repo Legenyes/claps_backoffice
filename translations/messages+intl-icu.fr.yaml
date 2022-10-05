@@ -148,6 +148,23 @@ user:
         new_password.first: "Nouveau mot de passe"
         new_password.confirm: "Confirmation"
     title: "Changer le mot de passe"
+  reset_password:
+    check_email:
+      dont_receive: 'Si vous n’avez pas reçu d’e-mail, veuillez vérifier votre dossier spam ou réessayer.'
+      info: "Un email contenant un lien pour réinitialiser votre mot de passe vous a été envoyé."
+      title: "Réinitialisation du mot de passe"
+    email:
+      subject: 'Votre demande de réinitialisation de mot de passe'
+      title: 'Votre demande de réinitialisation de mot de passe'
+      info: "Si vous avez demandé à réinitialiser votre mot de passe, utilisez le lien de confirmation ci-dessous. Si vous n'avez pas fait cette demande, ignorez cet email."
+    request:
+      action: "Envoyer"
+      info: "Vous recevrez un email avec un lien pour réinitialiser votre mot de passe"
+      title: "Réinitialiser le mot de passe"
+    reset:
+      action: "Réinitialiser le mot de passe"
+      info: "Vous pouvez réinitialiser le mot de passe de l’utilisateur en cliquant sur le bouton ci-dessous. Un email sera envoyé à l’utilisateur avec un lien pour réinitialiser son mot de passe."
+      title: "Réinitialiser le mot de passe"
   crud:
     title:
       singular: "Utilisateur"
@@ -157,6 +174,7 @@ user:
     title: "Modifier mon compte"
   login:
     action: "Me connecter"
+    forgot_password: "Mot de passe oublié ?"
     notRegistered: "Pas encore inscrit ?"
     title: "Me connecter"
   register:

@@ -20,7 +20,7 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
     #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    #[ORM\ManyToMany(targetEntity: User::class)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 

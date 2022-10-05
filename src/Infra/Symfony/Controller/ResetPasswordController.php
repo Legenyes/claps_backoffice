@@ -28,8 +28,10 @@ class ResetPasswordController extends AbstractController
     private ResetPasswordHelperInterface $resetPasswordHelper;
     private EntityManagerInterface $entityManager;
 
-    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        ResetPasswordHelperInterface $resetPasswordHelper,
+        EntityManagerInterface $entityManager,
+    ) {
         $this->resetPasswordHelper = $resetPasswordHelper;
         $this->entityManager = $entityManager;
     }
@@ -145,24 +147,16 @@ class ResetPasswordController extends AbstractController
 
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
-        } catch (ResetPasswordExceptionInterface $e) {
-            // If you want to tell the user why a reset email was not sent, uncomment
-            // the lines below and change the redirect to 'app_forgot_password_request'.
-            // Caution: This may reveal if a user is registered or not.
-            //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
-            //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-            // ));
-
+        } catch (ResetPasswordExceptionInterface) {
             return $this->redirectToRoute('app_check_email');
         }
 
+        $senderAddress = $this->getParameter('app.sender_address');
+        $senderName = $this->getParameter('app.sender_name');
         $email = (new TemplatedEmail())
-            ->from(new Address('', 'ClapSabots'))
+            ->from(new Address($senderAddress, $senderName))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject($translator->trans('user.reset_password.email.subject'))
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
@@ -170,7 +164,6 @@ class ResetPasswordController extends AbstractController
         ;
 
         $mailer->send($email);
-
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
 
