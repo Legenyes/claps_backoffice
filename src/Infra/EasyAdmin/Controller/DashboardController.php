@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use Infra\Symfony\Persistance\Doctrine\Entity\Barcode;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesColor;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostume;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesOpportunity;
@@ -115,6 +116,7 @@ class DashboardController extends AbstractDashboardController
 
         $submenuEvent = [
             MenuItem::linkToCrud('Event', 'fa fa-calendar-alt', Event::class),
+            MenuItem::linkToCrud('Barcode', 'fa fa-barcode', Barcode::class),
             MenuItem::linkToDashboard('Reservation <small>(soon)</small>', 'fa fa-ticket-alt'),
         ];
 

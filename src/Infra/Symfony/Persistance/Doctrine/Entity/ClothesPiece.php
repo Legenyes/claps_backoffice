@@ -92,6 +92,11 @@ class ClothesPiece implements \Stringable
         return $this->name . ' ('. $this->code .')';
     }
 
+    public function getcodeDisplayName(): string
+    {
+        return $this->code . ' - '. $this->name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

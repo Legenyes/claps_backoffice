@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use Infra\Symfony\Form\Type\CostumePieceType;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostume;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -62,7 +64,8 @@ class ClothesCostumeCrudController extends AbstractCrudController
         $description = TextareaField::new('description', 'word.description');
         $season = AssociationField::new('season', 'clothe_season.crud.title.singular');
         $clotheOpportunity = AssociationField::new('clotheOpportunity', 'clothe_opportunity.crud.title.singular');
-        $clothesCostumePieces = AssociationField::new('clothesCostumePieces', 'clothe_piece.crud.title.plural');
+        $clothesCostumePieces = CollectionField::new('clothesCostumePieces', 'clothe_piece.crud.title.plural')
+            ->setFormTypeOption('entry_type', CostumePieceType::class);
         $id = IdField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {

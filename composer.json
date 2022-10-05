@@ -27,11 +27,14 @@
         "symfony/form": "*",
         "symfony/framework-bundle": "*",
         "symfony/http-client": "*",
+        "symfony/mailer": "*",
+        "symfony/mailgun-mailer": "*",
         "symfony/monolog-bundle": "*",
         "symfony/process": "*",
         "symfony/property-access": "*",
         "symfony/property-info": "*",
         "symfony/proxy-manager-bridge": "*",
+        "symfony/runtime": "*",
         "symfony/security-bundle": "*",
         "symfony/serializer": "*",
         "symfony/swiftmailer-bundle": "*",
@@ -40,6 +43,7 @@
         "symfony/validator": "*",
         "symfony/web-link": "*",
         "symfony/yaml": "*",
+        "symfonycasts/reset-password-bundle": "^1.15",
         "twig/intl-extra": "*",
         "vich/uploader-bundle": "^1.19"
     },
@@ -65,7 +69,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
-            "symfony/flex": true
+            "symfony/flex": true,
+            "symfony/runtime": true
         }
     },
     "autoload": {

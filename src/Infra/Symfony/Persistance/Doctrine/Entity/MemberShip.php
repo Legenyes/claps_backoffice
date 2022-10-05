@@ -160,7 +160,13 @@ class MemberShip implements \Stringable
 
     public function getExportData()
     {
+        $sections = '';
+        foreach ($this->sections as $section) {
+            $sections .= $section->getName() .' ';
+        }
+
         return \array_merge([
+            'sections' => $sections,
             'subscriptionAmount' => $this->subscriptionAmount,
             'subscriptionPaidAt' => $this->subscriptionPaidAt ? $this->subscriptionPaidAt->format('d/m/Y H:m') : '',
         ], $this->getMember()->getExportData());

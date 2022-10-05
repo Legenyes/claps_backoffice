@@ -9,10 +9,14 @@ use Infra\Symfony\Persistance\Doctrine\Entity\Member;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MemberEditType extends AbstractType
 {
@@ -20,7 +24,12 @@ class MemberEditType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class, [
-                'label' => 'member.properties.firstname',
+                'label' => new TranslatableMessage('order.status', ['%order_id%' => 32], 'store'),
+                'help' => new TranslatableMessage('order.status', ['%order_id%' => 32], 'store'),
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['min' => 30]),
+                ],
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'member.properties.lastname',
@@ -29,8 +38,15 @@ class MemberEditType extends AbstractType
                 'label' => 'member.properties.birthdate',
             ])
             ->add('sex', ChoiceType::class, [
-                'choices' => [ 'Male' => 'M', 'Female' => 'F'],
-                'label' => 'member.properties.sex',
+                'label' => new TranslatableMessage('order.status', ['%order_id%' => 32], 'store'),
+                'help' => new TranslatableMessage('order.status', ['%order_id%' => 32], 'store'),
+                'choices' => [
+                    'sex.m' => 'M',
+                    'sex.f' => 'F',
+                ],
+                'choice_label' => function ($choice, $key, $value) {
+                    return new TranslatableMessage($key, false === $choice ? [] : ['%company%' => $value], 'store');
+                },
             ])
             ->add('niss', TextType::class, [
                 'label' => 'member.properties.niss',
