@@ -8,14 +8,25 @@ use Infra\Symfony\Persistance\Doctrine\Entity\Video;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchVideoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $countries = $options['countries'];
+        $countriesChoice = [];
+        foreach ($countries as $countryIso) {
+            if ($countryIso) {
+                $countryLabel = Countries::getName($countryIso);
+                $countriesChoice[$countryLabel] = $countryIso;
+            }
+        }
+        ksort($countriesChoice);
 
         $builder
             ->setMethod('GET')
@@ -35,7 +46,8 @@ class SearchVideoType extends AbstractType
                 'multiple' => false,
                 'required' => false
             ])
-            ->add('country', CountryType::class, [
+            ->add('country', ChoiceType::class, [
+                'choices' => $countriesChoice,
                 'required' => false,
                 'attr' => ['class' => 'form-control'],
             ])
@@ -45,7 +57,8 @@ class SearchVideoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Video::class
+            'data_class' => Video::class,
+            'countries' => []
         ));
     }
 

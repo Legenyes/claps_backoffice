@@ -17,7 +17,10 @@ class ClothesPieceController extends BaseController
     #[Route('/', name:'app_clothes_piece_index')]
     public function indexAction(ClothesPieceRepository $clothesPieceRepository): Response
     {
-        $form = $this->createForm(SearchClothesPieceType::class);
+        $countries = $clothesPieceRepository->getCountryList();
+        $form = $this->createForm(SearchClothesPieceType::class, null, [
+            'countries' => $countries
+        ]);
         $pieces = $clothesPieceRepository->filterAll($this->getSqlParameterBag());
 
         return $this->render('clothespiece/index.html.twig', [

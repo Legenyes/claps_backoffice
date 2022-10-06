@@ -19,7 +19,10 @@ class VideoController extends BaseController
     #[Route('/', name:'app_video_index')]
     public function indexAction(VideoRepository $videoRepository): Response
     {
-        $form = $this->createForm(SearchVideoType::class);
+        $countries = $videoRepository->getCountryList();
+        $form = $this->createForm(SearchVideoType::class, null, [
+            'countries' => $countries
+        ]);
         $videos = $videoRepository->findAll();
 
         return $this->render('video/index.html.twig', [

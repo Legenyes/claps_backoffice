@@ -32,10 +32,23 @@ class ClothesPieceRepository extends ServiceEntityRepository
         ;
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    private function filterAllQueryBuilder(SqlParameterBag $params)
+    public function getCountryList(): array
+    {
+        $result = $this->createQueryBuilder('v')
+            ->select('v.country')
+            ->distinct()
+            ->getQuery()
+            ->getArrayResult() ;
+
+        $countries = [];
+        foreach ($result as $i) {
+            $countries[] = $i['country'];
+        }
+
+        return $countries;
+    }
+
+    private function filterAllQueryBuilder(SqlParameterBag $params): QueryBuilder
     {
         /** @var QueryBuilder $query */
         $query = $this->createQueryBuilder('cp')
