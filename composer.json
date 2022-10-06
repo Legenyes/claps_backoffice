@@ -8,7 +8,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-intl": "*",
-        "api-platform/core": "^2.6",
+        "amphp/http-client": "^4.6",
+        "api-platform/core": "^3.0",
         "composer/package-versions-deprecated": "1.11.99.4",
         "doctrine/annotations": "^1.13",
         "doctrine/doctrine-bundle": "^2.5",
@@ -39,7 +40,6 @@
         "symfony/security-bundle": "*",
         "symfony/sendinblue-mailer": "*",
         "symfony/serializer": "*",
-        "symfony/swiftmailer-bundle": "*",
         "symfony/translation": "*",
         "symfony/twig-bundle": "*",
         "symfony/validator": "*",
@@ -60,8 +60,7 @@
         "symfony/maker-bundle": "^1.14",
         "symfony/phpunit-bridge": "^6.1",
         "symfony/stopwatch": "^6.1",
-        "symfony/web-profiler-bundle": "^6.1",
-        "symfony/web-server-bundle": "*"
+        "symfony/web-profiler-bundle": "^6.1"
     },
     "config": {
         "platform-check": false,
