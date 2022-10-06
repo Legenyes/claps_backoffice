@@ -53,14 +53,14 @@
         "doctrine/doctrine-fixtures-bundle": "*",
         "phpunit/phpunit": "^9.5",
         "rector/rector": "^0.12.19",
-        "symfony/browser-kit": "^6.0",
-        "symfony/css-selector": "^6.0",
-        "symfony/debug-bundle": "^6.0",
+        "symfony/browser-kit": "^6.1",
+        "symfony/css-selector": "^6.1",
+        "symfony/debug-bundle": "^6.1",
         "symfony/dotenv": "*",
         "symfony/maker-bundle": "^1.14",
-        "symfony/phpunit-bridge": "^6.0",
-        "symfony/stopwatch": "^6.0",
-        "symfony/web-profiler-bundle": "^6.0",
+        "symfony/phpunit-bridge": "^6.1",
+        "symfony/stopwatch": "^6.1",
+        "symfony/web-profiler-bundle": "^6.1",
         "symfony/web-server-bundle": "*"
     },
     "config": {
@@ -108,7 +108,7 @@
         ]
     },
     "conflict": {
-        "symfony/symfony": "6.0"
+        "symfony/symfony": "6.1"
     },
     "extra": {
         "symfony": {
