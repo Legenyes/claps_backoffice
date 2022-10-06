@@ -18,3 +18,4 @@ bin/
 private/
 .idea/
 nbproject/
+/.env.local
