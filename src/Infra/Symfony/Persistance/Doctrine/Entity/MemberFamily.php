@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Infra\Symfony\Persistance\Doctrine\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Infra\Symfony\Persistance\Doctrine\Repository\MemberFamilyRepository;
@@ -32,6 +33,14 @@ class MemberFamily implements \Stringable
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $fatherMobilePhone = null;
+
+    #[ORM\ManyToMany(targetEntity: Member::class, mappedBy: 'families')]
+    private $famillyMembers;
+
+    public function __construct()
+    {
+        $this->famillyMembers = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -101,6 +110,11 @@ class MemberFamily implements \Stringable
         $this->fatherMobilePhone = $fatherMobilePhone;
 
         return $this;
+    }
+
+    public function getFamillyMembers()
+    {
+        return $this->famillyMembers;
     }
 
     public function getExportData()

@@ -158,6 +158,37 @@ class MemberShip implements \Stringable
         return $this;
     }
 
+    public function getSubscripptionType(): string
+    {
+        $age = $this->getMember()->getAge();
+
+        if (!$age) {
+            return '';
+        } elseif ($age < 7) {
+            return '< 7 ANS';
+        } elseif ($age < 16) {
+            return '< 16 ANS';
+        } else {
+            return 'ADULTES';
+        }
+    }
+
+    public function getDiscount(): string
+    {
+        if (!$this->getMember()) {
+            return '';
+        }
+
+        $families = $this->getMember()->getFamilies();
+        foreach ($families as $family) {
+            if ($family->getFamillyMembers() && $family->getFamillyMembers()->count() >= 3) {
+                return ' -20 %';
+            }
+        }
+
+        return '';
+    }
+
     public function getExportData()
     {
         $sections = '';
@@ -167,8 +198,10 @@ class MemberShip implements \Stringable
 
         return \array_merge([
             'sections' => $sections,
-            'subscriptionAmount' => $this->subscriptionAmount,
-            'subscriptionPaidAt' => $this->subscriptionPaidAt ? $this->subscriptionPaidAt->format('d/m/Y H:m') : '',
+            '.TYPE' => $this->getSubscripptionType(),
+            '.FEE' => $this->subscriptionAmount,
+            '.DISCOUNT' => $this->getDiscount(),
+            '.PAID_AT' => $this->subscriptionPaidAt ? $this->subscriptionPaidAt->format('d/m/Y H:m') : '',
         ], $this->getMember()->getExportData());
     }
 }

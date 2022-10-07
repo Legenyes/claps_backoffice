@@ -29,7 +29,7 @@ class PdfPrintTicket extends PdfPrint
         $logoTitreImage = "/var/www/test.claps.be/public/images/logo-titre.png";
         $logoImage = "/var/www/test.claps.be/public/images/LogoClapTitre.jpg";
         $pdf->Image($logoTitreImage, 20, 8, 75, 0, '', '', '', 2, 300, '', false, false, 0, "CB");
-        $pdf->Image($logoImage, 150, 260, 35, 0, '', '', '', 2, 300, '', false, false, 0, "CB");
+        $pdf->Image($logoImage, 150, 270, 35, 0, '', '', '', 2, 300, '', false, false, 0, "CB");
 
 
         $pdf->write2DBarcode($barcode->getValue(), "QRCODE,Q", 140, 25+15, 50, 50, [
@@ -88,7 +88,7 @@ class PdfPrintTicket extends PdfPrint
 
 
         $pdf->setFont('FreeSans', '', 7);
-        $pdf->setXY(20, 240);
+        $pdf->setXY(20, 250);
         $conditions = "Cet e-ticket est soumis aux conditions générales de vente de l'ASBL Ensemble Clap'Sabots, ainsi qu’à celles de l'organisation, que vous avez acceptées lors de votre commande.  Cet e-ticket est non remboursable. Sauf accord contraire de l’organisation, cet e-ticket est non transférable et non échangeable. L'accès au site est soumis au contrôle de validité de cet e-ticket.  Cet e-ticket est valable uniquement pour le lieu, la date et l'heure exacts définis par ledit e-ticket.   Après l''heure de début, l'accès au site n'est plus garanti et en cas d'accès refusé,  cet e-ticket ne donne pas droit à un remboursement.  Il est interdit de reproduire, de copier ou de contrefaire cet e-ticket de quelque manière que ce soit,  sous peine de poursuites judiciaires.  De même, toute commande utilisant une méthode de paiement illicite pour obtenir un e-ticket entraînera des poursuites pénales et rendra invalide cet e-ticket.";
         $pdf->setCellHeightRatio(0.9);
         $pdf->MultiCell(170, 100, $conditions, 0, 'J', false, 1, '', '', true, 0, false, true, 25);

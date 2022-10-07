@@ -50,7 +50,7 @@ class Member implements \Stringable
     #[ORM\OneToOne(targetEntity: Address::class, cascade: ['persist', 'remove'])]
     private $address;
 
-    #[ORM\ManyToMany(targetEntity: MemberFamily::class)]
+    #[ORM\ManyToMany(targetEntity: MemberFamily::class, inversedBy: 'famillyMembers')]
     private $families;
 
     #[ORM\OneToMany(targetEntity: MemberShip::class, mappedBy: 'member', orphanRemoval: true)]
@@ -203,7 +203,7 @@ class Member implements \Stringable
     /**
      * @return Collection|MemberFamily[]
      */
-    public function getFamilies(): Collection
+    public function getFamilies()
     {
         return $this->families;
     }
@@ -229,7 +229,7 @@ class Member implements \Stringable
     /**
      * @return Collection|MemberShip[]
      */
-    public function getMemberShips(): Collection
+    public function getMemberShips()
     {
         return $this->memberShips;
     }
@@ -319,6 +319,18 @@ class Member implements \Stringable
         return $this;
     }
 
+    public function getAge(): ?int
+    {
+        if ($this->getBirthdate() === null) {
+            return null;
+        }
+
+        $now = new \DateTime();
+        $interval = $now->diff($this->getBirthdate());
+
+        return $interval->y;
+    }
+
     public function getExportData()
     {
         $address = $this->getAddress() ? $this->getAddress()->getExportData() : [];
@@ -331,6 +343,7 @@ class Member implements \Stringable
             '.PRENOM' => $this->firstname,
             '.NOM' => strtoupper($this->lastname),
             '.DATEN' => $this->birthdate ? $this->birthdate->format('d/m/Y') : '',
+            '.AGE' => $this->getAge() ?? '',
             '.GENRE' => $this->sex,
             '.IDFEDE' => '',
             '.TYPEM' => 'Adhérent',

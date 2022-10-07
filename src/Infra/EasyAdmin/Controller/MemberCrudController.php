@@ -124,7 +124,7 @@ class MemberCrudController extends AbstractCrudController
     {
         $context = $request->attributes->get(EA::CONTEXT_REQUEST_ATTRIBUTE);
         $fields = FieldCollection::new($this->configureFields(Crud::PAGE_INDEX));
-        $filters = $this->get(FilterFactory::class)->create($context->getCrud()->getFiltersConfig(), $fields, $context->getEntity());
+        $filters = $this->container->get(FilterFactory::class)->create($context->getCrud()->getFiltersConfig(), $fields, $context->getEntity());
         $members = $this->createIndexQueryBuilder($context->getSearch(), $context->getEntity(), $fields, $filters)
             ->getQuery()
             ->getResult();
