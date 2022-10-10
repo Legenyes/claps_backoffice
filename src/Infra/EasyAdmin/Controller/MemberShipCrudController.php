@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClubYear;
 use Infra\Symfony\Persistance\Doctrine\Entity\Member;
 use Infra\Symfony\Persistance\Doctrine\Entity\MemberShip;
@@ -87,11 +89,14 @@ class MemberShipCrudController extends AbstractCrudController
         $subscriptionAmount = MoneyField::new('subscriptionAmount')
             ->setCurrency('EUR')
             ->setStoredAsCents(false);
+        $subscripptionType = TextField::new('subscripptionType');
         $subscriptionPaidAt = DateField::new('subscriptionPaidAt');
+
+        $age = NumberField::new('member.age');
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$member, $sections, $subscriptionAmount, $subscriptionPaidAt];
+            return [$member, $age, $sections, $subscripptionType, $subscriptionAmount, $subscriptionPaidAt];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $startDate, $endDate, $subscriptionAmount, $subscriptionPaidAt, $clubYear, $member, $sections];
         } elseif (Crud::PAGE_NEW === $pageName) {
