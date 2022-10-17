@@ -46,6 +46,7 @@
         "symfony/web-link": "*",
         "symfony/yaml": "*",
         "symfonycasts/reset-password-bundle": "^1.15",
+        "tecnickcom/tcpdf": "^6.5",
         "twig/intl-extra": "*",
         "vich/uploader-bundle": "^1.19"
     },

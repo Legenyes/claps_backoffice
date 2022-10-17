@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Clap'Scan</title>
+        <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+<body>
+    <header style="background-color: #ea6045; width:100%; height: 60px;padding: 10px;">
+        <img src="https://www.claps.be/images/logo.png">
+    </header>
+
+    <div id="reader" width="100%"></div>
+
+    <div id="myModal" class="modal fade " role="dialog">
+        <div class="modal-dialog modal-fullscreen">
+            <!-- Modal content-->
+            <div class="modal-content" style="background-color: rgba(56,161,105);}">
+                <div class="modal-body">
+                    <div style="max-width: 360px;" class="text-center w-full rounded-lg bg-white shadow-lg p-4 sm:py-4 sm:px-6 mx-1 sm:mx-2">
+
+
+                        <br />
+                        <br />
+                        <img src="https://iconarchive.com/download/i86039/graphicloads/100-flat-2/check-1.ico">
+                        <h3 id="voucher-name"></h3>
+                        <div class="mb-1">
+                            <span class="font-semibold">Voucher code:</span> <div id="voucher-number"></div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <button type="button" class="btn btn-success btn-lg closeModal"  data-dismiss="modal" style="width: 100%">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="myModalError" class="modal fade " role="dialog">
+        <div class="modal-dialog modal-fullscreen">
+            <!-- Modal content-->
+            <div class="modal-content" style="background-color: orangered;}">
+                <div class="modal-body">
+                    <div style="max-width: 360px;" class="text-center w-full rounded-lg bg-white shadow-lg p-4 sm:py-4 sm:px-6 mx-1 sm:mx-2">
+
+                        <br/>
+                        <br />
+                        <img style="width:100%" src="https://cdn.pixabay.com/photo/2012/04/12/13/15/red-29985_960_720.png">
+                        <h3>Billet inconnu</h3>
+                        <br />
+
+                        <button type="button" class="btn btn-success btn-lg closeModal"  data-dismiss="modal" style="width: 100%">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="myModalWarning" class="modal fade " role="dialog">
+        <div class="modal-dialog modal-fullscreen">
+            <!-- Modal content-->
+            <div class="modal-content" style="background-color: darkorange;}">
+                <div class="modal-body">
+                    <div style="max-width: 360px;" class="text-center w-full rounded-lg bg-white shadow-lg p-4 sm:py-4 sm:px-6 mx-1 sm:mx-2">
+
+                        <br /><br />
+                        <img style="width:100%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/OOjs_UI_icon_alert-warning.svg/1200px-OOjs_UI_icon_alert-warning.svg.png">
+                        <h3>Billet déja scanné</h3>
+                        <br />
+                        <br />
+
+                        <button type="button" class="btn btn-success btn-lg closeModal"  data-dismiss="modal" style="width: 100%">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let ajaxRunning = false;
+        $( document ).ready(function() {
+            var myModal = new bootstrap.Modal(document.getElementById('myModal'))
+            var myModalError = new bootstrap.Modal(document.getElementById('myModalError'))
+            var myModalWarning = new bootstrap.Modal(document.getElementById('myModalWarning'))
+
+
+            function qrCodeSuccessCallback(decodedText, decodedResult) {
+                if(ajaxRunning) {
+                    return;
+                }
+
+                ajaxRunning = true;
+                console.log(`Code matched = ${decodedText}`, decodedResult);
+
+                $.ajax({
+                    url: "{{ path('app_barcode_scan') }}",
+                    method: "POST",
+                    data: { 'barcodeValue': decodedText },
+                    dataType : "json",
+                })
+                .done(function(response){
+                    console.log(response);
+                    if (response.barcode) {
+                        if(response.scanned) {
+                            myModalWarning.show();
+                        } else {
+                            $('#voucher-name').text(response.name);
+                            $('#voucher-number').text(decodedText);
+                            myModal.show();
+                        }
+                    } else {
+                        myModalError.show();
+                    }
+                })
+                .fail(function(error){
+                    ajaxRunning = false;
+                    alert("La requête s'est terminée en échec. Infos : " + JSON.stringify(error));
+                })
+            }
+
+            const html5QrCode = new Html5Qrcode("reader");
+            const config = { fps: 10 };
+
+            // If you want to prefer back camera
+            html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+
+            $('.closeModal').click(function() {
+                ajaxRunning = false;
+                myModal.hide();
+                myModalError.hide();
+                myModalWarning.hide();
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>
