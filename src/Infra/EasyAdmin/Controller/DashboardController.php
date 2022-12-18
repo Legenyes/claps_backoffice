@@ -49,6 +49,13 @@ class DashboardController extends AbstractDashboardController
         return $this->redirect($adminUrlGenerator->setController(MemberCrudController::class)->generateUrl());
     }
 
+    #[Route('/admin/address_map', name: 'admin_dashboard_addressmap')]
+    public function addressMap(): Response
+    {
+        return $this->render('admin/dashboard/addressesMap.html.twig', [
+        ]);
+    }
+
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -89,6 +96,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Members', 'fa fa-user', Member::class),
             MenuItem::linkToCrud('MemberShip '.$now->format('Y'), 'fa fa-address-card', MemberShip::class),
             MenuItem::linkToCrud('Families', 'fa fa-users', MemberFamily::class),
+            MenuItem::linkToRoute('Addresses map', 'fa fa-map', 'admin_dashboard_addressmap'),
         ];
 
         $submenuDocument = [

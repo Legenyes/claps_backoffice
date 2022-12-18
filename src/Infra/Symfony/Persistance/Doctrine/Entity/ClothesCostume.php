@@ -16,7 +16,7 @@ use Infra\Symfony\Persistance\Doctrine\Repository\ClothesCostumeRepository;
 class ClothesCostume implements \Stringable
 {
     public final const GENDER_MALE = "M";
-    public final const GENDER_FEMALE = "M";
+    public final const GENDER_FEMALE = "F";
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -203,7 +203,7 @@ class ClothesCostume implements \Stringable
     /**
      * @return Collection|Section[]
      */
-    public function getSections(): Collection
+    public function getSections()
     {
         return $this->sections;
     }

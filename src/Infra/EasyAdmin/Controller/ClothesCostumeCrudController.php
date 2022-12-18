@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use Infra\Symfony\Form\Type\CostumePieceType;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostume;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
@@ -34,6 +35,18 @@ class ClothesCostumeCrudController extends AbstractCrudController
             ->setSearchFields(['id', 'name', 'code', 'description', 'country', 'area', 'city', 'gender'])
             ->setPaginatorPageSize(100)
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $sendInvoice = Action::new('pieceDashboard', 'pieceDashboard', 'fa fa-cubes')
+            ->linkToRoute('admin_clothes_costume_dashboard', function (ClothesCostume $costume): array {
+                return [
+                    'id' => $costume->getId(),
+                ];
+            });
+
+        return $actions->add(Crud::PAGE_DETAIL, $sendInvoice);
     }
 
     public function configureFilters(Filters $filters): Filters

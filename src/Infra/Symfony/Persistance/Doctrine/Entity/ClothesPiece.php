@@ -360,7 +360,7 @@ class ClothesPiece implements \Stringable
     /**
      * @return Collection|ClothesPieceStock[]
      */
-    public function getClothesPieceStocks(): Collection
+    public function getClothesPieceStocks()
     {
         return $this->clothesPieceStocks;
     }

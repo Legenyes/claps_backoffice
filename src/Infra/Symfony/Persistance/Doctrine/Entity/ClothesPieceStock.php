@@ -33,7 +33,7 @@ class ClothesPieceStock implements \Stringable
     #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'clothesPieceStitched')]
     private $dressMaker;
 
-    #[ORM\ManyToOne(targetEntity: ClothesColor::class, inversedBy: 'clothesPieceStocks')]
+    #[ORM\ManyToMany(targetEntity: ClothesColor::class, inversedBy: 'clothesPieceStocks')]
     private $colors;
 
     #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'clothesPieces')]
@@ -123,7 +123,7 @@ class ClothesPieceStock implements \Stringable
     /**
      * @return Collection|ClothesColor[]
      */
-    public function getColors(): Collection
+    public function getColors()
     {
         return $this->colors;
     }
