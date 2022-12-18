@@ -6,3 +6,4 @@ twig:
     globals:
         # the value is the service's id
         path_documents: '%app.path.documents%'
+        site_name: "%env(APP_NAME)%"

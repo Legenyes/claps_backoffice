@@ -9,6 +9,7 @@ parameters:
     app.path.documents: /uploads/documents
     app.sender_address: "%env(MAILER_SENDER_ADDR)%"
     app.sender_name: "%env(MAILER_SENDER_NAME)%"
+    app.site_name: "%env(APP_NAME)%"
 
 services:
     # default configuration for services in *this* file
