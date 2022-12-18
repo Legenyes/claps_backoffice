@@ -1,0 +1,31 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+{% if ea.crud.currentAction == 'detail' %}
+    <table class="table table-striped">
+        <tr>
+            <th>Code</th>
+            <th>Pays</th>
+            <th>Type</th>
+            <th>Name</th>
+        </tr>
+        {% for value in field.value %}
+            {% set url = ea_url()
+                .setController('Infra\\EasyAdmin\\Controller\\ClothesPieceCrudController')
+                .setAction('detail')
+                .setEntityId(value.piece.id) %}
+            <tr>
+                <td>
+                    <a href="{{ url }}">
+                        {{ value.piece.code }}
+                    </a>
+                </td>
+                <td>{{ value.piece.country|country }}</td>
+                <td>{{ value.piece.clotheType }}</td>
+                <td>{{ value.piece.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <span class="badge badge-secondary">{{ field.formattedValue }}</span>
+{% endif %}

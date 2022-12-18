@@ -78,7 +78,8 @@ class ClothesCostumeCrudController extends AbstractCrudController
         $season = AssociationField::new('season', 'clothe_season.crud.title.singular');
         $clotheOpportunity = AssociationField::new('clotheOpportunity', 'clothe_opportunity.crud.title.singular');
         $clothesCostumePieces = CollectionField::new('clothesCostumePieces', 'clothe_piece.crud.title.plural')
-            ->setFormTypeOption('entry_type', CostumePieceType::class);
+            ->setFormTypeOption('entry_type', CostumePieceType::class)
+            ->setTemplatePath('admin/field/clothes_costume_pieces.html.twig');
         $id = IdField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
