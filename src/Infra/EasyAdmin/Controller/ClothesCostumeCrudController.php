@@ -76,8 +76,8 @@ class ClothesCostumeCrudController extends AbstractCrudController
         $area = TextField::new('area', 'address.properties.area');
         $city = TextField::new('city', 'address.properties.city');
         $description = TextareaField::new('description', 'word.description');
-        $season = AssociationField::new('season', 'clothe_season.crud.title.singular');
-        $clotheOpportunity = AssociationField::new('clotheOpportunity', 'clothe_opportunity.crud.title.singular');
+       // $season = AssociationField::new('season', 'clothe_season.crud.title.singular');
+       // $clotheOpportunity = AssociationField::new('clotheOpportunity', 'clothe_opportunity.crud.title.singular');
         $clothesCostumePieces = CollectionField::new('clothesCostumePieces', 'clothe_piece.crud.title.plural')
             ->setFormTypeOption('entry_type', CostumePieceType::class)
             ->setTemplatePath('admin/field/clothes_costume_pieces.html.twig');
@@ -86,11 +86,11 @@ class ClothesCostumeCrudController extends AbstractCrudController
         if (Crud::PAGE_INDEX === $pageName) {
             return [$code, $gender, $name, $country];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $code, $description, $country, $area, $city, $gender, $season, $clotheOpportunity, $sections, $clothesCostumePieces];
+            return [$id, $name, $code, $description, $country, $area, $city, $gender, $sections, $clothesCostumePieces];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $code, $gender, $sections, $country, $area, $city, $description, $season, $clotheOpportunity, $clothesCostumePieces];
+            return [$name, $code, $gender, $sections, $country, $area, $city, $description, $clothesCostumePieces];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $code, $gender, $sections, $country, $area, $city, $description, $season, $clotheOpportunity, $clothesCostumePieces];
+            return [$name, $code, $gender, $sections, $country, $area, $city, $description, $clothesCostumePieces];
         }
     }
 }

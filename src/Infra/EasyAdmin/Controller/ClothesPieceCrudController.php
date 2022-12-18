@@ -67,8 +67,6 @@ class ClothesPieceCrudController extends AbstractCrudController
         $city = TextField::new('city');
         $description = TextareaField::new('description');
         $clotheType = AssociationField::new('clotheType');
-        $clotheTexture = AssociationField::new('clotheTexture');
-        $clotheOpportunity = AssociationField::new('clotheOpportunity');
         $imageFile = Field::new('imageFile');
         $clothesPieceStocks = AssociationField::new('clothesPieceStocks', 'Stocks');
         $id = IdField::new('id', 'ID');
@@ -80,11 +78,11 @@ class ClothesPieceCrudController extends AbstractCrudController
         if (Crud::PAGE_INDEX === $pageName) {
             return [$image, $code, $gender, $name, $country, $clothesPieceStocks];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $code, $description, $country, $area, $city, $personal, $gender, $image, $updatedAt, $season, $clotheType, $clotheTexture, $clotheOpportunity, $sections, $clothesCostumePieces, $clothesPieceStocks];
+            return [$id, $name, $code, $description, $country, $area, $city, $personal, $gender, $image, $updatedAt, $season, $clotheType, $sections, $clothesCostumePieces, $clothesPieceStocks];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $code, $gender, $personal, $sections, $country, $area, $city, $description, $clotheType, $clotheTexture, $clotheOpportunity, $imageFile, $clothesPieceStocks];
+            return [$name, $code, $gender, $personal, $sections, $country, $area, $city, $description, $clotheType, $imageFile, $clothesPieceStocks];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $code, $gender, $personal, $sections, $country, $area, $city, $description, $clotheType, $clotheTexture, $clotheOpportunity, $imageFile, $clothesPieceStocks];
+            return [$name, $code, $gender, $personal, $sections, $country, $area, $city, $description, $clotheType, $imageFile, $clothesPieceStocks];
         }
     }
 }

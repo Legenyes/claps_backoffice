@@ -45,10 +45,10 @@ class ClothesCostume implements \Stringable
     private $gender;
 
     #[ORM\ManyToOne(targetEntity: ClothesOpportunity::class)]
-    private $clotheOpportunity;
+    private $clotheOpportunity = null;
 
     #[ORM\ManyToOne(targetEntity: ClothesSeason::class)]
-    private $season;
+    private $season = null;
 
     #[ORM\ManyToMany(targetEntity: Section::class)]
     private $sections;
