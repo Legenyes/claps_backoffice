@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Persistance\Doctrine\Repository;
 
+use Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostume;
+use Infra\Symfony\Persistance\Doctrine\Entity\ClubYear;
 use Infra\Symfony\Persistance\Doctrine\Entity\MemberShip;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,32 +23,19 @@ class MemberShipRepository extends ServiceEntityRepository
         parent::__construct($registry, MemberShip::class);
     }
 
-    // /**
-    //  * @return MemberShip[] Returns an array of MemberShip objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findForCostumeAssignation(ClubYear $year, ClothesCostume $costume): array
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $query = $this->createQueryBuilder('m')
+            ->join('m.member', 'mem')
+            ->join('m.sections', 'section')
+            ->andWhere('m.clubYear = :year')
+            ->andWhere('mem.sex IN (:genders)')
+            ->andWhere('section IN (:sections)')
+            ->setParameter('year', $year)
+            ->setParameter('genders', $costume->getGender())
+            ->setParameter('sections', $costume->getSections())
         ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?MemberShip
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $query->getQuery()->getResult();
     }
-    */
 }

@@ -3,5 +3,7 @@
         <span class="badge badge-primary" style="color:white; background-color: {{ element.code|raw }}">{{ element }}</span>
     {% endfor %}
 {% else %}
-    <span class="badge badge-primary" style="color:white; background-color: {{ value|raw }}">{{ field.value }}</span>
+    {% if field.value is not null %}
+        <span class="badge badge-primary" style="color:white; background-color: {{ value|raw }}">{{ field.value }}</span>
+    {% endif %}
 {% endif %}
