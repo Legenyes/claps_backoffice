@@ -7,6 +7,7 @@ namespace Infra\EasyAdmin\Controller;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use Infra\EasyAdmin\Filter\CountryFilter;
 use Infra\Symfony\Form\Type\CostumePieceType;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesCostume;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -55,7 +56,7 @@ class ClothesCostumeCrudController extends AbstractCrudController
             ->add('code')
             ->add('name')
             ->add('gender')
-            ->add('country')
+            ->add(CountryFilter::new('country'))
             ->add(EntityFilter::new('sections'));
     }
 

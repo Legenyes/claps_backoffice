@@ -6,6 +6,7 @@ namespace Infra\EasyAdmin\Controller;
 
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
+use Infra\EasyAdmin\Filter\CountryFilter;
 use Infra\Symfony\Persistance\Doctrine\Entity\Video;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -37,7 +38,7 @@ class VideoCrudController extends AbstractCrudController
     {
         return $filters
             ->add('name')
-            ->add('country')
+            ->add(CountryFilter::new('country'))
             ->add(EntityFilter::new('sections'));
     }
 

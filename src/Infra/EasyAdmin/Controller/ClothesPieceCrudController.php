@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use Infra\EasyAdmin\Filter\CountryFilter;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesPiece;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -45,7 +46,8 @@ class ClothesPieceCrudController extends AbstractCrudController
             ->add('code')
             ->add('name')
             ->add('gender')
-            ->add('country')
+            ->add(EntityFilter::new('clotheType'))
+            ->add(CountryFilter::new('country'))
             ->add(EntityFilter::new('sections'));
     }
 
