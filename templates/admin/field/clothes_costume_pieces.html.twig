@@ -26,6 +26,15 @@
             </tr>
         {% endfor %}
     </table>
+    <div class="row">
+        {% for value in field.value %}
+            {% if value.piece.image %}
+                <div class="col-3">
+                    <img src="{{ asset(value.piece.image) }}" class="img-fluid" alt="{{ value.piece.name }}">
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% else %}
     <span class="badge badge-secondary">{{ field.formattedValue }}</span>
 {% endif %}
