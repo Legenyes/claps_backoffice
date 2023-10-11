@@ -35,6 +35,7 @@ class ClothesCostumeCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('clothe_costume.crud.title.plural')
             ->setSearchFields(['id', 'name', 'code', 'description', 'country', 'area', 'city', 'gender'])
             ->setPaginatorPageSize(100)
+            ->setDefaultSort(['country' => 'ASC'])
             ->overrideTemplate('label/null', 'easy_admin/label_null.html.twig');
     }
 

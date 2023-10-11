@@ -23,7 +23,7 @@ class VideoController extends BaseController
         $form = $this->createForm(SearchVideoType::class, null, [
             'countries' => $countries
         ]);
-        $videos = $videoRepository->findAll();
+        $videos = $videoRepository->findLastVideos(500);
 
         return $this->render('video/index.html.twig', [
             'videos' => $videos,

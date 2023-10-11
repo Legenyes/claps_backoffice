@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Infra\Symfony\Persistance\Doctrine\Repository\BarcodeRepository;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource]
@@ -34,6 +35,18 @@ class Barcode implements \Stringable
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $lastname = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $category = null;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $price = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $seat = null;
+
+    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'barcode', cascade: ['persist'])]
+    private $event;
 
     public function __construct()
     {
@@ -123,11 +136,61 @@ class Barcode implements \Stringable
 
     public function getPdfFileName(): string
     {
-        return sprintf("bc-%d.pdf", $this->id);
+        $slugger = new AsciiSlugger();
+        $filename = $slugger->slug($this->getEvent()?->getName());
+        $filename .= "-". $slugger->slug($this->getAttendeeDisplayName());
+        if ($this->getSeat() !== null) {
+            $filename .= "-". $slugger->slug($this->getSeat());
+        }
+
+        return sprintf("%s.pdf", $filename);
     }
 
     public function getAttendeeDisplayName(): string
     {
-        return $this->getFirstname() ." ". $this->getLastname();
+        return $this->getLastname(). " " . $this->getFirstname();
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+
+    public function setCategory(?string $category): void
+    {
+        $this->category = $category;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): void
+    {
+        $this->price = $price;
+    }
+
+    public function getSeat(): ?string
+    {
+        return $this->seat;
+    }
+
+    public function setSeat(?string $seat): void
+    {
+        $this->seat = $seat;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
+
+        return $this;
     }
 }

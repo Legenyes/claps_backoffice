@@ -8,8 +8,10 @@ use Domain\Barcode\Service\PdfPrintTicket;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use Infra\Symfony\Persistance\Doctrine\Entity\Barcode;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -52,10 +54,14 @@ class BarcodeCrudController extends AbstractCrudController
     {
         return [
             IDField::new('id', 'ID')->onlyOnDetail(),
-            TextField::new('value', 'word.value'),
-            EmailField::new('email', 'barcode.properties.email'),
+            TextField::new('value', 'word.value')->hideOnIndex(),
+            EmailField::new('email', 'barcode.properties.email')->hideOnIndex(),
             TextField::new('firstname', 'barcode.properties.firstname'),
             TextField::new('lastname', 'barcode.properties.lastname'),
+            TextField::new('category', 'barcode.properties.category')->hideOnIndex(),
+            TextField::new('seat', 'barcode.properties.seat'),
+            IntegerField::new('price', 'barcode.properties.price')->hideOnIndex(),
+            AssociationField::new('event', 'event.crud.title.singular'),
             BooleanField::new('scanned', 'barcode.properties.scanned'),
         ];
     }
@@ -78,7 +84,8 @@ class BarcodeCrudController extends AbstractCrudController
             ]
         );*/
         $fileResponse = new BinaryFileResponse($fullName);
-        $fileResponse->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, "test.pdf");
+        $fileResponse->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $barcode->getPdfFileName());
+
         return $fileResponse;
     }
 

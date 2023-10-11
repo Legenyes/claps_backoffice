@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Infra\EasyAdmin\Controller;
 
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use Infra\EasyAdmin\Filter\CountryFilter;
 use Infra\Symfony\Persistance\Doctrine\Entity\Video;
@@ -51,16 +52,17 @@ class VideoCrudController extends AbstractCrudController
         $recordDate = DateTimeField::new('recordDate', 'video.properties.record_date');
         $country = CountryField::new('country', 'address.properties.country');
         $id = IntegerField::new('id', 'ID');
+        $description = TextareaField::new('description');
         $playlistVideos = AssociationField::new('playlistVideos', 'playlist.crud.title.plural');
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $event, $sections, $country, $url];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $url, $recordDate, $country, $sections, $playlistVideos, $event];
+            return [$id, $name, $url, $recordDate, $country, $sections, $playlistVideos, $event, $description];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $url, $event, $sections, $recordDate, $country];
+            return [$name, $url, $event, $sections, $recordDate, $country, $description];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $url, $event, $sections, $recordDate, $country];
+            return [$name, $url, $event, $sections, $recordDate, $country, $description];
         }
     }
 }

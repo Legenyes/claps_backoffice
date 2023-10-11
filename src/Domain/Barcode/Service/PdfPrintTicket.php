@@ -20,7 +20,7 @@ class PdfPrintTicket extends PdfPrint
         $pdf->setAutoPageBreak(false);
         $pdf->setAuthor("Clap'Sabots");
         $pdf->setCreator("Clap'Sabots");
-        $pdf->setTitle("Clap'Sabots - 45ème anniversaire");
+        $pdf->setTitle("Clap'Sabots - Gala 46ème anniversaire - 15 Avril 2023");
 
         $pdf->AddPage();
         //$pdf->RoundedRect(5, 5, 255, 255, 3.50, '1111', 'DF', null, array(255, 255, 255));
@@ -44,46 +44,46 @@ class PdfPrintTicket extends PdfPrint
 
         $pdf->setFont('FreeSans', 'B', 17);
         $pdf->setXY(20, 29+15);
-        $pdf->Cell(181, 7, "Soirée 45ème anniversaire", 0, 0, 'L');
+        $pdf->Cell(181, 7, "Gala 46ème anniversaire - 15 Avril 2023", 0, 0, 'L');
 
 
         $pdf->setFont('FreeSans', 'B', 13);
         $pdf->setXY(20,53);
-        $pdf->Cell(60, 4, "Billet adulte", 0, 1, 'L');
+        $pdf->Cell(60, 4, "Billet ". $barcode->getCategory(), 0, 1, 'L');
 
         $pdf->setFont('FreeSans', null, 11);
         $pdf->setXY(20,60);
-        $pdf->Cell(60, 4, "Collège Cardinal Mercier", 0, 1, 'L');
+        $pdf->Cell(60, 4, "CERIA - Auditorium Jacques Brel", 0, 1, 'L');
         $pdf->setXY(20,64);
-        $pdf->Cell(60, 4, "Chau. de Mont-Saint-Jean 83, 1420 Braine-l'Alleud", 0, 1, 'L');
+        $pdf->Cell(60, 4, "Av. Emile Gryson 1/, 1070 Anderlecht", 0, 1, 'L');
 
 
         $pdf->setFont('FreeSans', 'B', 11);
         $pdf->setXY(20,60+15);
         $pdf->Cell(60, 4, "Prix", 0, 1, 'L');
         $pdf->setXY(40,60+15);
-        $pdf->Cell(75, 4, "Date", 0, 1, 'L');
+        $pdf->Cell(75, 4, "Place", 0, 1, 'L');
         $pdf->setXY(85,60+15);
         $pdf->Cell(60, 4, "Nom", 0, 1, 'L');
 
         $pdf->setFont('FreeSans', null, 11);
         $pdf->setXY(20,67+15);
-        $pdf->Cell(60, 4, "8,00 €", 0, 1, 'L');
+        $pdf->Cell(60, 4, $barcode->getPrice() .",00 €", 0, 1, 'L');
         $pdf->setXY(40,67+15);
-        $pdf->Cell(75, 4, "23/04/2022 - 19h00", 0, 1, 'L');
+        $pdf->Cell(75, 4, $barcode->getSeat(), 0, 1, 'L');
         $pdf->setXY(85,67+15);
         $pdf->Cell(60, 4, $barcode->getAttendeeDisplayName(), 0, 1, 'L');
 
 
-        $mapImage = "/var/www/test.claps.be/public/images/map-ccm-detail.jpg";
+        $mapImage = "/var/www/test.claps.be/public/images/map-ceria-detail.png";
         $pdf->Image($mapImage, 10, 100, 190, 0, '', '', '', 2, 300, '', false, false, 0, "CB");
 
 
         $pdf->setFont('FreeSans', null, 10);
         $pdf->setXY(10,230);
-        $pdf->Cell(60, 4,"Chau. de Mont-Saint-Jean 83, 1420 Braine-l'Alleud", 0, 1, 'L');
+        $pdf->Cell(60, 4,"Av. Emile Gryson 1/, 1070 Anderlecht", 0, 1, 'L');
         $pdf->setXY(10,235);
-        $pdf->Cell(60, 4,"Sortie R0 25 (du Sud) ou 26 (du Nord)", 0, 1, 'L');
+        $pdf->Cell(60, 4,"Sortie R0 16 - Metro CERIA", 0, 1, 'L');
 
 
 

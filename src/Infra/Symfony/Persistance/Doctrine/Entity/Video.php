@@ -41,6 +41,9 @@ class Video implements \Stringable
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'video', cascade: ['persist'])]
     private $event;
 
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $description = null;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
@@ -170,6 +173,19 @@ class Video implements \Stringable
     public function setEvent(Event $event): self
     {
         $this->event = $event;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
         return $this;
     }
 
