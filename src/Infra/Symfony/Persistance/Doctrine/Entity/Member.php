@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Infra\Symfony\Persistance\Doctrine\Repository\MemberRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource]
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
@@ -20,12 +21,15 @@ class Member implements \Stringable
     #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
+    #[Assert\Length(min: 2, max: 255)]
      #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
      private ?string $firstname = null;
 
+    #[Assert\Length(min: 2, max: 255)]
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $lastname = null;
 
+    #[Assert\Email]
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $email = null;
 
@@ -50,6 +54,10 @@ class Member implements \Stringable
     #[ORM\OneToOne(targetEntity: Address::class, cascade: ['persist', 'remove'])]
     private $address;
 
+    #[Assert\Valid]
+    #[ORM\OneToOne(targetEntity: BodyMeasurement::class, cascade: ['persist', 'remove'])]
+    private $bodyMeasurement;
+
     #[ORM\ManyToMany(targetEntity: MemberFamily::class, inversedBy: 'famillyMembers')]
     private $families;
 
@@ -68,6 +76,8 @@ class Member implements \Stringable
         $this->memberShips = new ArrayCollection();
         $this->clothesPieceStitched = new ArrayCollection();
         $this->clothesPieces = new ArrayCollection();
+
+        $this->bodyMeasurement = new BodyMeasurement();
     }
 
     public function __toString(): string
@@ -196,6 +206,22 @@ class Member implements \Stringable
     public function setAddress(Address $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getBodyMeasurement(): ?BodyMeasurement
+    {
+        if ($this->bodyMeasurement === null) {
+            $this->bodyMeasurement = new BodyMeasurement();
+        }
+
+        return $this->bodyMeasurement;
+    }
+
+    public function setBodyMeasurement(BodyMeasurement $bodyMeasurement): self
+    {
+        $this->bodyMeasurement = $bodyMeasurement;
 
         return $this;
     }
@@ -338,6 +364,7 @@ class Member implements \Stringable
         if ($this->getFamilies() && count($this->getFamilies()) > 0) {
             $family = $this->getFamilies()->first()->getExportData();
         }
+        $bodyMeasurement = $this->getBodyMeasurement() ? $this->getBodyMeasurement()->getExportData() : [];
 
         return \array_merge([
             '.PRENOM' => $this->firstname,
@@ -354,6 +381,6 @@ class Member implements \Stringable
             '.TEL' => $this->phone,
             '.GSM' => $this->mobilePhone,
             '.EMAIL' => $this->email,
-        ], $address, $family);
+        ], $address, $family, $bodyMeasurement);
     }
 }

@@ -11,6 +11,29 @@ address:
     streetBox: "Boite"
     streetNumber: "Numéro"
     zipCode: "Code postal"
+  
+body_measurement:
+  properties:
+    neck: "Tour du Cou"
+    bust: "Tour de la poitrine"
+    underBust: "Tour du sous poitrine"
+    waist: "Tour de taille"
+    hips: "Tour de hanches"
+    thigh: "Tour de cuisse"
+    calf: "Tour de mollet"
+    biceps: "Tour de biceps"
+    wrist: "Tour de poignet"
+    shoulder: "Largeur d'épaule"
+    armLength: "Longueur de bras"
+    bustHeight: "Hauteur de poitrine"
+    shoulderToWaistFront: "Épaule à taille devant"
+    shoulderToWaistBack: "Épaule à taille dos"
+    backWidth: "Largeur du dos"
+    hipHeight: "Hauteur de hanches"
+    legLength: "Longueur de jambe"
+    waistToFloor: "Taille à sol"
+    neckToFloor: "Cou à sol"
+    totalHeight: "Hauteur totale"
 
 clothe_color:
   crud:
@@ -109,6 +132,7 @@ member:
       contact: "Coordonnées"
       families: "Informations familiales"
       personal: "Informations personnelles"
+      bodyMeasurement: "Mensurations"
     title:
       singular: "Membre"
       plural: "Membres"

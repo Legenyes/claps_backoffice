@@ -9,7 +9,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA;
 use EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use Infra\Symfony\Persistance\Doctrine\Entity\Address;
+use Infra\Symfony\Persistance\Doctrine\Entity\BodyMeasurement;
 use Infra\Symfony\Persistance\Doctrine\Entity\Member;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -23,15 +25,17 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use Infra\Symfony\Persistance\Doctrine\Entity\MemberShip;
 use Infra\Symfony\Service\CsvService;
 use Symfony\Component\HttpFoundation\Request;
 
 class MemberCrudController extends AbstractCrudController
 {
-    public function __construct(private readonly CsvService $csvService, private readonly EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly CsvService $csvService,
+        private readonly EntityManagerInterface $entityManager
+    ) {
     }
+
     public static function getEntityFqcn(): string
     {
         return Member::class;
@@ -42,18 +46,30 @@ class MemberCrudController extends AbstractCrudController
         $address = new Address();
         $address->setCountry('BE');
 
+        $bodyMeasurement = new BodyMeasurement();
+
         $member = new Member();
         $member->setAddress($address);
+        $member->setBodyMeasurement($bodyMeasurement);
 
         return $member;
     }
 
-    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
-    {
-        if (!$entityInstance->getAddress()) {
-            $address = new Address();
-            $address->setCountry('BE');
-            $entityInstance->setAddress($address);
+    public function updateEntity(
+        EntityManagerInterface $entityManager,
+        $entityInstance
+    ): void {
+        if ($entityInstance instanceof Member) {
+            if (!$entityInstance->getAddress()) {
+                $address = new Address();
+                $address->setCountry('BE');
+                $entityInstance->setAddress($address);
+            }
+
+            if (!$entityInstance->getBodyMeasurement()) {
+                $bodyMeasurement = new BodyMeasurement();
+                $entityInstance->setBodyMeasurement($bodyMeasurement);
+            }
         }
 
         parent::updateEntity($entityManager, $entityInstance);
@@ -84,6 +100,8 @@ class MemberCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            FormField::addTab('member.crud.form.personal'),
+
             FormField::addPanel('member.crud.form.personal'),
             IdField::new('id')->onlyOnDetail(),
             TextField::new('firstName', 'member.properties.firstname'),
@@ -117,6 +135,30 @@ class MemberCrudController extends AbstractCrudController
             TextField::new('address.zipCode', 'address.properties.zipCode')->hideOnIndex(),
             TextField::new('address.city', 'address.properties.city')->hideOnIndex(),
             CountryField::new('address.country', 'address.properties.country')->hideOnIndex(),
+
+            FormField::addTab('member.crud.form.bodyMeasurement'),
+            FormField::addPanel('member.crud.form.bodyMeasurement'),
+            IntegerField::new('bodyMeasurement.neck', 'body_measurement.properties.neck')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.bust', 'body_measurement.properties.bust')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.underBust', 'body_measurement.properties.underBust')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.waist', 'body_measurement.properties.waist')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.hips', 'body_measurement.properties.hips')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.thigh', 'body_measurement.properties.thigh')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.calf', 'body_measurement.properties.calf')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.biceps', 'body_measurement.properties.biceps')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.wrist', 'body_measurement.properties.wrist')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.shoulder', 'body_measurement.properties.shoulder')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.armLength', 'body_measurement.properties.armLength')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.bustHeight', 'body_measurement.properties.bustHeight')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.shoulderToWaistFront', 'body_measurement.properties.shoulderToWaistFront')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.shoulderToWaistBack', 'body_measurement.properties.shoulderToWaistBack')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.backWidth', 'body_measurement.properties.backWidth')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.hipHeight', 'body_measurement.properties.hipHeight')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.legLength', 'body_measurement.properties.legLength')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.waistToFloor', 'body_measurement.properties.waistToFloor')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.neckToFloor', 'body_measurement.properties.neckToFloor')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.totalHeight', 'body_measurement.properties.totalHeight')->hideOnIndex()->setHelp("cm"),
+
         ];
     }
 
