@@ -65,7 +65,7 @@ class VideoRepository extends ServiceEntityRepository
             foreach ($searchs as $key => $search) {
                 $search = iconv('UTF-8','UTF-8//IGNORE', $search);
                 $query
-                    ->andWhere('video.name LIKE :search'.$key)
+                    ->andWhere('video.name LIKE :search' . $key . ' OR video.description LIKE :search' . $key)
                     ->setParameter('search'.$key, '%'.$search.'%');
             }
 

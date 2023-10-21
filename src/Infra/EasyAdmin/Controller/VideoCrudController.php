@@ -6,6 +6,7 @@ namespace Infra\EasyAdmin\Controller;
 
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use Infra\EasyAdmin\Filter\CountryFilter;
 use Infra\Symfony\Persistance\Doctrine\Entity\Video;
@@ -52,7 +53,7 @@ class VideoCrudController extends AbstractCrudController
         $recordDate = DateTimeField::new('recordDate', 'video.properties.record_date');
         $country = CountryField::new('country', 'address.properties.country');
         $id = IntegerField::new('id', 'ID');
-        $description = TextareaField::new('description');
+        $description = TextEditorField::new('description');
         $playlistVideos = AssociationField::new('playlistVideos', 'playlist.crud.title.plural');
 
         if (Crud::PAGE_INDEX === $pageName) {

@@ -27,7 +27,7 @@ class Video implements \Stringable
     private string $url;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private \DateTime $recordDate;
+    private ?\DateTime $recordDate = null;
 
     #[ORM\Column(type: Types::STRING, length: 5, nullable: true)]
     private ?string $country = null;
@@ -41,7 +41,7 @@ class Video implements \Stringable
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'video', cascade: ['persist'])]
     private $event;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, length: 4000, nullable: true)]
     private ?string $description = null;
 
     public function __construct()

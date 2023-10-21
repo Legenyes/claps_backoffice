@@ -34,6 +34,7 @@ body_measurement:
     waistToFloor: "Taille à sol"
     neckToFloor: "Cou à sol"
     totalHeight: "Hauteur totale"
+    shoeSize: "Pointure"
 
 clothe_color:
   crud:

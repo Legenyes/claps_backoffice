@@ -41,7 +41,7 @@ class SearchVideoType extends AbstractType
             ->add('event', EntityType::class, [
                 'class' => Event::class,
                 'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('event')
-                    ->orderBy('event.id', 'ASC'),
+                    ->orderBy('event.date', 'DESC'),
                 'attr' => ['class' => 'form-control'],
                 'multiple' => false,
                 'required' => false

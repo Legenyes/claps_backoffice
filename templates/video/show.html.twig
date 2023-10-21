@@ -18,7 +18,7 @@
             <div class="sidebar">
                 <div class="portfolio-desc">
                     <h3 class="widget-title">Description</h3>
-                    {# <p>{{ video.description }}</p> #}
+                    <p>{{ video.description|raw }}</p>
 
                     {% if video.country is not null %}
                         <h3 class="widget-title">Pays</h3>
