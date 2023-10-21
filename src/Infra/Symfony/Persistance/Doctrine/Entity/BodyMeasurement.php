@@ -21,11 +21,11 @@ class BodyMeasurement
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $neck = null;
 
-    #[Assert\Range(min: 1, max: 100)]
+    #[Assert\Range(min: 1, max: 200)]
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $bust = null;
 
-    #[Assert\Range(min: 1, max: 100)]
+    #[Assert\Range(min: 1, max: 200)]
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $underBust = null;
 
