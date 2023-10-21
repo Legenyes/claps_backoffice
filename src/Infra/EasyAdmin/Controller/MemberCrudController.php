@@ -158,6 +158,7 @@ class MemberCrudController extends AbstractCrudController
             IntegerField::new('bodyMeasurement.waistToFloor', 'body_measurement.properties.waistToFloor')->hideOnIndex()->setHelp("cm"),
             IntegerField::new('bodyMeasurement.neckToFloor', 'body_measurement.properties.neckToFloor')->hideOnIndex()->setHelp("cm"),
             IntegerField::new('bodyMeasurement.totalHeight', 'body_measurement.properties.totalHeight')->hideOnIndex()->setHelp("cm"),
+            IntegerField::new('bodyMeasurement.shoeSize', 'body_measurement.properties.shoeSize')->hideOnIndex()->setHelp("cm"),
 
         ];
     }

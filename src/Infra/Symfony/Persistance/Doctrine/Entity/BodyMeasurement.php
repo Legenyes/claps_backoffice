@@ -97,6 +97,10 @@ class BodyMeasurement
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $totalHeight = null;
 
+    #[Assert\Range(min: 1, max: 60)]
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $shoeSize = null;
+
     public function __construct()
     {
     }
@@ -317,6 +321,16 @@ class BodyMeasurement
         $this->totalHeight = $totalHeight;
     }
 
+    public function getShoeSize(): ?int
+    {
+        return $this->shoeSize;
+    }
+
+    public function setShoeSize(?int $shoeSize): void
+    {
+        $this->shoeSize = $shoeSize;
+    }
+
     public function getExportData(): array
     {
         return [
@@ -340,6 +354,7 @@ class BodyMeasurement
             'waistToFloor' => $this->getWaistToFloor(),
             'neckToFloor' => $this->getNeckToFloor(),
             'totalHeight' => $this->getTotalHeight(),
+            'shoeSize' => $this->getShoeSize(),
         ];
     }
 }
