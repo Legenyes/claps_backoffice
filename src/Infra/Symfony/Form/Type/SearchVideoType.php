@@ -2,6 +2,7 @@
 
 namespace Infra\Symfony\Form\Type;
 
+use Domain\Video\Enum\VideoTagEnum;
 use Infra\Symfony\Persistance\Doctrine\Entity\Event;
 use Infra\Symfony\Persistance\Doctrine\Entity\Section;
 use Infra\Symfony\Persistance\Doctrine\Entity\Video;
@@ -9,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Intl\Countries;
@@ -48,6 +50,11 @@ class SearchVideoType extends AbstractType
             ])
             ->add('country', ChoiceType::class, [
                 'choices' => $countriesChoice,
+                'required' => false,
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('tag', EnumType::class, [
+                'class' => VideoTagEnum::class,
                 'required' => false,
                 'attr' => ['class' => 'form-control'],
             ])

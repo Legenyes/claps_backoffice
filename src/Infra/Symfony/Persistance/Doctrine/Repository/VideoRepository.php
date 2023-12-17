@@ -83,6 +83,12 @@ class VideoRepository extends ServiceEntityRepository
                 ->setParameter('event', $params->get('event'));
         }
 
+        if ($params->has('tag') && strlen((string) $params->get('tag'))>0) {
+            $query
+                ->andWhere('video.tag = :tag')
+                ->setParameter('tag', $params->get('tag'));
+        }
+
         if ($params->has('sections') && strlen((string) $params->get('sections'))>0) {
             $query
                 ->andWhere('section.id = :sections')

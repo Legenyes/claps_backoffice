@@ -116,7 +116,8 @@ class MemberCrudController extends AbstractCrudController
                 ->setChoices([
                     'PartenaMut' => 'PARTENA',
                     'Mutualité Solidaris' => 'SOLIDARIS',
-                    'Mutualité Chrétienne' => 'MC'
+                    'Mutualité Chrétienne' => 'MC',
+                    'Mutualité Neutre' => 'MN'
                 ]),
 
             FormField::addPanel('member.crud.form.contact')->collapsible(),

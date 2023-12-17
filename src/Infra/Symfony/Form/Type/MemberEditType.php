@@ -56,7 +56,8 @@ class MemberEditType extends AbstractType
                 'choices' => [
                     'PartenaMut' => 'PARTENA',
                     'Mutualité Solidaris' => 'SOLIDARIS',
-                    'Mutualité Chrétienne' => 'MC'
+                    'Mutualité Chrétienne' => 'MC',
+                    'Mutualité Neutre' => 'MN'
                 ],
                 'label' => 'member.properties.insurer',
                 'required' => false,

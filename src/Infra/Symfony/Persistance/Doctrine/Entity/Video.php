@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Persistance\Doctrine\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Domain\Video\Enum\VideoTagEnum;
 use Infra\Symfony\Persistance\Doctrine\Repository\VideoRepository;
 
 #[ApiResource]
@@ -44,10 +45,14 @@ class Video implements \Stringable
     #[ORM\Column(type: Types::TEXT, length: 4000, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(type: Types::STRING, enumType: VideoTagEnum::class, nullable: true)]
+    private ?VideoTagEnum $tag;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
         $this->playlistVideos = new ArrayCollection();
+        $this->tag = VideoTagEnum::Show;
     }
 
     public function __toString(): string
@@ -185,6 +190,18 @@ class Video implements \Stringable
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getTag(): ?VideoTagEnum
+    {
+        return $this->tag;
+    }
+
+    public function setTag(?VideoTagEnum $tag): self
+    {
+        $this->tag = $tag;
 
         return $this;
     }

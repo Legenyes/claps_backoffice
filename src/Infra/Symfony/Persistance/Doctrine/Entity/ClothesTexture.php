@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Infra\Symfony\Persistance\Doctrine\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;

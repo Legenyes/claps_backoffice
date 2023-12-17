@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use Domain\Video\Enum\VideoTagEnum;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -54,16 +56,17 @@ class VideoCrudController extends AbstractCrudController
         $country = CountryField::new('country', 'address.properties.country');
         $id = IntegerField::new('id', 'ID');
         $description = TextEditorField::new('description');
+        $tag = ChoiceField::new('tag')->setChoices(VideoTagEnum::cases());
         $playlistVideos = AssociationField::new('playlistVideos', 'playlist.crud.title.plural');
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $event, $sections, $country, $url];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $url, $recordDate, $country, $sections, $playlistVideos, $event, $description];
+            return [$id, $name, $url, $recordDate, $country, $sections, $playlistVideos, $event, $tag, $description];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $url, $event, $sections, $recordDate, $country, $description];
+            return [$name, $url, $event, $sections, $recordDate, $country, $tag, $description];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $url, $event, $sections, $recordDate, $country, $description];
+            return [$name, $url, $event, $sections, $recordDate, $country, $tag, $description];
         }
     }
 }
