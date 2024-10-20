@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Infra\Symfony\Persistance\Doctrine\Repository\MemberShipRepository;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[ApiResource]
 #[ORM\Entity(repositoryClass: MemberShipRepository::class)]
@@ -173,6 +174,11 @@ class MemberShip implements \Stringable
         }
     }
 
+    public function isPaid(): bool
+    {
+        return $this->subscriptionPaidAt !== null;
+    }
+
     public function getDiscount(): string
     {
         if (!$this->getMember()) {
@@ -203,5 +209,18 @@ class MemberShip implements \Stringable
             '.DISCOUNT' => $this->getDiscount(),
             '.PAID_AT' => $this->subscriptionPaidAt ? $this->subscriptionPaidAt->format('d/m/Y H:m') : '',
         ], $this->getMember()->getExportData());
+    }
+
+    public function getPdfFileName(string $type): string
+    {
+        $member = $this->getMember();
+        $clubYear = $this->getClubYear();
+
+        $slugger = new AsciiSlugger();
+        $filename = $slugger->slug($member->getLastname() . ' ' . $member->getFirstname());
+        $filename .= " - ". $slugger->slug($type);
+        $filename .= " - ". $slugger->slug($clubYear->__toString());
+
+        return sprintf("%s.pdf", $filename);
     }
 }

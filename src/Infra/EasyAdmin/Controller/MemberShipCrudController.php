@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infra\EasyAdmin\Controller;
 
+use Domain\MemberShip\Service\PdfInsurance;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClubYear;
@@ -28,7 +30,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
 use Infra\Symfony\Service\CsvService;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class MemberShipCrudController extends AbstractCrudController
 {
@@ -59,7 +63,16 @@ class MemberShipCrudController extends AbstractCrudController
             ->setCssClass('btn')
             ->createAsGlobalAction();
 
-        return $actions->add(Crud::PAGE_INDEX, $export);
+        $renderInsurancePdf = Action::new('generateInsuranceDocument', 'Insurance')
+            ->setIcon('fa fa-file-invoice')
+            ->linkToCrudAction('generateInsuranceDocument')
+            ->setCssClass('btn')
+            ->displayIf(fn (MemberShip $entity) => $entity->isPaid() && $entity->getMember()->getInsurer() !== null);
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $export)
+            ->add(Crud::PAGE_EDIT, $renderInsurancePdf)
+            ->add(Crud::PAGE_DETAIL, $renderInsurancePdf);
     }
 
     public function configureFilters(Filters $filters): Filters
@@ -139,5 +152,22 @@ class MemberShipCrudController extends AbstractCrudController
         }
 
         return $this->csvService->export($data, 'export_members_'.date_create()->format('d-m-y').'.csv');
+    }
+
+    public function generateInsuranceDocument(AdminContext $context): BinaryFileResponse
+    {
+        $memberShip = $context->getEntity()->getInstance();
+        $filename = "public/insurances/" . $memberShip->getPdfFileName("Insurance");
+        $pdf = PdfInsurance::createDocument($memberShip);
+
+        $test = __DIR__ . '/../../../../'.$filename;
+        $pdf->Output(__DIR__ . '/../../../../'.$filename, "F");
+        $pdf->freeResources();
+        $fullName = realpath($test);
+
+        $fileResponse = new BinaryFileResponse($fullName);
+        $fileResponse->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $memberShip->getPdfFileName("Insurance"));
+
+        return $fileResponse;
     }
 }
