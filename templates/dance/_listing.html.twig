@@ -1,0 +1,38 @@
+
+<table style="width: 100%">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Pays</th>
+            <th>Région</th>
+            <th>Vidéo</th>
+            <th>Stage</th>
+            <th>Musique</th>
+            <th>Costume</th>
+        </tr>
+    </thead>
+    {% for dance in dances %}
+    <tr>
+        <td>
+            <a href="{{ path('app_dance_show', { 'id': dance.id }) }}">
+                {{ dance.name }}
+            </a>
+        </td>
+        <td>{{ dance.country|country }}</td>
+        <td>{{ dance.region }}</td>
+        <td>
+            {% if dance.videosOfPerformance|length > 0 %}
+                <i class="fa fa-film"></i>
+            {% endif %}
+        </td>
+        <td>
+            {% if dance.videosOfWorkShop|length > 0 %}
+                <i class="fa fa-film"></i>
+            {% endif %}
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    {% endfor %}
+</table>

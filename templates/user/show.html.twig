@@ -60,6 +60,49 @@
         {% endfor %}
     </div>
     {% endif %}
+
+    <h3 class="title-border"><i class="fa fa-tags"></i> Mes affiliations</h3>
+    <div class="accordion" id="accordion_membership">
+        {% for familyMember in familyMembers %}
+            <div class="card border rounded mb-2">
+                <div class="card-header p-0">
+                    <a class="h4 mb-0 font-weight-bold text-uppercase d-block p-2 pl-5 collapsed" data-toggle="collapse" data-target="#collapseMemberShip_{{ familyMember.id }}" aria-expanded="false" aria-controls="collapseMemberShip_{{ familyMember.id }}">
+                        {{ familyMember.firstname }} {{ familyMember.lastname }}</a>
+                </div>
+                <div id="collapseMemberShip_{{ familyMember.id }}" class="{% if not loop.first %}collapse{% endif %}" data-parent="#accordion" style="">
+                    <div class="card-body">
+                        <div class="contact-info">
+                            <table class="table">
+                                {% for memberShip in familyMember.memberShips|reverse %}
+                                    <tr>
+                                        <td>{{ memberShip.clubYear.club.name }}</td>
+                                        <td>{{ memberShip.startDate|date('d/m/Y') }}</td>
+                                        <td>
+                                            {% for section in memberShip.sections %}
+                                                <span class="badge badge-info">{{ section.name }}</span>&nbsp;
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ memberShip.subscriptionAmount }} €</td>
+                                        <td>
+                                            {% if memberShip.isPaid %}
+                                                <span class="badge badge-success">Payé</span>&nbsp;
+                                                <small>{{ memberShip.subscriptionPaidAt|date('d/m/Y', false) }}</small>
+                                            {% else %}
+                                                <span class="badge badge-danger">Non payé</span>
+                                             {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="gap-20"></div>
+
+
 {% endblock %}
 
 {% block sidebar %}

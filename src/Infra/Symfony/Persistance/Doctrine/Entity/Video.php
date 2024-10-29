@@ -48,9 +48,13 @@ class Video implements \Stringable
     #[ORM\Column(type: Types::STRING, enumType: VideoTagEnum::class, nullable: true)]
     private ?VideoTagEnum $tag;
 
+    #[ORM\ManyToMany(targetEntity: Dance::class, mappedBy: 'videos')]
+    private $dances;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
+        $this->dances = new ArrayCollection();
         $this->playlistVideos = new ArrayCollection();
         $this->tag = VideoTagEnum::Show;
     }
@@ -204,6 +208,27 @@ class Video implements \Stringable
         $this->tag = $tag;
 
         return $this;
+    }
+
+    public function getDances()
+    {
+        return $this->dances;
+    }
+
+    public function addDance(Dance $dance)
+    {
+        if (!$this->dances->contains($dance)) {
+            $this->dances[] = $dance;
+            $dance->addVideo($this);
+        }
+    }
+
+    public function removeDance(Dance $dance)
+    {
+        if ($this->dances->contains($dance)) {
+            $this->dances->removeElement($dance);
+            $dance->removeVideo($this);
+        }
     }
 
     public function getYoutubeId()

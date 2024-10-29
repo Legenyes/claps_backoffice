@@ -9,7 +9,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClubYear;
-use Infra\Symfony\Persistance\Doctrine\Entity\Member;
 use Infra\Symfony\Persistance\Doctrine\Entity\MemberShip;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;

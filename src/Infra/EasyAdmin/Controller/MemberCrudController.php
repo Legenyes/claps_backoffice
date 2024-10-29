@@ -137,6 +137,11 @@ class MemberCrudController extends AbstractCrudController
             TextField::new('address.city', 'address.properties.city')->hideOnIndex(),
             CountryField::new('address.country', 'address.properties.country')->hideOnIndex(),
 
+            FormField::addTab('Affiliations'),
+            AssociationField::new('memberShips', 'Affiliations')
+                ->setTemplatePath('admin/field/property_membership.html.twig')
+                ->onlyOnDetail(),
+
             FormField::addTab('member.crud.form.bodyMeasurement'),
             FormField::addPanel('member.crud.form.bodyMeasurement'),
             IntegerField::new('bodyMeasurement.neck', 'body_measurement.properties.neck')->hideOnIndex()->setHelp("cm"),

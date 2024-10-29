@@ -16,6 +16,7 @@ use Infra\Symfony\Persistance\Doctrine\Entity\ClothesType;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClothesTypeZone;
 use Infra\Symfony\Persistance\Doctrine\Entity\Club;
 use Infra\Symfony\Persistance\Doctrine\Entity\ClubYear;
+use Infra\Symfony\Persistance\Doctrine\Entity\Dance;
 use Infra\Symfony\Persistance\Doctrine\Entity\DocumentCategory;
 use Infra\Symfony\Persistance\Doctrine\Entity\DocumentFile;
 use Infra\Symfony\Persistance\Doctrine\Entity\Event;
@@ -104,6 +105,10 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Categories', 'fa fa-sitemap', DocumentCategory::class),
         ];
 
+        $submenuDance = [
+            MenuItem::linkToCrud('Dances', 'fa fa-file', Dance::class),
+        ];
+
         $submenuClothe = [
             MenuItem::linkToCrud('Costumes', 'fa fa-user-tie', ClothesCostume::class),
             MenuItem::linkToCrud('Pieces', 'fa fa-tshirt', ClothesPiece::class),
@@ -138,6 +143,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Membres', 'fa fa-users')->setSubItems($submenuMember);
         yield MenuItem::subMenu('Documents', 'fa fa-file')->setSubItems($submenuDocument);
+        yield MenuItem::subMenu('Dances', 'fas fa-file')->setSubItems($submenuDance);
         yield MenuItem::subMenu('Costumes', 'fas fa-tshirt')->setSubItems($submenuClothe);
         yield MenuItem::subMenu('Medias', 'fas fa-photo-video')->setSubItems($submenuMedia);
         yield MenuItem::subMenu('Event', 'fa fa-calendar-alt')->setSubItems($submenuEvent);

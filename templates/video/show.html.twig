@@ -20,6 +20,15 @@
                     <h3 class="widget-title">Description</h3>
                     <p>{{ video.description|raw }}</p>
 
+                    {% if video.dances|length > 0 %}
+                        <h3 class="widget-title">Danses</h3>
+                        <ul>
+                            {% for dance in video.dances %}
+                                <li><a href="{{ path('app_dance_show', { 'id': dance.id }) }}">{{ dance }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
                     {% if video.country is not null %}
                         <h3 class="widget-title">Pays</h3>
                         <p><a href="{{ path('app_video_search', { 'country': video.country }) }}">{{ video.country|country }}</a></p>

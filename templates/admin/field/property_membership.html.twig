@@ -1,0 +1,36 @@
+{% if field.value is iterable %}
+    <table class="table table-bordered">
+    {% for element in field.value %}
+        {% set memberShip = element %}
+        <tr>
+            <td>{{ memberShip.clubYear.club.name }}</td>
+            <td>{{ memberShip.startDate|date('d/m/Y') }}</td>
+            <td>{{ memberShip.endDate|date('d/m/Y') }}</td>
+            <td>
+                {% for section in memberShip.sections %}
+                    <span class="badge badge-info">{{ section.name }}</span>&nbsp;
+                {% endfor %}
+            </td>
+            <td>{{ memberShip.subscriptionAmount }} €</td>
+            <td>{{ memberShip.subscripptionType }}</td>
+            <td>
+                {% if memberShip.isPaid %}
+                    <span class="badge badge-success">Payé</span>&nbsp;
+                    <small>{{ memberShip.subscriptionPaidAt|date('d/m/Y', false) }}</small>
+                {% else %}
+                    <span class="badge badge-danger">Non payé</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ ea_url()
+                    .setController('Infra\\EasyAdmin\\Controller\\MemberShipCrudController')
+                    .setAction('edit')
+                    .setEntityId(memberShip.id)
+                }}" class=" action-edit btn btn-secondary">
+                    <i class="action-icon fa fa-fw  fa-eye"></i>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
